@@ -175,6 +175,7 @@ GameObject:
   - component: {fileID: 128267080}
   - component: {fileID: 128267081}
   - component: {fileID: 128267082}
+  - component: {fileID: 128267083}
   m_Layer: 0
   m_Name: Hole
   m_TagString: Untagged
@@ -222,6 +223,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1026725959}
   warpTarget: {fileID: 1449697507}
+  targetRoom: {fileID: 0}
+--- !u!114 &128267083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 128267079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbc7a951beca4825b8bfce0ff22dfa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newTrack: 2
+  switchOnStart: 0
 --- !u!1 &238031387
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,8 +354,6 @@ MonoBehaviour:
   - {fileID: 1398601032}
   - {fileID: 1160577632}
   - {fileID: 302409884}
-  - {fileID: 0}
-  - {fileID: 0}
   currentTrack: 0
   musicCanPlay: 1
 --- !u!1 &302409882
@@ -1248,6 +1261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1026725962}
   m_speed: 0.1
+  currentRoom: {fileID: 0}
   minPosition: -10
   maxPosition: 10
 --- !u!1 &1123104739
@@ -1387,6 +1401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   warpTarget: {fileID: 1193241195}
+  targetRoom: {fileID: 0}
 --- !u!61 &1138981537
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1497,7 +1512,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1749,7 +1764,7 @@ GameObject:
   - component: {fileID: 1398601033}
   - component: {fileID: 1398601032}
   m_Layer: 0
-  m_Name: the_journey's_call(looped) (1)
+  m_Name: the_journey's_call
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1822,7 +1837,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1945,6 +1960,7 @@ GameObject:
   - component: {fileID: 1539062849}
   - component: {fileID: 1539062851}
   - component: {fileID: 1539062850}
+  - component: {fileID: 1539062852}
   m_Layer: 0
   m_Name: Front Tunnel
   m_TagString: Untagged
@@ -1978,6 +1994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   warpTarget: {fileID: 351305553}
+  targetRoom: {fileID: 0}
 --- !u!61 &1539062851
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1992,6 +2009,19 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
+--- !u!114 &1539062852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1539062848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbc7a951beca4825b8bfce0ff22dfa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newTrack: 1
+  switchOnStart: 0
 --- !u!1001 &1838994156
 Prefab:
   m_ObjectHideFlags: 0
