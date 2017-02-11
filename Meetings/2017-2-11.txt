@@ -1,0 +1,32 @@
+Programming
+Fix Dialogue Bug (sometimes skips first line)
+Introduce Read-File for Dialogue
+Create Start Menu
+Create Save States
+Music Manager Script
+Keep Camera Inside the Map
+Player Stats/Items/Money Initialization
+Better UI
+Create Prefabs for Everything
+Combat/Turn-based Battle System
+Scene Transitions
+Lighting??
+
+Art
+Create Icon for Game (Square, 64x64 minimum)
+Create Main Character Sprites
+Create Friend/Love Sprites
+Create Game Logo (The Big Dungeon)
+Characters >>> Maps/Tiles
+
+Music
+Sound Effects Introduction (walking, talking, etc.)
+New Song for Combat?
+
+Writing/Design
+Story Introduction
+Story Creation
+Character Creation
+Combat Specifications
+Map Design
+Puzzle Design
