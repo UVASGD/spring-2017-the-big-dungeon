@@ -20,13 +20,14 @@ public class DialogueHolder : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if(other.gameObject.name == "Player" && Input.GetKey(KeyCode.Space))
+		if(other.gameObject.name == "Player" && Input.GetKeyUp(KeyCode.Space))
         {
             if (!dMan.dialogueActive)
             {
                 Debug.Log("Calling into Dialogue Manager");
                 dMan.dialogueLines = dialogueLines;
                 dMan.currentLine = 0;
+				dMan.initialFrame = true;
                 dMan.ShowDialogue();
             }
         }
