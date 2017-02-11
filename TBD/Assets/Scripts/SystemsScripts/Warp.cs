@@ -8,15 +8,15 @@ public class Warp : MonoBehaviour {
     public Transform warpTarget;
 	public GameObject targetRoom;
     ScreenFader sf;
-    TitleFader tf;
+    //TitleFader tf;
 
     // Use this for initialization
     void Start()
     {
         player = FindObjectOfType<PlayerMovement>();
         sf = GameObject.FindGameObjectWithTag("Fader").GetComponent<ScreenFader>();
-        tf = GameObject.FindGameObjectWithTag("Title").GetComponent<TitleFader>();
-        tf.FadeToBlack();
+        //tf = GameObject.FindGameObjectWithTag("Title").GetComponent<TitleFader>();
+        //tf.FadeToBlack();
     }
 
     IEnumerator OnTriggerEnter2D(Collider2D other) {
@@ -34,10 +34,12 @@ public class Warp : MonoBehaviour {
 			Camera.main.GetComponent<CameraFollow> ().setCurrentRoom (targetRoom);
 		}
 
+		/*
         if (warpTarget.name == "Hole")
         {
             yield return StartCoroutine(tf.FadeToClear());
         }
+        */
 
         yield return StartCoroutine(sf.FadeToClear());
         player.frozen = false;
