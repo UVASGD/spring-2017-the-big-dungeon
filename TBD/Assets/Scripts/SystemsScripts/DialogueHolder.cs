@@ -20,7 +20,7 @@ public class DialogueHolder : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if(other.gameObject.name == "Player" && Input.GetKey(KeyCode.Space))
+		if(other.gameObject.name == "Player" && Input.GetKeyUp(KeyCode.Space))
         {
             if (!dMan.dialogueActive)
             {
