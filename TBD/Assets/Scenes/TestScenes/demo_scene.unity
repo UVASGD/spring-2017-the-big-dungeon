@@ -348,18 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 503ba7e96721b774181c5c8702cd2438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: 
-  dialogueLines:
-  - Hello There!
-  - My name is Rocky!
-  - How are you?
-  - I'm actually doing pretty well myself, thanks for asking.
-  - Have you ever just sat around all day wondering what your purpose was in life?
-  - What does it MEAN to be a rock?
-  - Should I strive to be a boulder, or continue wearing down to be a pebble.
-  - Are rocks supposed to even have thoughts?
-  - Anyways, sorry for bothering you. I guess I'll be here when you come back.
-  - If you come back...
+  dialogueFile: Assets/Resources/Text/Rocky.txt
 --- !u!61 &486794527
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -473,11 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 503ba7e96721b774181c5c8702cd2438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: 
-  dialogueLines:
-  - Hello and welcome to The Big Dungeon (TM).
-  - The dungeon is currently under construction, please come back again later!
-  - Do not attempt to cross the bridge!
+  dialogueFile: Assets/Resources/Text/Introduction.txt
 --- !u!212 &632500713
 SpriteRenderer:
   m_ObjectHideFlags: 0

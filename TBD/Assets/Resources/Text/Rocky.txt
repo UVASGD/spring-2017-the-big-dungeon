@@ -1,0 +1,11 @@
+﻿start:
+	Hello There!
+	My name is Rocky!
+	How are you?
+	I'm actually doing pretty well myself, thanks for asking.
+	Have you ever just sat around all day wondering what your purpose was in life?
+	What does it MEAN to be a rock?
+	Should I strive to be a boulder, or continue wearing down to be a pebble.
+	Are rocks supposed to even have thoughts?
+	Anyways, sorry for bothering you. I guess I'll be here when you come back.
+	If you come back...
