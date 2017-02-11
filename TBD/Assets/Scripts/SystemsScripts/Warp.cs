@@ -6,6 +6,7 @@ public class Warp : MonoBehaviour {
 
     public PlayerMovement player;
     public Transform warpTarget;
+	public GameObject targetRoom;
     ScreenFader sf;
     TitleFader tf;
 
@@ -29,6 +30,9 @@ public class Warp : MonoBehaviour {
 
         other.gameObject.transform.position = warpTarget.position;
         Camera.main.transform.position = warpTarget.position;
+		if (targetRoom) {
+			Camera.main.GetComponent<CameraFollow> ().setCurrentRoom (targetRoom);
+		}
 
         if (warpTarget.name == "Hole")
         {
