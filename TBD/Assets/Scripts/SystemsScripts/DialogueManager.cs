@@ -11,6 +11,7 @@ public class DialogueManager : MonoBehaviour {
     public bool dialogueActive = false;
     public string[] dialogueLines;
     public int currentLine;
+	public bool initialFrame;
 
     // Use this for initialization
     void Start()
@@ -23,7 +24,7 @@ public class DialogueManager : MonoBehaviour {
     {
         if (dialogueActive) {
             dText.text = dialogueLines[currentLine];
-            if (Input.GetKeyDown(KeyCode.Space)) {
+			if (Input.GetKeyUp(KeyCode.Space) && !initialFrame) {
                 Debug.Log("Pressed Space");
                 currentLine++;
                 if (currentLine >= dialogueLines.Length)
@@ -35,6 +36,7 @@ public class DialogueManager : MonoBehaviour {
                 }
                 dText.text = dialogueLines[currentLine];
             }
+			initialFrame = false;
         }
     }
 

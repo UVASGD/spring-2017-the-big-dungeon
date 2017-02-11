@@ -27,6 +27,7 @@ public class DialogueHolder : MonoBehaviour {
                 Debug.Log("Calling into Dialogue Manager");
                 dMan.dialogueLines = dialogueLines;
                 dMan.currentLine = 0;
+				dMan.initialFrame = true;
                 dMan.ShowDialogue();
             }
         }
