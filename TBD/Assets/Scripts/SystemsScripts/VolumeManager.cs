@@ -13,7 +13,7 @@ public class VolumeManager : MonoBehaviour {
 	void Start () {
 		vcObjects = FindObjectsOfType<VolumeController> ();
 
-		if (currentVolumeLevel > maxVolumeLevel) {
+		if (currentVolumeLevel < maxVolumeLevel) {
 			currentVolumeLevel = maxVolumeLevel;
 		}
 

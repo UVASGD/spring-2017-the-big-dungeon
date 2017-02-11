@@ -16,9 +16,9 @@ public class MusicController : MonoBehaviour {
 	void Start () {
 		if (!mcExists) {
 			mcExists = true;
-			DontDestroyOnLoad (transform.gameObject);
+			//DontDestroyOnLoad (transform.gameObject);
 		} else {
-			Destroy (gameObject);
+			//Destroy (gameObject);
 		}
 	}
 	
