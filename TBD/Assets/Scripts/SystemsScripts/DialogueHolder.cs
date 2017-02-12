@@ -1,16 +1,42 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class DialogueHolder : MonoBehaviour {
 
-    public string dialogue;
+    public int dialogueState;
+	public bool hasDialogueStateBeenSet = false;
     private DialogueManager dMan;
-    public string[] dialogueLines;
+	public string dialogueFile;
+	private List<string> dialogueLines = new List<string>();
+	private Dictionary<string, int> dialogueLabels = new Dictionary<string, int>();
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         dMan = FindObjectOfType<DialogueManager>();
+		loadDialogue (dialogueFile);
+	}
+
+	void loadDialogue(string file) {
+		StreamReader r = new StreamReader (file);
+		string line = r.ReadLine();
+		int pos = 0;
+		while (line != null) {
+
+			// Check if this is a label or a line
+			if (line [0] == '\t') {
+				// Regular line
+				dialogueLines.Add(line.Trim());
+				pos++;
+			} else {
+                // Label
+                line = line.Trim();
+                line = line.Substring(0, line.Length - 1);
+                dialogueLabels.Add(line, pos);
+			}
+			line = r.ReadLine ();
+		}
 	}
 	
 	// Update is called once per frame
@@ -24,11 +50,12 @@ public class DialogueHolder : MonoBehaviour {
         {
             if (!dMan.dialogueActive)
             {
-                Debug.Log("Calling into Dialogue Manager");
                 dMan.dialogueLines = dialogueLines;
-                dMan.currentLine = 0;
-				dMan.initialFrame = true;
-                dMan.ShowDialogue();
+				dMan.dialogueLabels = dialogueLabels;
+                dMan.dialogueState = dialogueState;
+                dMan.hasDialogueStateBeenSet = hasDialogueStateBeenSet;
+                dMan.initialFrame = true;
+                dMan.ShowDialogue(this);
             }
         }
     }
