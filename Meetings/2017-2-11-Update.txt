@@ -1,0 +1,33 @@
+Programming
+Fix Dialogue Bug (sometimes skips first line) — Completed (Cyrus)
+Introduce Read-File for Dialogue — Completed (Cyrus)
+Create Start Menu — Not Completed, Assigned (Jack)
+Create Save States — Completed (Jack)
+Music Manager Script — Completed (Reid)
+Keep Camera Inside the Map — Completed (Jack)
+Player Stats/Items/Money Initialization — Not Completed
+Better UI — Not Completed
+Create Prefabs for Everything — Not Completed
+Combat/Turn-based Battle System — Not Completed
+Scene Transitions — Not Completed
+Lighting?? — Not Completed
+Volume Manager — Completed (Reid)
+
+Art
+Create Icon for Game (Square, 64x64 minimum) — Not Completed, Assigned (Will)
+Create Main Character Sprites — Not Completed
+Create Friend/Love Sprites — Not Completed
+Create Game Logo (The Big Dungeon) — Not Completed
+
+Music
+Sound Effects Introduction (walking, talking, etc.) — Not Completed
+New Song for Combat — Partially Completed (Raymond)
+Song for Forest — Partially Completed (Raymond)
+
+Writing/Design
+Story Introduction — Completed (All)
+Story Creation — Completed (All)
+Character Creation — Completed (All)
+Combat Specifications — Not Completed
+Map Design — Not Completed
+Puzzle Design — Not Completed
