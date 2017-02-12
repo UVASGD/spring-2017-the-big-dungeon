@@ -1,5 +1,9 @@
 start:
 	Hello and welcome to The Big Dungeon (TM).
 	The dungeon is currently under construction, please come back again later!
-loop:
-	{sound:spooky}Do not attempt to cross the bridge!{goto:loop}{end}
+first:
+	{sound:spooky}Do not attempt to cross the bridge!{goto:second}{end}
+second:
+	...Seriously, don't try to cross the bridge!{goto:third}{end}
+third:
+	DON'T. EVEN. THINK. ABOUT. IT!{goto:third}{end}

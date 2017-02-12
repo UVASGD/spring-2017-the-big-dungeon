@@ -15,43 +15,49 @@ public class DialogueManager : MonoBehaviour {
 	public Dictionary<string, int> dialogueLabels;
 	public int dialogueState;
 	public bool initialFrame;
-	public bool hasDialogueStateBeenSet;
-	public bool dialogueEnd;
+	public bool hasDialogueStateBeenSet = false;
+	private bool dialogueEnd;
+    private DialogueHolder caller;
 
     // Use this for initialization
     void Start()
     {
         player = FindObjectOfType<PlayerMovement>();
-        dBox.SetActive(dialogueActive);
+        dBox.SetActive(this.dialogueActive);
     }
 
     void Update()
     {
-        if (dialogueActive) {
-			if (Input.GetKeyUp(KeyCode.Space) && !initialFrame) {
-                dialogueState++;
+        if (this.dialogueActive) {
+			if (Input.GetKeyUp(KeyCode.Space) && !this.initialFrame) {
 				if (dialogueState >= dialogueLines.Count || dialogueEnd)
                 {
-                    dialogueActive = false;
-					dialogueEnd = false;
+                    this.dialogueActive = false;
+                    this.dialogueEnd = false;
                     dBox.SetActive(false);
                     player.frozen = false;
 
-					// Dialogue is over, see if we need to reset the dialogue state
-					if (!hasDialogueStateBeenSet) {
-						dialogueLabels.TryGetValue ("start", out dialogueState);
-					}
+                    // Update caller information so we can save our state
+                    this.caller.dialogueState = this.dialogueState;
+                    this.caller.hasDialogueStateBeenSet = this.hasDialogueStateBeenSet;
+
+                    this.dialogueState = 0;
+                    this.hasDialogueStateBeenSet = false;
+                    this.caller = null;
+
+                } else
+                {
+                    ParseDialogueLine(this.dialogueState);
                 }
-				string output = ParseDialogueLine (dialogueState);
-                dText.text = output;
             }
-			initialFrame = false;
+            this.initialFrame = false;
         }
     }
 
-	public string ParseDialogueLine(int dialogueState) {
-		string line = dialogueLines[dialogueState];
-		string ret = "";
+	public void ParseDialogueLine(int dialogueState) {
+        string line = dialogueLines[dialogueState];
+        string ret = "";
+        bool shouldIncrementDialogState = true;
 
 		int pos = 0;
 		while (pos < line.Length) {
@@ -62,45 +68,61 @@ public class DialogueManager : MonoBehaviour {
 					pos = line.Length;
 				}
 			} else {
-				// Get the current token and act on it
+                // Get the current token and act on it
 				ret = ret + line.Substring (pos, Math.Max(start - pos - 1, 0));
-				pos = line.IndexOf ("}", start);
-				string tokenstr = line.Substring(start + 1, pos - start - 1);
+				pos = line.IndexOf ("}", start) + 1;
+				string tokenstr = line.Substring(start + 1, pos - start - 2);
 
-				// Process the token string
-				switch (tokenstr)
+                // Process the token string
+                string tokencmd = tokenstr.Split(new Char[] { ':' })[0];
+
+                switch (tokencmd)
 				{
-				case "end":
-					dialogueEnd = true;
-					break;
-				case "goto":
-					dialogueState = Int32.Parse (tokenstr.Split (new Char[] {':'}) [1]);
-					break;
-				default:
-					break;
+				    case "end":
+					    dialogueEnd = true;
+					    break;
+				    case "goto":
+                        this.dialogueState = dialogueLabels[tokenstr.Split(new Char[] { ':' })[1]];
+                        shouldIncrementDialogState = false;
+					    break;
+				    default:
+					    break;
 				}
-				Debug.Log (tokenstr);
 			}
 		}
 
-		return ret;
+        if (shouldIncrementDialogState)
+        {
+            this.dialogueState++;
+        }
+
+        dText.text = ret;
 	}
 
-
-    public void ShowBox(string dialogue)
+    public void ShowDialogue(DialogueHolder caller)
     {
-        dBox.SetActive(true);
-        dialogueActive = true;
+        this.dialogueActive = true;
+        this.dialogueEnd = false;
+        this.caller = caller;
         player.frozen = true;
-        dText.text = dialogue;
-    }
 
-    public void ShowDialogue()
-    {
-        Debug.Log("Activating now");
-        dialogueActive = true;
-		dialogueEnd = false;
+        // Check if we've given any dialogue before
+        if (!this.hasDialogueStateBeenSet)
+        {
+            dialogueLabels.TryGetValue("start", out this.dialogueState);
+            this.hasDialogueStateBeenSet = true;
+        }
+
+        // Check if we need to reset the dialogue state
+        if (dialogueState >= dialogueLines.Count)
+        {
+            this.dialogueState = 0;
+        }
+
+        // Process the first line
+        ParseDialogueLine(this.dialogueState);
+
         dBox.SetActive(true);
-        player.frozen = true;
+
     }
 }
