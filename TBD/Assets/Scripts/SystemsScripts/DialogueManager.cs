@@ -8,7 +8,14 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour {
 
     public GameObject dBox;
+
     public Text dText;
+    private string currentLine;
+    enum Speed { Regular, Drag, Slow, Fast, Hyper, Instant };
+    private Dictionary<int, Speed> dialogueSpeed = new Dictionary<int, Speed>();
+    private Coroutine ulHolder;
+    private const double dialogueBaseSpeed = 0.05;
+
     public PlayerMovement player;
     public bool dialogueActive = false;
 	public List<string> dialogueLines;
@@ -18,6 +25,7 @@ public class DialogueManager : MonoBehaviour {
 	public bool hasDialogueStateBeenSet = false;
 	private bool dialogueEnd;
     private DialogueHolder caller;
+    private int x;
 
     // Use this for initialization
     void Start()
@@ -35,6 +43,11 @@ public class DialogueManager : MonoBehaviour {
                     this.dialogueActive = false;
                     this.dialogueEnd = false;
                     dBox.SetActive(false);
+                    if (this.ulHolder != null)
+                    {
+                        StopCoroutine(this.ulHolder);
+                        this.ulHolder = null;
+                    }
                     player.frozen = false;
 
                     // Update caller information so we can save our state
@@ -59,7 +72,9 @@ public class DialogueManager : MonoBehaviour {
         string ret = "";
         bool shouldIncrementDialogState = true;
 
-		int pos = 0;
+        this.dialogueSpeed.Clear();
+
+        int pos = 0;
 		while (pos < line.Length) {
 			int start = line.IndexOf ("{", pos);
 			if (start == -1) {
@@ -69,12 +84,12 @@ public class DialogueManager : MonoBehaviour {
 				}
 			} else {
                 // Get the current token and act on it
-				ret = ret + line.Substring (pos, Math.Max(start - pos - 1, 0));
+				ret = ret + line.Substring (pos, Math.Max(start - pos, 0));
 				pos = line.IndexOf ("}", start) + 1;
 				string tokenstr = line.Substring(start + 1, pos - start - 2);
 
                 // Process the token string
-                string tokencmd = tokenstr.Split(new Char[] { ':' })[0];
+                string tokencmd = tokenstr.Split(new Char[] { ':' })[0].ToLower();
 
                 switch (tokencmd)
 				{
@@ -85,19 +100,116 @@ public class DialogueManager : MonoBehaviour {
                         this.dialogueState = dialogueLabels[tokenstr.Split(new Char[] { ':' })[1]];
                         shouldIncrementDialogState = false;
 					    break;
-				    default:
+                    case "fast":
+                        this.dialogueSpeed[ret.Length] = Speed.Fast;
+                        break;
+                    case "hyper":
+                        this.dialogueSpeed[ret.Length] = Speed.Hyper;
+                        break;
+                    case "slow":
+                        this.dialogueSpeed[ret.Length] = Speed.Slow;
+                        break;
+                    case "drag":
+                        this.dialogueSpeed[ret.Length] = Speed.Drag;
+                        break;
+                    case "instant":
+                        this.dialogueSpeed[ret.Length] = Speed.Instant;
+                        break;
+                    case "endspeed":
+                        this.dialogueSpeed[ret.Length] = Speed.Regular;
+                        break;
+                    default:
 					    break;
 				}
 			}
 		}
 
+        // Increment the line unless we called goto
         if (shouldIncrementDialogState)
         {
             this.dialogueState++;
         }
 
-        dText.text = ret;
+        // Update the actual dialogue line
+        UpdateDialogueLine(ret);
 	}
+
+    IEnumerator DisplayDialogueLine()
+    {
+        double currentSpeed = dialogueBaseSpeed;
+        this.dText.text = "";
+        int len = currentLine.Length;
+        bool isInstant = false;
+        for(int x = 0; x < len; x++) {
+
+            if (this.dialogueSpeed.ContainsKey(x))
+            {
+                switch(this.dialogueSpeed[x])
+                {
+                    case Speed.Drag:
+                        currentSpeed = dialogueBaseSpeed * 4.0;
+                        break;
+                    case Speed.Slow:
+                        currentSpeed = dialogueBaseSpeed * 2.0;
+                        break;
+                    case Speed.Regular:
+                        currentSpeed = dialogueBaseSpeed * 1.0;
+                        break;
+                    case Speed.Fast:
+                        currentSpeed = dialogueBaseSpeed * 0.5;
+                        break;
+                    case Speed.Hyper:
+                        currentSpeed = dialogueBaseSpeed * 0.25;
+                        break;
+                    case Speed.Instant:
+                        // Find the next speed, if there is one
+                        // Otherwise, just print out the rest of the line
+                        string buf = "" + currentLine.ElementAt(x);
+                        x = x + 1;
+                        while (x < len) {
+                            if (this.dialogueSpeed.ContainsKey(x))
+                            {
+                                break;
+                            }
+                            buf += currentLine.ElementAt(x++);
+                        }
+
+                        this.dText.text += buf;
+
+                        if (x < len)
+                        {
+                            x = x - 1;
+                        }
+                        isInstant = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            yield return new WaitForSeconds ((float) currentSpeed);
+
+            // If it was "instant" speed, we don't want to add the char here
+            // because it was already added above
+            if (!isInstant)
+                this.dText.text += currentLine.ElementAt(x);
+            else
+                isInstant = false;
+
+        }
+    }
+
+    public void UpdateDialogueLine(string line)
+    {
+        if (this.ulHolder != null)
+        {
+            StopCoroutine(ulHolder);
+            this.ulHolder = null;
+        }
+
+        this.currentLine = line;
+        this.ulHolder = StartCoroutine(DisplayDialogueLine());
+    }
 
     public void ShowDialogue(DialogueHolder caller)
     {
