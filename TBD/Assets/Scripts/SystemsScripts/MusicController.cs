@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MusicController : MonoBehaviour {
 
-	public static bool mcExists;
-
 	public AudioSource[] musicTracks;
 
 	public int currentTrack;
@@ -14,12 +12,7 @@ public class MusicController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if (!mcExists) {
-			mcExists = true;
-			//DontDestroyOnLoad (transform.gameObject);
-		} else {
-			//Destroy (gameObject);
-		}
+		
 	}
 	
 	// Update is called once per frame

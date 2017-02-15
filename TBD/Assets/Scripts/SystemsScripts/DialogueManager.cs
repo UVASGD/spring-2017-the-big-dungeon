@@ -16,7 +16,7 @@ public class DialogueManager : MonoBehaviour {
     private Coroutine ulHolder;
     private const double dialogueBaseSpeed = 0.05;
 
-    public PlayerMovement player;
+    public PlayerController player;
     public bool dialogueActive = false;
 	public List<string> dialogueLines;
 	public Dictionary<string, int> dialogueLabels;
@@ -30,7 +30,7 @@ public class DialogueManager : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        player = FindObjectOfType<PlayerMovement>();
+        player = FindObjectOfType<PlayerController>();
         dBox.SetActive(this.dialogueActive);
     }
 
