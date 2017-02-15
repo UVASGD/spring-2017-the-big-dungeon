@@ -24,6 +24,7 @@ public class DialogueManager : MonoBehaviour {
 	public bool initialFrame;
 	public bool hasDialogueStateBeenSet = false;
 	private bool dialogueEnd;
+    private bool dialogueDuringOutput;
     private DialogueHolder caller;
     private int x;
 
@@ -38,7 +39,21 @@ public class DialogueManager : MonoBehaviour {
     {
         if (this.dialogueActive) {
 			if (Input.GetKeyUp(KeyCode.Space) && !this.initialFrame) {
-				if (dialogueState >= dialogueLines.Count || dialogueEnd)
+
+                // Check if we're in the process of writing out a dialogue line
+                // If so, just finish the current line
+                if (this.dialogueDuringOutput)
+                {
+                    if (this.ulHolder != null)
+                    {
+                        StopCoroutine(this.ulHolder);
+                        this.ulHolder = null;
+                    }
+
+                    this.dText.text = currentLine;
+                    this.dialogueDuringOutput = false;
+
+                } else if (dialogueState >= dialogueLines.Count || dialogueEnd)
                 {
                     this.dialogueActive = false;
                     this.dialogueEnd = false;
@@ -73,6 +88,8 @@ public class DialogueManager : MonoBehaviour {
         bool shouldIncrementDialogState = true;
 
         this.dialogueSpeed.Clear();
+
+        this.dialogueDuringOutput = true;
 
         int pos = 0;
 		while (pos < line.Length) {
@@ -197,6 +214,9 @@ public class DialogueManager : MonoBehaviour {
                 isInstant = false;
 
         }
+
+        this.dialogueDuringOutput = false;
+
     }
 
     public void UpdateDialogueLine(string line)
