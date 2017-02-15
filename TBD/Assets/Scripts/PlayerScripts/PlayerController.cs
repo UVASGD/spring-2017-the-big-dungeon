@@ -74,10 +74,11 @@ public class PlayerController : MonoBehaviour {
 			currentStep = playerStepSounds[Random.Range(0, playerStepSounds.Length)];
 		}
 		if (lastStep != null)
-			lastStep.Stop();
-		if (currentStep != null)
-			currentStep.Play();
-	}
+            sfxMan.StopSFX(lastStep);
+        if (currentStep != null)
+            sfxMan.PlaySFX(currentStep);
+
+    }
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (stepsOn) {
