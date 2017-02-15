@@ -37,11 +37,10 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (!frozen)
-        {
-            Vector2 movement_vector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * 2.5f;
+		if (!frozen) {
+			Vector2 movement_vector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * 2.5f;
 
-            /*
+			/*
             if (stepsOn) {
                 if (currentStep.time > 0.2f) {
                     currentStep.Stop();
@@ -49,28 +48,29 @@ public class PlayerController : MonoBehaviour {
             }
             */
 
-            if (movement_vector != Vector2.zero)
-            {
-                anim.SetBool("is_walking", true);
-                anim.SetFloat("input_x", movement_vector.x);
-                anim.SetFloat("input_y", movement_vector.y);
-                if (stepsOn)
-                    timer += Time.deltaTime;
+			if (movement_vector != Vector2.zero) {
+				anim.SetBool("is_walking", true);
+				anim.SetFloat("input_x", movement_vector.x);
+				anim.SetFloat("input_y", movement_vector.y);
+				if (stepsOn)
+					timer += Time.deltaTime;
 
-                if (timer > stepInterval)
-                {
-                    timer = 0;
-                    PlayNextSound();
-                }
-            }
-            else
-            {
-                anim.SetBool("is_walking", false);
-                timer = 0;
-            }
-            rbody.MovePosition(rbody.position + (movement_vector * Time.deltaTime));
-        }
-    }
+				if (timer > stepInterval) {
+					timer = 0;
+					PlayNextSound();
+				}
+			}
+			else {
+				anim.SetBool("is_walking", false);
+				timer = 0;
+			}
+			rbody.MovePosition(rbody.position + (movement_vector * Time.deltaTime));
+		}
+		if (frozen) {
+			anim.SetBool("is_walking", false);
+			timer = 0;
+		}
+	}
 
 	void PlayNextSound() {
 		AudioSource lastStep = currentStep;

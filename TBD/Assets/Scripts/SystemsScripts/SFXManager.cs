@@ -18,14 +18,19 @@ public class SFXManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		player = FindObjectOfType<PlayerController>();
-		if (myGroundTypes.Count > 0) {
+		if (myGroundTypes.Count > 0 && player != null) {
 			setGroundType(myGroundTypes[0]);
 		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (player == null) {
+			player = FindObjectOfType<PlayerController>();
+		}
+		if (myGroundTypes.Count > 0 && player != null) {
+			setGroundType(myGroundTypes[0]);
+		}
 	}
 
     public void StopSFX(AudioSource sfx)
