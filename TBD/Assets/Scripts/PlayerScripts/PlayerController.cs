@@ -22,7 +22,8 @@ public class PlayerController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		anim = GetComponent<Animator>();
+
+        anim = GetComponent<Animator>();
 		rbody = GetComponent<Rigidbody2D>();
 		sfxMan = FindObjectOfType<SFXManager>();
 
@@ -35,38 +36,41 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Vector2 movement_vector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * 2.5f;
 
-		/*
-		if (stepsOn) {
-			if (currentStep.time > 0.2f) {
-				currentStep.Stop();
-			}
-		}
-		*/
+        if (!frozen)
+        {
+            Vector2 movement_vector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * 2.5f;
 
-		if (movement_vector != Vector2.zero && !frozen) {
-			anim.SetBool("is_walking", true);
-			anim.SetFloat("input_x", movement_vector.x);
-			anim.SetFloat("input_y", movement_vector.y);
-			if (stepsOn)
-				timer += Time.deltaTime;
+            /*
+            if (stepsOn) {
+                if (currentStep.time > 0.2f) {
+                    currentStep.Stop();
+                }
+            }
+            */
 
-			if (timer > stepInterval) {
-				timer = 0;
-				PlayNextSound();
-			}
-		}
-		else {
-			anim.SetBool("is_walking", false);
-			timer = 0;
-		}
-		if (!frozen) {
-			rbody.MovePosition(rbody.position + movement_vector * Time.deltaTime);
-		}
+            if (movement_vector != Vector2.zero)
+            {
+                anim.SetBool("is_walking", true);
+                anim.SetFloat("input_x", movement_vector.x);
+                anim.SetFloat("input_y", movement_vector.y);
+                if (stepsOn)
+                    timer += Time.deltaTime;
 
-		
-	}
+                if (timer > stepInterval)
+                {
+                    timer = 0;
+                    PlayNextSound();
+                }
+            }
+            else
+            {
+                anim.SetBool("is_walking", false);
+                timer = 0;
+            }
+            rbody.MovePosition(rbody.position + (movement_vector * Time.deltaTime));
+        }
+    }
 
 	void PlayNextSound() {
 		AudioSource lastStep = currentStep;
