@@ -10,6 +10,7 @@ public class SFXManager : MonoBehaviour {
 	public AudioSource footstepSFX;
 	public AudioSource coinsSFX;
 
+
 	public List<GroundType> myGroundTypes = new List<GroundType>();
 	public PlayerController player;
 	public string currentground;
@@ -26,6 +27,16 @@ public class SFXManager : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void StopSFX(AudioSource sfx)
+    {
+        sfx.Stop();
+    }
+
+    public void PlaySFX(AudioSource sfx)
+    {
+        sfx.Play();
+    }
 
 	public void GroundChange(string change) {
 		if (change == "path") {
