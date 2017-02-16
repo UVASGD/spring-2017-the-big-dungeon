@@ -5,12 +5,16 @@ using UnityEngine;
 
 public class DialogueHolder : MonoBehaviour {
 
-    public int dialogueState;
-	public bool hasDialogueStateBeenSet = false;
+    private int dialogueState;
+	private bool hasDialogueStateBeenSet = false;
     private DialogueManager dMan;
 	public string dialogueFile;
 	private List<string> dialogueLines = new List<string>();
 	private Dictionary<string, int> dialogueLabels = new Dictionary<string, int>();
+
+    // These variables will be set in the UI
+    public string characterName;
+    public Sprite faceSprite;
 
     // Use this for initialization
     void Start () {
@@ -44,6 +48,16 @@ public class DialogueHolder : MonoBehaviour {
 		
 	}
 
+    public void UpdateHasDialogueStateBeenSet(bool hasDialogueStateBeenSet)
+    {
+        this.hasDialogueStateBeenSet = hasDialogueStateBeenSet;
+    }
+
+    public void UpdateDialogueState(int dialogueState)
+    {
+        this.dialogueState = dialogueState;
+    }
+
     void OnTriggerStay2D(Collider2D other)
     {
 		if(other.gameObject.name == "Player" && Input.GetKeyUp(KeyCode.Space))
@@ -53,6 +67,8 @@ public class DialogueHolder : MonoBehaviour {
                 dMan.dialogueLines = dialogueLines;
 				dMan.dialogueLabels = dialogueLabels;
                 dMan.dialogueState = dialogueState;
+                dMan.faceSprite = faceSprite;
+                dMan.characterName = characterName;
                 dMan.hasDialogueStateBeenSet = hasDialogueStateBeenSet;
                 dMan.initialFrame = true;
                 dMan.ShowDialogue(this);
