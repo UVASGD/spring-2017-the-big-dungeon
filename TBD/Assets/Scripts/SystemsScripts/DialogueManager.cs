@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour {
 
     public GameObject dBox;
+    public Image dFace;
+    public Text dName;
 
     public Text dText;
     private string currentLine;
@@ -28,6 +30,9 @@ public class DialogueManager : MonoBehaviour {
     private DialogueHolder caller;
     private int x;
 
+    public string characterName;
+    public Sprite faceSprite;
+
     // Use this for initialization
     void Start()
     {
@@ -42,6 +47,7 @@ public class DialogueManager : MonoBehaviour {
 
                 // Check if we're in the process of writing out a dialogue line
                 // If so, just finish the current line
+
                 if (this.dialogueDuringOutput)
                 {
                     if (this.ulHolder != null)
@@ -66,11 +72,17 @@ public class DialogueManager : MonoBehaviour {
                     player.frozen = false;
 
                     // Update caller information so we can save our state
-                    this.caller.dialogueState = this.dialogueState;
-                    this.caller.hasDialogueStateBeenSet = this.hasDialogueStateBeenSet;
+                    this.caller.UpdateDialogueState(this.dialogueState);
+                    this.caller.UpdateHasDialogueStateBeenSet(this.hasDialogueStateBeenSet);
+                    this.caller.faceSprite = this.faceSprite;
+                    this.caller.characterName = this.characterName;
 
                     this.dialogueState = 0;
                     this.hasDialogueStateBeenSet = false;
+                    this.faceSprite = null;
+                    this.dFace.sprite = null;
+                    this.dName.text = "";
+                    this.characterName = null;
                     this.caller = null;
 
                 } else
@@ -113,7 +125,7 @@ public class DialogueManager : MonoBehaviour {
 				    case "end":
 					    dialogueEnd = true;
 					    break;
-				    case "goto":
+                    case "goto":
                         this.dialogueState = dialogueLabels[tokenstr.Split(new Char[] { ':' })[1]];
                         shouldIncrementDialogState = false;
 					    break;
@@ -250,6 +262,12 @@ public class DialogueManager : MonoBehaviour {
         {
             this.dialogueState = 0;
         }
+
+        // Set the face sprite
+        dFace.sprite = this.faceSprite;
+
+        // Set the character name
+        dName.text = this.characterName;
 
         // Process the first line
         ParseDialogueLine(this.dialogueState);
