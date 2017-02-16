@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4507861298031264}
+  - component: {fileID: 114464548743999570}
   m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
@@ -1053,6 +1054,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultAudio: 1
+--- !u!114 &114464548743999570
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1117656047397850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 722619f768776fb4f9574ac0024bcec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114465570826874884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1068,7 +1080,8 @@ MonoBehaviour:
   - {fileID: 82376137923208828}
   - {fileID: 82246906111269156}
   - {fileID: 82240667964149198}
-  currentTrack: 0
+  currentTrack: 2
+  fadeSpeed: 0.3
   musicCanPlay: 1
 --- !u!114 &114481184528712104
 MonoBehaviour:
@@ -1140,10 +1153,10 @@ MonoBehaviour:
     - {fileID: 82341942642880004}
   - name: path
     stepSounds:
-    - {fileID: 0}
+    - {fileID: 82194612012775736}
   - name: grass
     stepSounds:
-    - {fileID: 0}
+    - {fileID: 82116995837763740}
   player: {fileID: 0}
   currentground: 
 --- !u!114 &114753805520638528

@@ -18,7 +18,7 @@ public class CameraFollow : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         mycam = GetComponent<Camera>();
-
+		target = FindObjectOfType<PlayerController>().transform;
 		currentBounds = currentRoom.GetComponent<Tiled2Unity.TiledMap> ().GetMapRectInPixelsScaled ();
 	}
 	
