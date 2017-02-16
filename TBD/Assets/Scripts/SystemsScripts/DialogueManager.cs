@@ -125,7 +125,7 @@ public class DialogueManager : MonoBehaviour {
 				    case "end":
 					    dialogueEnd = true;
 					    break;
-				    case "goto":
+                    case "goto":
                         this.dialogueState = dialogueLabels[tokenstr.Split(new Char[] { ':' })[1]];
                         shouldIncrementDialogState = false;
 					    break;
