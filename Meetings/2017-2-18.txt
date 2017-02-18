@@ -1,0 +1,27 @@
+Programming
+Create Start Menu
+Fix Camera Inside the Map
+Player Stats/Items/Money Initialization
+Better UI
+Combat/Turn-based Battle System
+Scene Transitions
+Lighting
+Other Issues on Github
+
+Art
+Create Friend/Love Sprites
+Discuss with Writing/Design for Character Designs
+Create Game Logo (The Big Dungeon)
+
+Music
+Sound Effects Introduction (walking, talking, etc.)
+New Song for Combat
+Finish Forest Song
+
+Writing/Design
+More Story >> Less Dark (More Light-hearted Please!) <<
+Story Creation
+Character Creation
+Combat Specifications
+Map Design
+Puzzle Design
