@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
 
 		if (!frozen) {
-			Vector2 movement_vector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * 2.5f;
+			Vector2 movement_vector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * 1.5f;
 
 			/*
             if (stepsOn) {
