@@ -13,6 +13,7 @@ public class MenuScript : MonoBehaviour {
 	public Button creditsText;
 	public Button exitText;
 
+	private SaveController saveCont;
 
 	// Use this for initialization
 	void Start () {
@@ -23,6 +24,7 @@ public class MenuScript : MonoBehaviour {
 		creditsText = creditsText.GetComponent<Button>();
 		exitText = exitText.GetComponent<Button>();
 		quitMenu.enabled = false;
+		saveCont = FindObjectOfType<SaveController> ();
 	}
 	
 	// Update is called once per frame
@@ -48,7 +50,13 @@ public class MenuScript : MonoBehaviour {
 		exitText.enabled = true;
 	}
 
+	public void ContinueGame(){
+		saveCont.isContinuing = true;
+		SceneManager.LoadScene(1);
+	}
+
 	public void StartGame() {
+		saveCont.isContinuing = false;
 		SceneManager.LoadScene(1);
 		
 	}
