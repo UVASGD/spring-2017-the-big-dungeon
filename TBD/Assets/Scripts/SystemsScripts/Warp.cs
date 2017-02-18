@@ -25,9 +25,7 @@ public class Warp : MonoBehaviour {
 
         other.gameObject.transform.position = warpTarget.position;
         Camera.main.transform.position = warpTarget.position;
-		if (targetRoom) {
-			Camera.main.GetComponent<CameraFollow> ().setCurrentRoom (targetRoom);
-		}
+		Camera.main.GetComponent<CameraFollow> ().setCurrentRoom (targetRoom);
 
 		/*
         if (warpTarget.name == "Hole")
