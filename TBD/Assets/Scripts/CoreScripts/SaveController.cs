@@ -5,13 +5,23 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEngine.UI;
 
+using UnityEngine.SceneManagement;
+
 public class SaveController : MonoBehaviour {
 
 	public GameObject player;
+	private static bool saveExists;
+	public bool isContinuing = false;
 
 	// Use this for initialization
 	void Start () {
-		
+		SceneManager.sceneLoaded += OnLevelFinishedLoading;
+		if (!saveExists) {
+			saveExists = true;
+			DontDestroyOnLoad(transform.gameObject);
+		} else {
+			Destroy (gameObject);
+		}
 	}
 	
 	// Update is called once per frame
@@ -51,6 +61,22 @@ public class SaveController : MonoBehaviour {
 			SaveData s = (SaveData)bf.Deserialize (file);
 			file.Close ();
 			WriteFromData (s);
+		}
+	}
+
+	void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+		Scene currentScene = SceneManager.GetSceneByName(scene.name);
+		int buildIndex = currentScene.buildIndex;
+		switch (buildIndex) {
+		case 0:
+			break;
+		case 1:
+			player = FindObjectOfType<PlayerController>().gameObject;
+			if (isContinuing)
+				LoadFrom ("default");
+			break;
+		default:
+			break;
 		}
 	}
 }
