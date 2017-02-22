@@ -8,8 +8,8 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager instance = null;
     public List<Item> items = new List<Item>();
-    private int maxSize = 20;
-    private int currentSize;
+    public int maxSize = 20;
+    //private int currentSize;
     private void Awake()
     {
         //Make sure only ever one InventoryManager
@@ -26,7 +26,10 @@ public class InventoryManager : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
     }
-
+    public int spaceRemaining()
+    {
+        return maxSize - items.Count;
+    }
     public void addItem(Item item)
     {
         //If item already in inventory, increment quantity of item
