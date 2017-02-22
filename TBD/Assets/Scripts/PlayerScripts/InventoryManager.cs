@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    private List<Item> items;
+    public List<Item> items { get; set; }
     private int maxSize = 20;
     private int currentSize;
     // Use this for initialization
     void Start()
     {
-
+        DontDestroyOnLoad(gameObject);
     }
 
     public void addItem(Item item)
