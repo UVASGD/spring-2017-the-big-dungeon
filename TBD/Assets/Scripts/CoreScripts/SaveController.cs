@@ -6,15 +6,18 @@ using System.IO;
 using UnityEngine.UI;
 
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class SaveController : MonoBehaviour {
 
 	public GameObject player;
+    public InventoryManager inventory;
 	private static bool saveExists;
 	public bool isContinuing = false;
 
 	// Use this for initialization
 	void Start () {
+        inventory = InventoryManager.instance;
 		SceneManager.sceneLoaded += OnLevelFinishedLoading;
 		if (!saveExists) {
 			saveExists = true;
@@ -35,6 +38,7 @@ public class SaveController : MonoBehaviour {
 
 	void WriteFromData(SaveData s) {
 		player.transform.position = new Vector2 (s.x, s.y);
+        inventory.items = s.inventory;
 		//player.transform.position.x = s.x;
 		//player.transform.position.y = s.y;
 	}
@@ -43,6 +47,7 @@ public class SaveController : MonoBehaviour {
 		SaveData s = new SaveData ();
 		s.x = player.transform.position.x;
 		s.y = player.transform.position.y;
+        s.inventory = inventory.items;
 		return s;
 	}
 
@@ -86,4 +91,5 @@ class SaveData {
 	//Any saved fields must be in here. currently just position:
 	public float x;
 	public float y;
+    public List<Item> inventory;
 }
