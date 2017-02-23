@@ -1,18 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Runtime.Serialization.Formatters.Binary;
+using System;
 
 public class InventoryManager : MonoBehaviour
 {
-    public List<Item> items { get; set; }
-    private int maxSize = 20;
-    private int currentSize;
+    public static InventoryManager instance = null;
+    public List<Item> items = new List<Item>();
+    public int maxSize = 20;
+    //private int currentSize;
+    private void Awake()
+    {
+        //Make sure only ever one InventoryManager
+        if (instance == null)
+        {
+            instance = this;
+        }else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    } 
     // Use this for initialization
     void Start()
     {
         DontDestroyOnLoad(gameObject);
     }
-
+    public int spaceRemaining()
+    {
+        return maxSize - items.Count;
+    }
     public void addItem(Item item)
     {
         //If item already in inventory, increment quantity of item
@@ -46,7 +63,7 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
     //Destroy All Items Passed In
-    bool destroyItem(Item item)
+    public bool destroyItem(Item item)
     {
         if (items.Contains(item))
         {
@@ -61,7 +78,7 @@ public class InventoryManager : MonoBehaviour
 
     }
 }
-
+[Serializable]
 public class Item
 {
     public bool special { get; set; }
@@ -83,6 +100,7 @@ public class Item
         this.description = description;
         this.slug = slug;
         this.special = special;
+        this.quantity = 1;
     }
 
 }
