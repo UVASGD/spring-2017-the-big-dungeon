@@ -6,7 +6,6 @@ public class ScreenFader : MonoBehaviour {
 
     Animator anim;
     bool isFading = false;
-	bool blackingOut = false;
 	bool initialized = false;
 
 	// Use this for initialization

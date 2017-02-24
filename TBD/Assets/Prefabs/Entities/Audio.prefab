@@ -1307,5 +1307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vcObjects: []
-  currentVolumeLevel: 0
-  maxVolumeLevel: 1
+  currentMusicVolumeLevel: 1
+  maxMusicVolumeLevel: 1
+  currentSFXVolumeLevel: 1
+  maxSFXVolumeLevel: 1

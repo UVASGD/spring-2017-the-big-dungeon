@@ -84,6 +84,8 @@ public class SaveController : MonoBehaviour {
 		case 1:
 			ScreenFader sf = GameObject.FindGameObjectWithTag("Fader").GetComponent<ScreenFader>();
 			player = FindObjectOfType<PlayerController>().gameObject;
+			player.GetComponent<Animator>().SetFloat("input_x", 0);
+			player.GetComponent<Animator>().SetFloat("input_y", -1);
 			inventory = FindObjectOfType<InventoryManager>();
 			GameObject[] maps = GameObject.FindGameObjectsWithTag("map");
 			for (int i = 0; i < maps.Length; ++i) {
