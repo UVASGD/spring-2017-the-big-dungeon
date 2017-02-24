@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
 	private SFXManager sfxMan;
 	private Animator anim;
 	private Rigidbody2D rbody;
+	private CameraFollow cam;
 
 	public bool frozen = false;
 
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour {
         anim = GetComponent<Animator>();
 		rbody = GetComponent<Rigidbody2D>();
 		sfxMan = FindObjectOfType<SFXManager>();
+		cam = FindObjectOfType<CameraFollow>();
 
 		if (playerStepSounds.Length > 0) {
 			currentStep = playerStepSounds[Random.Range(0, playerStepSounds.Length)];
@@ -36,9 +38,8 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
 		if (!frozen) {
-			Vector2 movement_vector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * 1.5f;
+			Vector2 movement_vector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * 2.0f;
 
 			/*
             if (stepsOn) {
@@ -84,7 +85,12 @@ public class PlayerController : MonoBehaviour {
 
     }
 
+
 	void OnTriggerEnter2D(Collider2D other) {
+		if (other.tag == "map") {
+			cam.setCurrentRoom(other.gameObject);
+		}
+
 		if (stepsOn) {
 			if (other.transform.tag == "path") {
 				sfxMan.GroundChange("path");

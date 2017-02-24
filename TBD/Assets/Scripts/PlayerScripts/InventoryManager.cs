@@ -78,6 +78,7 @@ public class InventoryManager : MonoBehaviour
 
     }
 }
+
 [Serializable]
 public class Item
 {

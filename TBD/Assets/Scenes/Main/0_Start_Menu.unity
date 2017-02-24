@@ -1480,6 +1480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  inventory: {fileID: 0}
   isContinuing: 0
 --- !u!4 &1468786995
 Transform:
@@ -1732,11 +1733,11 @@ RectTransform:
   m_Father: {fileID: 26509752}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 650.1, y: 357}
-  m_SizeDelta: {x: 114.4, y: 56.7}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -18.2, y: -12}
+  m_SizeDelta: {x: 114.400024, y: 56.700012}
+  m_Pivot: {x: 1, y: 1}
 --- !u!1001 &2145823659
 Prefab:
   m_ObjectHideFlags: 0
