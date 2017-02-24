@@ -17,8 +17,16 @@ public class SaveController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        inventory = InventoryManager.instance;
 		SceneManager.sceneLoaded += OnLevelFinishedLoading;
+		try {
+			player = FindObjectOfType<PlayerController>().gameObject;
+			inventory = FindObjectOfType<InventoryManager>();
+			GameObject[] maps = GameObject.FindGameObjectsWithTag("map");
+			for (int i = 0; i < maps.Length; ++i) {
+				maps[i].AddComponent<MapSaver>();
+			}
+		}
+		catch {}
 		if (!saveExists) {
 			saveExists = true;
 			DontDestroyOnLoad(transform.gameObject);
@@ -39,8 +47,6 @@ public class SaveController : MonoBehaviour {
 	void WriteFromData(SaveData s) {
 		player.transform.position = new Vector2 (s.x, s.y);
         inventory.items = s.inventory;
-		//player.transform.position.x = s.x;
-		//player.transform.position.y = s.y;
 	}
 
 	SaveData WriteToData() {
@@ -76,9 +82,20 @@ public class SaveController : MonoBehaviour {
 		case 0:
 			break;
 		case 1:
+			ScreenFader sf = GameObject.FindGameObjectWithTag("Fader").GetComponent<ScreenFader>();
 			player = FindObjectOfType<PlayerController>().gameObject;
-			if (isContinuing)
-				LoadFrom ("default");
+			player.GetComponent<Animator>().SetFloat("input_x", 0);
+			player.GetComponent<Animator>().SetFloat("input_y", -1);
+			inventory = FindObjectOfType<InventoryManager>();
+			GameObject[] maps = GameObject.FindGameObjectsWithTag("map");
+			for (int i = 0; i < maps.Length; ++i) {
+				maps[i].AddComponent<MapSaver>();
+			}
+			if (isContinuing) {
+				sf.BlackOut();
+				StartCoroutine(sf.Wait(1.0f));
+				LoadFrom("default");
+			}
 			break;
 		default:
 			break;

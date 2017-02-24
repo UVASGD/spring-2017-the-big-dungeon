@@ -13,6 +13,8 @@ public class MenuScript : MonoBehaviour {
 	public Button creditsText;
 	public Button exitText;
 
+	public Canvas optionsMenu;
+
 	private SaveController saveCont;
 
 	// Use this for initialization
@@ -23,7 +25,9 @@ public class MenuScript : MonoBehaviour {
 		optionsText = optionsText.GetComponent<Button>();
 		creditsText = creditsText.GetComponent<Button>();
 		exitText = exitText.GetComponent<Button>();
+		optionsMenu = optionsMenu.GetComponent<Canvas>();
 		quitMenu.enabled = false;
+		optionsMenu.enabled = false;
 		saveCont = FindObjectOfType<SaveController> ();
 	}
 	
@@ -63,5 +67,25 @@ public class MenuScript : MonoBehaviour {
 
 	public void ExitGame() {
 		Application.Quit();
+	}
+
+	public void OptionsPressed() {
+		optionsMenu.enabled = true;
+		this.GetComponent<Canvas>().enabled = false;
+		startText.enabled = false;
+		continueText.enabled = false;
+		optionsText.enabled = false;
+		creditsText.enabled = false;
+		exitText.enabled = false;
+	}
+
+	public void CloseOptions() {
+		optionsMenu.enabled = false;
+		this.GetComponent<Canvas>().enabled = true;
+		startText.enabled = true;
+		continueText.enabled = true;
+		optionsText.enabled = true;
+		creditsText.enabled = true;
+		exitText.enabled = true;
 	}
 }
