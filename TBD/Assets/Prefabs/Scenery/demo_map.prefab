@@ -1600,7 +1600,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueFile: Assets/Resources/Text/Rocky.txt
-  characterName: 
+  characterName: Rocky
   faceSprite: {fileID: 0}
 --- !u!114 &114264211322660196
 MonoBehaviour:

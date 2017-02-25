@@ -4,19 +4,15 @@ using UnityEngine;
 
 public class SFXManager : MonoBehaviour {
 
-	public AudioSource chopSFX;
-	public AudioSource clothSFX;
-	public AudioSource creakSFX;
-	public AudioSource footstepSFX;
-	public AudioSource coinsSFX;
-
-
-	public List<GroundType> myGroundTypes = new List<GroundType>();
 	public PlayerController player;
+
+	public List<AudioSource> soundEffects = new List<AudioSource>();
+	public List<GroundType> myGroundTypes = new List<GroundType>();
 	public string currentground;
 
 	// Use this for initialization
 	void Start () {
+		soundEffects.AddRange(GetComponentsInChildren<AudioSource>());
 		player = FindObjectOfType<PlayerController>();
 		if (myGroundTypes.Count > 0 && player != null) {
 			setGroundType(myGroundTypes[0]);
