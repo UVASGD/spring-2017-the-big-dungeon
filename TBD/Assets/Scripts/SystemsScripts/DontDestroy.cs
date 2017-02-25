@@ -7,6 +7,7 @@ public class DontDestroy : MonoBehaviour {
 
 	private static bool audioExists;
 
+
 	// Use this for initialization
 	void Start () {
 		if (!audioExists) {
@@ -15,10 +16,6 @@ public class DontDestroy : MonoBehaviour {
 		} else {
 			Destroy(gameObject);
 		}
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
 	}
 }

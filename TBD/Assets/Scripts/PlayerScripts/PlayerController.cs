@@ -8,17 +8,21 @@ public class PlayerController : MonoBehaviour {
 	private SFXManager sfxMan;
 	private Animator anim;
 	private Rigidbody2D rbody;
+	private CameraFollow cam;
 
 	public bool frozen = false;
 
 	public AudioSource[] playerStepSounds;
 	
 	// How often the step sound occurs
-	private float stepInterval = 0.25f;
+	private float stepInterval = 0.4f;
 	private float timer = 0.0f;
 	private AudioSource currentStep;
 
 	private bool stepsOn;
+
+	public bool inMenu = false;
+	public bool talking = false;
 
 	// Use this for initialization
 	void Start () {
@@ -26,6 +30,7 @@ public class PlayerController : MonoBehaviour {
         anim = GetComponent<Animator>();
 		rbody = GetComponent<Rigidbody2D>();
 		sfxMan = FindObjectOfType<SFXManager>();
+		cam = FindObjectOfType<CameraFollow>();
 
 		if (playerStepSounds.Length > 0) {
 			currentStep = playerStepSounds[Random.Range(0, playerStepSounds.Length)];
@@ -36,17 +41,8 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
 		if (!frozen) {
 			Vector2 movement_vector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * 2.5f;
-
-			/*
-            if (stepsOn) {
-                if (currentStep.time > 0.2f) {
-                    currentStep.Stop();
-                }
-            }
-            */
 
 			if (movement_vector != Vector2.zero) {
 				anim.SetBool("is_walking", true);
@@ -64,6 +60,7 @@ public class PlayerController : MonoBehaviour {
 				anim.SetBool("is_walking", false);
 				timer = 0;
 			}
+
 			rbody.MovePosition(rbody.position + (movement_vector * Time.deltaTime));
 		}
 		if (frozen) {
@@ -84,7 +81,12 @@ public class PlayerController : MonoBehaviour {
 
     }
 
+
 	void OnTriggerEnter2D(Collider2D other) {
+		if (other.tag == "map") {
+			cam.setCurrentRoom(other.gameObject);
+		}
+
 		if (stepsOn) {
 			if (other.transform.tag == "path") {
 				sfxMan.GroundChange("path");

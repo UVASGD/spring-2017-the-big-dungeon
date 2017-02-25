@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 114512373108984920}
   m_Layer: 0
   m_Name: demo_map2
-  m_TagString: Untagged
+  m_TagString: map
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -610,7 +610,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1218970970656526}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.9967651, y: 3.7993374, z: 0}
+  m_LocalPosition: {x: -3.77, y: 2.92, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4929589900302402}
@@ -1321,9 +1321,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 503ba7e96721b774181c5c8702cd2438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueState: 0
-  hasDialogueStateBeenSet: 0
   dialogueFile: Assets/Resources/Text/Introduction.txt
+  characterName: 
+  faceSprite: {fileID: 0}
 --- !u!114 &114183324686288758
 MonoBehaviour:
   m_ObjectHideFlags: 1

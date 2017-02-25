@@ -18,33 +18,38 @@ public class CameraFollow : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         mycam = GetComponent<Camera>();
-		target = FindObjectOfType<PlayerController>().transform;
-		currentBounds = currentRoom.GetComponent<Tiled2Unity.TiledMap> ().GetMapRectInPixelsScaled ();
+		target = FindObjectOfType<PlayerController> ().transform;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        float scalefactor = 3f;
+        float scalefactor = 4.5f;
         mycam.orthographicSize = (Screen.height / 100f) / scalefactor;
-		if ((target != null) && (currentRoom != null)) {
+		if ((target != null)) {
 			Vector3 targetPosition = new Vector3 (0, 0, 0);
-			if (currentBounds.height < mycam.orthographicSize * 2) {
-				targetPosition.y = (currentBounds.yMin + currentBounds.yMax) / 2;
-			} else if (target.transform.position.y < currentBounds.yMin + mycam.orthographicSize) {
-				targetPosition.y = currentBounds.yMin + mycam.orthographicSize;
-			} else if (target.transform.position.y > currentBounds.yMax - mycam.orthographicSize) {
-				targetPosition.y = currentBounds.yMax - mycam.orthographicSize;
+			if (currentRoom) {
+				currentBounds = currentRoom.GetComponent<Tiled2Unity.TiledMap> ().GetMapRectInPixelsScaled ();
+				if (currentBounds.height < mycam.orthographicSize * 2) {
+					targetPosition.y = (currentBounds.yMin + currentBounds.yMax) / 2;
+				} else if (target.transform.position.y < currentBounds.yMin + mycam.orthographicSize) {
+					targetPosition.y = currentBounds.yMin + mycam.orthographicSize;
+				} else if (target.transform.position.y > currentBounds.yMax - mycam.orthographicSize) {
+					targetPosition.y = currentBounds.yMax - mycam.orthographicSize;
+				} else {
+					targetPosition.y = target.transform.position.y;
+				}
+				if (currentBounds.width < mycam.orthographicSize * 2 * mycam.aspect) {
+					targetPosition.x = (currentBounds.xMin + currentBounds.xMax) / 2;
+				} else if (target.transform.position.x < currentBounds.xMin + (mycam.orthographicSize * mycam.aspect)) {
+					targetPosition.x = currentBounds.xMin + (mycam.orthographicSize * mycam.aspect);
+				} else if (target.transform.position.x > currentBounds.xMax - (mycam.orthographicSize * mycam.aspect)) {
+					targetPosition.x = currentBounds.xMax - (mycam.orthographicSize * mycam.aspect);
+				} else {
+					targetPosition.x = target.position.x;
+				}
 			} else {
-				targetPosition.y = target.transform.position.y;
-			}
-			if (currentBounds.width < mycam.orthographicSize * 2 * mycam.aspect) {
-				targetPosition.x = (currentBounds.xMin + currentBounds.xMax) / 2;
-			} else if (target.transform.position.x < currentBounds.xMin + (mycam.orthographicSize * mycam.aspect)) {
-				targetPosition.x = currentBounds.xMin + (mycam.orthographicSize * mycam.aspect);
-			} else if (target.transform.position.x > currentBounds.xMax - (mycam.orthographicSize * mycam.aspect)) {
-				targetPosition.x = currentBounds.xMax - (mycam.orthographicSize * mycam.aspect);
-			} else {
-				targetPosition.x = target.transform.position.x;
+				targetPosition.x = target.position.x;
+				targetPosition.y = target.position.y;
 			}
 			transform.position = Vector3.Lerp (transform.position, targetPosition, m_speed) + new Vector3 (0, 0, -10);
 		}
@@ -57,7 +62,6 @@ public class CameraFollow : MonoBehaviour {
 			currentBounds = currentRoom.GetComponent<Tiled2Unity.TiledMap> ().GetMapRectInPixelsScaled ();
 		} else {
 			currentRoom = null;
-			//currentBounds = null;
 		}
 	}
 }

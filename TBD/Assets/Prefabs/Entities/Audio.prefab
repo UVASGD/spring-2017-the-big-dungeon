@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4507861298031264}
-  - component: {fileID: 114464548743999570}
+  - component: {fileID: 114691322674523048}
   m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
@@ -89,6 +89,23 @@ GameObject:
   - component: {fileID: 114977927328382302}
   m_Layer: 0
   m_Name: Volume Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1420510554850186
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4494040221531624}
+  - component: {fileID: 82678692808119354}
+  - component: {fileID: 114409022554501532}
+  m_Layer: 0
+  m_Name: life_beneath_the_canopy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -276,6 +293,19 @@ Transform:
   m_Father: {fileID: 4507861298031264}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4494040221531624
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1420510554850186}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 157.80424, y: 1.1590748, z: -0.15576172}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4994323854201354}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4507861298031264
 Transform:
   m_ObjectHideFlags: 1
@@ -375,6 +405,7 @@ Transform:
   - {fileID: 4562918457617462}
   - {fileID: 4044289354873694}
   - {fileID: 4156029249680396}
+  - {fileID: 4494040221531624}
   m_Father: {fileID: 4507861298031264}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -938,6 +969,86 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!82 &82678692808119354
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1420510554850186}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 7f6a402d6d247e3469b8647bbe79bbc2, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!82 &82950194148040198
 AudioSource:
   m_ObjectHideFlags: 1
@@ -1054,17 +1165,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultAudio: 1
---- !u!114 &114464548743999570
+--- !u!114 &114409022554501532
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1117656047397850}
+  m_GameObject: {fileID: 1420510554850186}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 722619f768776fb4f9574ac0024bcec9, type: 3}
+  m_Script: {fileID: 11500000, guid: 85b305306ac504b1e9921d8c86601498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultAudio: 1
 --- !u!114 &114465570826874884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1076,13 +1188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c5f5bcf15a94a50954c6361fe5e9ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicTracks:
-  - {fileID: 82376137923208828}
-  - {fileID: 82246906111269156}
-  - {fileID: 82240667964149198}
-  currentTrack: 2
-  fadeSpeed: 0.3
   musicCanPlay: 1
+  fadeOutSpeed: 0.4
+  fadeInSpeed: 0.2
 --- !u!114 &114481184528712104
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1107,6 +1215,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultAudio: 1
+--- !u!114 &114691322674523048
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1117656047397850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 722619f768776fb4f9574ac0024bcec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114709619565223830
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1142,11 +1261,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db53e164c3307164bad0db9384ff3c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chopSFX: {fileID: 82194612012775736}
-  clothSFX: {fileID: 82116995837763740}
-  creakSFX: {fileID: 82950194148040198}
-  footstepSFX: {fileID: 82341942642880004}
-  coinsSFX: {fileID: 82135691359955956}
+  player: {fileID: 0}
+  soundEffects: []
   myGroundTypes:
   - name: default
     stepSounds:
@@ -1156,8 +1272,7 @@ MonoBehaviour:
     - {fileID: 82194612012775736}
   - name: grass
     stepSounds:
-    - {fileID: 82116995837763740}
-  player: {fileID: 0}
+    - {fileID: 82135691359955956}
   currentground: 
 --- !u!114 &114753805520638528
 MonoBehaviour:
@@ -1183,5 +1298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vcObjects: []
-  currentVolumeLevel: 0
-  maxVolumeLevel: 1
+  currentMusicVolumeLevel: 0
+  maxMusicVolumeLevel: 1
+  currentSFXVolumeLevel: 0
+  maxSFXVolumeLevel: 1
