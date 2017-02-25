@@ -90,8 +90,10 @@ public class SaveController : MonoBehaviour {
 		int buildIndex = currentScene.buildIndex;
 		switch (buildIndex) {
 		case 0:
+			music.SwitchTrack (2);
 			break;
 		case 1:
+			music.SwitchTrack (0);
 			ScreenFader sf = GameObject.FindGameObjectWithTag("Fader").GetComponent<ScreenFader>();
 			player = FindObjectOfType<PlayerController>().gameObject;
 			player.GetComponent<Animator>().SetFloat("input_x", 0);
@@ -108,6 +110,7 @@ public class SaveController : MonoBehaviour {
 			}
 			break;
 		default:
+			music.SwitchTrack (0);
 			break;
 		}
 	}

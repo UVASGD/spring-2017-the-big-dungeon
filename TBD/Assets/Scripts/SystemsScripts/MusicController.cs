@@ -24,7 +24,6 @@ public class MusicController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		SceneManager.sceneLoaded += OnLevelFinishedLoading;
 		musicTracks.AddRange(GetComponentsInChildren<AudioSource>());
 		vm = FindObjectOfType<VolumeManager>();
 		Scene currentScene = SceneManager.GetActiveScene();
@@ -86,27 +85,10 @@ public class MusicController : MonoBehaviour {
 		yield return new WaitForSeconds(duration);
 		if (!newTrackPlaying && !isFading) {
 			waitingOnSwitch = true;
-			Debug.Log ("About to play " + requestedTrack);
 			SwitchTrack(requestedTrack, requestedFadeOutSpeed, requestedFadeInSpeed);
 		}
 		else {
 			StartCoroutine(WaitAndTryAgain(1.0f, requestedTrack, requestedFadeOutSpeed, requestedFadeInSpeed));
-		}
-	}
-
-	void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
-		Scene currentScene = SceneManager.GetSceneByName(scene.name);
-		int buildIndex = currentScene.buildIndex;
-		switch (buildIndex) {
-			case 0:
-				SwitchTrack(2);
-				break;
-			case 1:
-				SwitchTrack(0);
-				break;
-			default:
-				SwitchTrack(0);
-				break;
 		}
 	}
 
