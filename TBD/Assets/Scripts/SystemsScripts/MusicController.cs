@@ -64,9 +64,9 @@ public class MusicController : MonoBehaviour {
 		if (newTrackPlaying || isFading) {
 			if (newTrack != requestedTrack) {
 				// Speed up the track changes
-				StartCoroutine(WaitAndTryAgain(1.0f, requestedTrack, 1f, 1f));
-				fadeOutSpeed = 1f;
-				fadeInSpeed = 1f;
+				StartCoroutine(WaitAndTryAgain(1.0f, requestedTrack, 0.8f, 0.8f));
+				fadeOutSpeed = 0.8f;
+				fadeInSpeed = 0.8f;
 			}
 		} else {
 			if (currentTrack != requestedTrack) {
@@ -86,6 +86,7 @@ public class MusicController : MonoBehaviour {
 		yield return new WaitForSeconds(duration);
 		if (!newTrackPlaying && !isFading) {
 			waitingOnSwitch = true;
+			Debug.Log ("About to play " + requestedTrack);
 			SwitchTrack(requestedTrack, requestedFadeOutSpeed, requestedFadeInSpeed);
 		}
 		else {

@@ -8,6 +8,11 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
+
+[RequireComponent (typeof (MusicController))]
+[RequireComponent (typeof (InventoryManager))]
+[RequireComponent (typeof (PlayerController))]
+[RequireComponent (typeof (VolumeManager))]
 public class SaveController : MonoBehaviour {
 
 	private static bool saveExists;
@@ -15,9 +20,13 @@ public class SaveController : MonoBehaviour {
 	public GameObject player;
     public InventoryManager inventory;
 	public bool isContinuing = false;
+	private MusicController music;
+	private VolumeManager volumeMan;
 
 	// Use this for initialization
 	void Start () {
+		music = FindObjectOfType<MusicController> ();
+		volumeMan = FindObjectOfType<VolumeManager> ();
 		SceneManager.sceneLoaded += OnLevelFinishedLoading;
 		try {
 			player = FindObjectOfType<PlayerController>().gameObject;
