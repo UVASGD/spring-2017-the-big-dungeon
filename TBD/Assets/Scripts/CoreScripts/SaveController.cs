@@ -53,6 +53,12 @@ public class SaveController : MonoBehaviour {
 			SaveTo ("default");
 		} else if (Input.GetKeyDown (KeyCode.P)) {
 			LoadFrom ("default");
+		} else if (Input.GetKeyDown (KeyCode.Alpha1)) {
+			LoadFrom ("slot1");
+		} else if (Input.GetKeyDown (KeyCode.Alpha2)) {
+			LoadFrom ("slot2");
+		} else if (Input.GetKeyDown (KeyCode.Alpha3)) {
+			LoadFrom ("slot3");
 		}
 	}
 
@@ -84,6 +90,9 @@ public class SaveController : MonoBehaviour {
 			SaveData s = (SaveData)bf.Deserialize (file);
 			file.Close ();
 			WriteFromData (s);
+			player = FindObjectOfType<PlayerController>().gameObject;
+			player.GetComponent<Animator>().SetFloat("input_x", 0);
+			player.GetComponent<Animator>().SetFloat("input_y", -1);
 		}
 	}
 
@@ -103,8 +112,6 @@ public class SaveController : MonoBehaviour {
 			music.SwitchTrack (0);
 			ScreenFader sf = GameObject.FindGameObjectWithTag("Fader").GetComponent<ScreenFader>();
 			player = FindObjectOfType<PlayerController>().gameObject;
-			player.GetComponent<Animator>().SetFloat("input_x", 0);
-			player.GetComponent<Animator>().SetFloat("input_y", -1);
 			inventory = FindObjectOfType<InventoryManager>();
 			GameObject[] maps = GameObject.FindGameObjectsWithTag("map");
 			for (int i = 0; i < maps.Length; ++i) {
