@@ -28,8 +28,8 @@ public class SettingScript : MonoBehaviour {
 	void Start () {
 		menu = FindObjectOfType<MenuScript>();
 		volMan = FindObjectOfType<VolumeManager>();
-		musicVolumeSlider.value = volMan.currentMusicVolumeLevel;
-		sfxVolumeSlider.value = volMan.currentSFXVolumeLevel;
+		musicVolumeSlider.value = volMan.getCurrentMusicVolumeLevel();
+		sfxVolumeSlider.value = volMan.getCurrentSFXVolumeLevel();
 
 		if (this.isActiveAndEnabled) {
 			onEnable();

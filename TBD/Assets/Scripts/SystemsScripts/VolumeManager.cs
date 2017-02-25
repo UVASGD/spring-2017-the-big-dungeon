@@ -68,4 +68,12 @@ public class VolumeManager : MonoBehaviour {
 			catch { }
 		}
 	}
+
+	public float getCurrentMusicVolumeLevel() {
+		return currentMusicVolumeLevel;
+	}
+
+	public float getCurrentSFXVolumeLevel() {
+		return currentSFXVolumeLevel;
+	}
 }

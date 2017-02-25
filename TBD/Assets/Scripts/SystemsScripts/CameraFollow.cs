@@ -62,7 +62,6 @@ public class CameraFollow : MonoBehaviour {
 			currentBounds = currentRoom.GetComponent<Tiled2Unity.TiledMap> ().GetMapRectInPixelsScaled ();
 		} else {
 			currentRoom = null;
-			//currentBounds = null;
 		}
 	}
 }

@@ -187,6 +187,11 @@ Prefab:
       propertyPath: targetRoom
       value: 
       objectReference: {fileID: 607584210}
+    - target: {fileID: 114283315513853290, guid: e5edc0b0712516642b864d56f92e6092,
+        type: 2}
+      propertyPath: warpTarget
+      value: 
+      objectReference: {fileID: 92177285}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e5edc0b0712516642b864d56f92e6092, type: 2}
   m_IsPrefabParent: 0

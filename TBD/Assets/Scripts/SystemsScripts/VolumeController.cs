@@ -5,10 +5,8 @@ using UnityEngine;
 public class VolumeController : MonoBehaviour {
 
 	private AudioSource theAudio;
-
 	private float audioLevel;
-
-	public float defaultAudio;
+	public float defaultAudio = 1.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -26,5 +24,13 @@ public class VolumeController : MonoBehaviour {
 		}
 		audioLevel = defaultAudio * volume;
 		theAudio.volume = audioLevel;
+	}
+
+	public float getDefaultAudio() {
+		return defaultAudio;
+	}
+
+	public void setDefaultAudio(float set) {
+		defaultAudio = set;
 	}
 }

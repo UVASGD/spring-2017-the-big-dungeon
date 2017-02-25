@@ -10,9 +10,10 @@ using System.Collections.Generic;
 
 public class SaveController : MonoBehaviour {
 
+	private static bool saveExists;
+
 	public GameObject player;
     public InventoryManager inventory;
-	private static bool saveExists;
 	public bool isContinuing = false;
 
 	// Use this for initialization
@@ -100,6 +101,14 @@ public class SaveController : MonoBehaviour {
 		default:
 			break;
 		}
+	}
+
+	public bool getContinuing() {
+		return isContinuing;
+	}
+
+	public void setContinuing(bool set) {
+		isContinuing = set;
 	}
 }
 

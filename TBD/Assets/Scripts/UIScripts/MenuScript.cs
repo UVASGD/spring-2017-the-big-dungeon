@@ -12,13 +12,18 @@ public class MenuScript : MonoBehaviour {
 	public Button optionsText;
 	public Button creditsText;
 	public Button exitText;
-
 	public Canvas optionsMenu;
-
-	private SaveController saveCont;
+	public Canvas credits;
+	private Canvas mainMenu;
+	private float timer = 0f;
+	private float maxTimer = 5.3f;
+	private bool timerOn = false;
+	private SaveController sc;
 
 	// Use this for initialization
 	void Start () {
+		sc = FindObjectOfType<SaveController>();
+		mainMenu = GetComponent<Canvas>();
 		quitMenu = quitMenu.GetComponent<Canvas>();
 		startText = startText.GetComponent<Button>();
 		continueText = continueText.GetComponent<Button>();
@@ -28,41 +33,43 @@ public class MenuScript : MonoBehaviour {
 		optionsMenu = optionsMenu.GetComponent<Canvas>();
 		quitMenu.enabled = false;
 		optionsMenu.enabled = false;
-		saveCont = FindObjectOfType<SaveController> ();
+		credits.enabled = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (timerOn) {
+			timer += Time.deltaTime;
+			if (timer > maxTimer) {
+				timer = 0f;
+				credits.enabled = false;
+				Color colorBlack = new Color(0f, 0f, 0f, 255f);
+				foreach (Image i in credits.GetComponentsInChildren<Image>()) {
+					i.GetComponent<CanvasRenderer>().SetColor(colorBlack);
+				}
+			}
+		}
 		
 	}
 
 	public void ExitPressed() {
 		quitMenu.enabled = true;
-		startText.enabled = false;
-		continueText.enabled = false;
-		optionsText.enabled = false;
-		creditsText.enabled = false;
-		exitText.enabled = false;
+		mainMenuOff();
 	}
 
 	public void NoExitPressed() {
 		quitMenu.enabled = false;
-		startText.enabled = true;
-		continueText.enabled = true;
-		optionsText.enabled = true;
-		creditsText.enabled = true;
-		exitText.enabled = true;
+		mainMenuOn();
 	}
 
 	public void ContinueGame(){
-		saveCont.isContinuing = true;
+		sc.setContinuing(true);
 		SceneManager.LoadScene(1);
 	}
 
 	public void StartGame() {
-		saveCont.isContinuing = false;
+		sc.setContinuing(false);
 		SceneManager.LoadScene(1);
-		
 	}
 
 	public void ExitGame() {
@@ -71,21 +78,49 @@ public class MenuScript : MonoBehaviour {
 
 	public void OptionsPressed() {
 		optionsMenu.enabled = true;
-		this.GetComponent<Canvas>().enabled = false;
-		startText.enabled = false;
-		continueText.enabled = false;
-		optionsText.enabled = false;
-		creditsText.enabled = false;
-		exitText.enabled = false;
+		mainMenu.enabled = false;
 	}
 
 	public void CloseOptions() {
 		optionsMenu.enabled = false;
-		this.GetComponent<Canvas>().enabled = true;
+		mainMenu.enabled = true;
+	}
+
+	public void CreditsPressed() {
+		timerOn = false;
+		timer = 0.0f;
+		Color colorBlack = new Color(0f, 0f, 0f, 255f);
+		foreach (Image i in credits.GetComponentsInChildren<Image>()) {
+			i.GetComponent<CanvasRenderer>().SetColor(colorBlack);
+		}
+		credits.enabled = true;
+		mainMenuOff();
+		credits.GetComponentInChildren<CreditsScript>().startCredits();
+	}
+
+	public void endOfCredits() {
+		Color colorFade = new Color(0f, 0f, 0f, 0f);
+		foreach (Image i in credits.GetComponentsInChildren<Image>()) {
+			i.GetComponent<CanvasRenderer>().SetAlpha(1f);
+			i.CrossFadeColor(colorFade, maxTimer, true, true);
+			timerOn = true;
+		}
+		mainMenuOn();
+	}
+
+	public void mainMenuOn() {
 		startText.enabled = true;
 		continueText.enabled = true;
 		optionsText.enabled = true;
 		creditsText.enabled = true;
 		exitText.enabled = true;
+	}
+
+	public void mainMenuOff() {
+		startText.enabled = false;
+		continueText.enabled = false;
+		optionsText.enabled = false;
+		creditsText.enabled = false;
+		exitText.enabled = false;
 	}
 }

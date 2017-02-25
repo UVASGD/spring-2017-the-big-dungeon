@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4507861298031264}
-  - component: {fileID: 114464548743999570}
+  - component: {fileID: 114691322674523048}
   m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
@@ -982,7 +982,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1177,17 +1177,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultAudio: 1
---- !u!114 &114464548743999570
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1117656047397850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 722619f768776fb4f9574ac0024bcec9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114465570826874884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1199,14 +1188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21c5f5bcf15a94a50954c6361fe5e9ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicTracks:
-  - {fileID: 82376137923208828}
-  - {fileID: 82246906111269156}
-  - {fileID: 82240667964149198}
-  currentTrack: 2
+  musicCanPlay: 1
   fadeOutSpeed: 0.4
   fadeInSpeed: 0.2
-  musicCanPlay: 1
 --- !u!114 &114481184528712104
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1231,6 +1215,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultAudio: 1
+--- !u!114 &114691322674523048
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1117656047397850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 722619f768776fb4f9574ac0024bcec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114709619565223830
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1266,11 +1261,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db53e164c3307164bad0db9384ff3c87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chopSFX: {fileID: 82194612012775736}
-  clothSFX: {fileID: 82116995837763740}
-  creakSFX: {fileID: 82950194148040198}
-  footstepSFX: {fileID: 82341942642880004}
-  coinsSFX: {fileID: 82135691359955956}
+  player: {fileID: 0}
+  soundEffects: []
   myGroundTypes:
   - name: default
     stepSounds:
@@ -1280,8 +1272,7 @@ MonoBehaviour:
     - {fileID: 82194612012775736}
   - name: grass
     stepSounds:
-    - {fileID: 82116995837763740}
-  player: {fileID: 0}
+    - {fileID: 82135691359955956}
   currentground: 
 --- !u!114 &114753805520638528
 MonoBehaviour:
@@ -1307,7 +1298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vcObjects: []
-  currentMusicVolumeLevel: 1
+  currentMusicVolumeLevel: 0
   maxMusicVolumeLevel: 1
-  currentSFXVolumeLevel: 1
+  currentSFXVolumeLevel: 0
   maxSFXVolumeLevel: 1
