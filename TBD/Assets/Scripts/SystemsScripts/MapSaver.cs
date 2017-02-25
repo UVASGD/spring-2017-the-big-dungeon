@@ -20,9 +20,4 @@ public class MapSaver : MonoBehaviour {
 		collider.size = new Vector3(width,height,0);
 		collider.offset = new Vector3(width / 2, - height / 2, 0);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
