@@ -8,6 +8,12 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
+
+[RequireComponent (typeof (MusicController))]
+[RequireComponent (typeof (InventoryManager))]
+[RequireComponent (typeof (PlayerController))]
+[RequireComponent (typeof (VolumeManager))]
+[RequireComponent (typeof (SaveController))]
 public class SaveController : MonoBehaviour {
 
 	private static bool saveExists;
@@ -15,9 +21,14 @@ public class SaveController : MonoBehaviour {
 	public GameObject player;
     public InventoryManager inventory;
 	public bool isContinuing = false;
+	private MusicController music;
+	private VolumeManager volumeMan;
 
 	// Use this for initialization
 	void Start () {
+		music = FindObjectOfType<MusicController> ();
+		volumeMan = FindObjectOfType<VolumeManager> ();
+		volumeMan.findVCObjects ();
 		SceneManager.sceneLoaded += OnLevelFinishedLoading;
 		try {
 			player = FindObjectOfType<PlayerController>().gameObject;
@@ -86,12 +97,19 @@ public class SaveController : MonoBehaviour {
 	}
 
 	void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
+		if (music == null) {
+			music = FindObjectOfType<MusicController> ();
+		}
+		Debug.Log (scene.name);
 		Scene currentScene = SceneManager.GetSceneByName(scene.name);
 		int buildIndex = currentScene.buildIndex;
+		Debug.Log ("Music from level load " + buildIndex);
 		switch (buildIndex) {
 		case 0:
+			music.SwitchTrack (2);
 			break;
 		case 1:
+			music.SwitchTrack (0);
 			ScreenFader sf = GameObject.FindGameObjectWithTag("Fader").GetComponent<ScreenFader>();
 			player = FindObjectOfType<PlayerController>().gameObject;
 			inventory = FindObjectOfType<InventoryManager>();
@@ -106,8 +124,14 @@ public class SaveController : MonoBehaviour {
 			}
 			break;
 		default:
+			music.SwitchTrack (0);
 			break;
 		}
+		SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+	}
+
+	public void changedLevel(int index){
+
 	}
 
 	public bool getContinuing() {
@@ -116,6 +140,14 @@ public class SaveController : MonoBehaviour {
 
 	public void setContinuing(bool set) {
 		isContinuing = set;
+	}
+
+	public void rememberMusic(int requestedTrack, float requestedFadeOutSpeed = 0.4f, float requestedFadeInSpeed = 0.2f){
+		if (music == null) {
+			Debug.Log ("Remembering music");
+			music = FindObjectOfType<MusicController> ();
+			music.SwitchTrack(requestedTrack, requestedFadeOutSpeed, requestedFadeInSpeed);
+		}
 	}
 }
 

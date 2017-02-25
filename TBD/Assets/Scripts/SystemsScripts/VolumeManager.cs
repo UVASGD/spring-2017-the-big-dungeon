@@ -71,4 +71,19 @@ public class VolumeManager : MonoBehaviour {
 	public float getCurrentSFXVolumeLevel() {
 		return currentSFXVolumeLevel;
 	}
+
+	public void findVCObjects(){
+		vcObjects = FindObjectsOfType<VolumeController> ();
+		for (int i = 0; i < vcObjects.Length; i++) {
+			try {
+				vcObjects[i].GetComponentInParent<MusicController>();
+				vcObjects[i].SetAudioLevel(currentMusicVolumeLevel);
+			} catch { }
+			try {
+				vcObjects[i].GetComponentInParent<SFXManager>();
+				vcObjects[i].SetAudioLevel(currentSFXVolumeLevel);
+			}
+			catch { }
+		}
+	}
 }
