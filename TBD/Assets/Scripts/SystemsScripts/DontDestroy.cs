@@ -7,6 +7,7 @@ public class DontDestroy : MonoBehaviour {
 
 	private static bool audioExists;
 
+
 	// Use this for initialization
 	void Start () {
 		if (!audioExists) {

@@ -21,6 +21,9 @@ public class MusicController : MonoBehaviour {
 	private float oldAudioLevel;
 	private float newAudioLevel;
 	private bool waitingOnSwitch = false;
+	private SaveController sc;
+	private bool switching = false;
+	private bool canSwitch = true;
 
 	// Use this for initialization
 	void Start () {
@@ -28,6 +31,7 @@ public class MusicController : MonoBehaviour {
 		vm = FindObjectOfType<VolumeManager>();
 		Scene currentScene = SceneManager.GetActiveScene();
 		int buildIndex = currentScene.buildIndex;
+		Debug.Log ("Starting music");
 		switch (buildIndex) {
 			case 0:
 				SwitchTrack(2);
@@ -56,24 +60,35 @@ public class MusicController : MonoBehaviour {
 		if (newTrackPlaying) {
 			fadeIn(newTrack);
 		}
+		if (!switching) {
+
+		}
 	}
 
 	public void SwitchTrack(int requestedTrack, float requestedFadeOutSpeed = 0.4f, float requestedFadeInSpeed = 0.2f) {
 		//Debug.Log("Calling SwitchTrack from: " + new System.Diagnostics.StackTrace().GetFrame(1).GetMethod().Name);
 		if (newTrackPlaying || isFading) {
-			if (newTrack != requestedTrack) {
+			if (newTrack != requestedTrack && this != null) {
 				// Speed up the track changes
-				StartCoroutine(WaitAndTryAgain(1.0f, requestedTrack, 0.8f, 0.8f));
+				newTrack = requestedTrack;
+				Debug.Log("Waiting on track " + newTrack);
+				StartCoroutine(WaitAndTryAgain(1.0f, newTrack, 0.8f, 0.8f));
 				fadeOutSpeed = 0.8f;
 				fadeInSpeed = 0.8f;
 			}
-		} else {
+			if (this == null) {
+				sc.rememberMusic (newTrack, requestedFadeOutSpeed, requestedFadeInSpeed);
+			}
+		}
+		else if (this != null){
 			if (currentTrack != requestedTrack) {
+				Debug.Log ("Switching to track " + requestedTrack);
+				switching = true;
+				newTrack = requestedTrack;
 				waitingOnSwitch = true;
 				oldAudioLevel = musicTracks[currentTrack].GetComponent<VolumeController>().getDefaultAudio();
 				newAudioLevel = musicTracks[requestedTrack].GetComponent<VolumeController>().getDefaultAudio();
 				currentVolume = vm.getCurrentMusicVolumeLevel() * oldAudioLevel;
-				newTrack = requestedTrack;
 				fadeOutSpeed = requestedFadeOutSpeed;
 				fadeInSpeed = requestedFadeInSpeed;
 				isFading = true;
@@ -83,12 +98,17 @@ public class MusicController : MonoBehaviour {
 
 	IEnumerator WaitAndTryAgain(float duration, int requestedTrack, float requestedFadeOutSpeed = 0.4f, float requestedFadeInSpeed = 0.2f) {
 		yield return new WaitForSeconds(duration);
+		if (currentTrack != requestedTrack)
+			newTrack = requestedTrack;
 		if (!newTrackPlaying && !isFading) {
 			waitingOnSwitch = true;
-			SwitchTrack(requestedTrack, requestedFadeOutSpeed, requestedFadeInSpeed);
+			newTrack = requestedTrack;
+			Debug.Log ("About to play " + newTrack);
+			SwitchTrack(newTrack, requestedFadeOutSpeed, requestedFadeInSpeed);
 		}
-		else {
-			StartCoroutine(WaitAndTryAgain(1.0f, requestedTrack, requestedFadeOutSpeed, requestedFadeInSpeed));
+		else if (!switching){
+			Debug.Log ("Continue waiting for track " + newTrack);
+			StartCoroutine(WaitAndTryAgain(1.0f, newTrack, requestedFadeOutSpeed, requestedFadeInSpeed));
 		}
 	}
 
@@ -106,6 +126,7 @@ public class MusicController : MonoBehaviour {
 			fadeOutSpeed = 0.4f;
 			fadeInSpeed = 0.2f;
 			waitingOnSwitch = false;
+			switching = false;
 		}
 	}
 
