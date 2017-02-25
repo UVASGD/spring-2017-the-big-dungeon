@@ -18,10 +18,13 @@ public class DialogueHolder : MonoBehaviour {
 
 	private bool withinTalkingRange = false;
 
+	private PlayerController player;
+
     // Use this for initialization
     void Start () {
         dMan = FindObjectOfType<DialogueManager>();
 		loadDialogue (dialogueFile);
+		player = FindObjectOfType<PlayerController>();
 	}
 
 	void loadDialogue(string file) {
@@ -47,7 +50,7 @@ public class DialogueHolder : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (withinTalkingRange && Input.GetKeyDown(KeyCode.Space)) {
+		if (withinTalkingRange && Input.GetKeyDown(KeyCode.Space) && !player.inMenu) {
 			if (!dMan.dialogueActive) {
 				dMan.dialogueLines = dialogueLines;
 				dMan.dialogueLabels = dialogueLabels;
@@ -72,12 +75,16 @@ public class DialogueHolder : MonoBehaviour {
     }
 
 	void OnTriggerEnter2D(Collider2D other) {
-		if (other.gameObject.name == "Player")
+		if (other.gameObject.name == "Player") {
 			withinTalkingRange = true;
+			player.talking = true;
+		}
 	}
 
 	void OnTriggerExit2D(Collider2D other) {
-		if (other.gameObject.name == "Player")
+		if (other.gameObject.name == "Player") {
 			withinTalkingRange = false;
+			player.talking = false;
+		}
 	}
 }

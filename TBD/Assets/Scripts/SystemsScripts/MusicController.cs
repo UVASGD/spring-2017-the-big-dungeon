@@ -20,14 +20,26 @@ public class MusicController : MonoBehaviour {
 	private float newVolume = 0.0f;
 	private float oldAudioLevel;
 	private float newAudioLevel;
-
+	private bool waitingOnSwitch = false;
 
 	// Use this for initialization
 	void Start () {
 		SceneManager.sceneLoaded += OnLevelFinishedLoading;
 		musicTracks.AddRange(GetComponentsInChildren<AudioSource>());
 		vm = FindObjectOfType<VolumeManager>();
-		currentTrack = 2;
+		Scene currentScene = SceneManager.GetActiveScene();
+		int buildIndex = currentScene.buildIndex;
+		switch (buildIndex) {
+			case 0:
+				SwitchTrack(2);
+				break;
+			case 1:
+				SwitchTrack(0);
+				break;
+			default:
+				SwitchTrack(0);
+				break;
+		}
 	}
 	
 	// Update is called once per frame
@@ -50,12 +62,15 @@ public class MusicController : MonoBehaviour {
 	public void SwitchTrack(int requestedTrack, float requestedFadeOutSpeed = 0.4f, float requestedFadeInSpeed = 0.2f) {
 		//Debug.Log("Calling SwitchTrack from: " + new System.Diagnostics.StackTrace().GetFrame(1).GetMethod().Name);
 		if (newTrackPlaying || isFading) {
-			// Speed up the track changes
-			StartCoroutine(WaitAndTryAgain(1.0f, requestedTrack, 0.8f, 0.8f));
-			fadeOutSpeed = 0.8f;
-			fadeInSpeed = 0.8f;
+			if (newTrack != requestedTrack) {
+				// Speed up the track changes
+				StartCoroutine(WaitAndTryAgain(1.0f, requestedTrack, 1f, 1f));
+				fadeOutSpeed = 1f;
+				fadeInSpeed = 1f;
+			}
 		} else {
 			if (currentTrack != requestedTrack) {
+				waitingOnSwitch = true;
 				oldAudioLevel = musicTracks[currentTrack].GetComponent<VolumeController>().getDefaultAudio();
 				newAudioLevel = musicTracks[requestedTrack].GetComponent<VolumeController>().getDefaultAudio();
 				currentVolume = vm.getCurrentMusicVolumeLevel() * oldAudioLevel;
@@ -70,8 +85,10 @@ public class MusicController : MonoBehaviour {
 	IEnumerator WaitAndTryAgain(float duration, int requestedTrack, float requestedFadeOutSpeed = 0.4f, float requestedFadeInSpeed = 0.2f) {
 		yield return new WaitForSeconds(duration);
 		if (!newTrackPlaying && !isFading) {
+			waitingOnSwitch = true;
 			SwitchTrack(requestedTrack, requestedFadeOutSpeed, requestedFadeInSpeed);
-		} else {
+		}
+		else {
 			StartCoroutine(WaitAndTryAgain(1.0f, requestedTrack, requestedFadeOutSpeed, requestedFadeInSpeed));
 		}
 	}
@@ -105,6 +122,7 @@ public class MusicController : MonoBehaviour {
 			newTrack = -1;
 			fadeOutSpeed = 0.4f;
 			fadeInSpeed = 0.2f;
+			waitingOnSwitch = false;
 		}
 	}
 
@@ -122,5 +140,9 @@ public class MusicController : MonoBehaviour {
 
 	public int getCurrentTrack() {
 		return currentTrack;
+	}
+
+	public bool isWaitingOnSwitch() {
+		return waitingOnSwitch;
 	}
 }

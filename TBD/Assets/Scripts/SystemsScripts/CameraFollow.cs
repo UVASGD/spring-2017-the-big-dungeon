@@ -23,7 +23,7 @@ public class CameraFollow : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        float scalefactor = 3f;
+        float scalefactor = 4.5f;
         mycam.orthographicSize = (Screen.height / 100f) / scalefactor;
 		if ((target != null)) {
 			Vector3 targetPosition = new Vector3 (0, 0, 0);

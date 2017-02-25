@@ -23,11 +23,13 @@ public class SettingScript : MonoBehaviour {
 
 	public VolumeManager volMan;
 	public MenuScript menu;
+	public PauseScript pause;
 
 	// Use this for initialization
 	void Start () {
 		menu = FindObjectOfType<MenuScript>();
 		volMan = FindObjectOfType<VolumeManager>();
+		pause = FindObjectOfType<PauseScript>();
 		musicVolumeSlider.value = volMan.getCurrentMusicVolumeLevel();
 		sfxVolumeSlider.value = volMan.getCurrentSFXVolumeLevel();
 
@@ -38,7 +40,9 @@ public class SettingScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			OnCancelButtonClick();
+		}
 	}
 
 	void onEnable() {
@@ -88,12 +92,28 @@ public class SettingScript : MonoBehaviour {
 	}
 
 	public void OnConfirmButtonClick() {
-		menu.CloseOptions();
+		if (menu != null) {
+			menu.CloseOptions();
+		}
+		else if (pause != null) {
+			pause.OptionsClose();
+		}
+		else {
+			Debug.Log("Something went wrong");
+		}
 		SaveSettings();
 	}
 
 	public void OnCancelButtonClick() {
-		menu.CloseOptions();
+		if (menu != null) {
+			menu.CloseOptions();
+		}
+		else if (pause != null) {
+			pause.OptionsClose();
+		}
+		else {
+			Debug.Log("Something went wrong");
+		}
 		LoadSettings();
 	}
 

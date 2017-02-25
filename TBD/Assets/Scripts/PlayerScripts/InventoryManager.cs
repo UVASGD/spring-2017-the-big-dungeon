@@ -44,11 +44,13 @@ public class InventoryManager : MonoBehaviour
         //If not, add the item
         items.Add(item);
     }
+
     //Can't implement this yet
     public void dropItem()
     {
 
     }
+
     //Destroy A Specified Number of Items
     public bool destroyItem(Item item, int quantity)
     {
