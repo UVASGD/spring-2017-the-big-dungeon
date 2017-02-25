@@ -35,11 +35,6 @@ public class VolumeManager : MonoBehaviour {
 			catch { }
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	public void updateMusicVolume(float volume) {
 		currentMusicVolumeLevel = volume;

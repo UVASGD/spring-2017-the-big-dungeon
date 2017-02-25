@@ -12,11 +12,6 @@ public class VolumeController : MonoBehaviour {
 	void Start () {
 		theAudio = GetComponent<AudioSource> ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	public void SetAudioLevel(float volume){
 		if (theAudio == null) {

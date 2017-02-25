@@ -10,14 +10,4 @@ public class GameSettings : MonoBehaviour {
 	public int textureQuality;
 	public float musicVolume;
 	public float sfxVolume;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
