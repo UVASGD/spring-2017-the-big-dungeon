@@ -14,18 +14,26 @@ public class Warp : MonoBehaviour {
     void Start()
     {
         player = FindObjectOfType<PlayerController>();
-        sf = GameObject.FindGameObjectWithTag("Fader").GetComponent<ScreenFader>();
+		try {
+			sf = GameObject.FindGameObjectWithTag("Fader").GetComponent<ScreenFader>();
+		}
+		catch {
+			sf = null;
+		}
+       
     }
 
     IEnumerator OnTriggerEnter2D(Collider2D other) {
-        player.frozen = true;
-        yield return StartCoroutine(sf.FadeToBlack());
+		if (sf != null) {
+			player.frozen = true;
+			yield return StartCoroutine(sf.FadeToBlack());
 
-        other.gameObject.transform.position = warpTarget.position;
-        Camera.main.transform.position = warpTarget.position;
-		Camera.main.GetComponent<CameraFollow> ().setCurrentRoom (targetRoom);
+			other.gameObject.transform.position = warpTarget.position;
+			Camera.main.transform.position = warpTarget.position;
+			Camera.main.GetComponent<CameraFollow>().setCurrentRoom(targetRoom);
 
-        yield return StartCoroutine(sf.FadeToClear());
-        player.frozen = false;
+			yield return StartCoroutine(sf.FadeToClear());
+			player.frozen = false;
+		}
     }
 }

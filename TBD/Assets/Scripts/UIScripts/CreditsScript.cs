@@ -41,7 +41,6 @@ public class CreditsScript : MonoBehaviour {
 		string wholeFile = inputFile.text;
 		creditsLines.AddRange(wholeFile.Split("\n"[0]));
 		foreach (string line in creditsLines) {
-			
 			GameObject newItem = Instantiate(firstLine, firstLine.transform.position, firstLine.transform.rotation);
 			Text newText = newItem.GetComponent<Text>();
 			newText.text = line;

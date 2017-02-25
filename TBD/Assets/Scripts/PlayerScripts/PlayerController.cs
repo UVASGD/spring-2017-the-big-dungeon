@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour {
 
 	private bool stepsOn;
 
+	public bool inMenu = false;
+	public bool talking = false;
+
 	// Use this for initialization
 	void Start () {
 

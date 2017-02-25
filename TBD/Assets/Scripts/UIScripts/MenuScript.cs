@@ -19,6 +19,8 @@ public class MenuScript : MonoBehaviour {
 	private float maxTimer = 5.3f;
 	private bool timerOn = false;
 	private SaveController sc;
+	private MusicController mc;
+	private bool noButtons = false;
 
 	// Use this for initialization
 	void Start () {
@@ -31,6 +33,7 @@ public class MenuScript : MonoBehaviour {
 		creditsText = creditsText.GetComponent<Button>();
 		exitText = exitText.GetComponent<Button>();
 		optionsMenu = optionsMenu.GetComponent<Canvas>();
+		mc = FindObjectOfType<MusicController>();
 		quitMenu.enabled = false;
 		optionsMenu.enabled = false;
 		credits.enabled = false;
@@ -49,7 +52,18 @@ public class MenuScript : MonoBehaviour {
 				}
 			}
 		}
-		
+		/*
+		if (mc.isWaitingOnSwitch()) {
+			Debug.Log("Off now");
+			noButtons = true;
+			mainMenuOff();
+		}
+		if (!mc.isWaitingOnSwitch() && noButtons) {
+			Debug.Log("On now");
+			mainMenuOn();
+			noButtons = false;
+		}
+		*/
 	}
 
 	public void ExitPressed() {
