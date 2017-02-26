@@ -8,6 +8,7 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager instance = null;
     public List<Item> items = new List<Item>();
+    public int money;
     public int maxSize = 20;
     //private int currentSize;
     private void Awake()
@@ -24,6 +25,8 @@ public class InventoryManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        //amount for testing
+        money = 80;
         DontDestroyOnLoad(gameObject);
     }
     public int spaceRemaining()
@@ -89,21 +92,27 @@ public class Item
     public string description { get; set; }
     public string slug { get; set; }
     public int quantity { get; set; }
-    public Item(string name, string description, string slug, int quantity, bool special)
+    public int price { get; set; }
+    public string type { get; set; }
+    public Item(string name, string description, string type, string slug, int quantity, int price, bool special)
     {
         this.name = name;
         this.description = description;
         this.slug = slug;
         this.quantity = quantity;
         this.special = special;
+        this.type = type;
+        this.price = price;
     }
-    public Item(string name, string description, string slug, bool special)
+    public Item(string name, string description, string type, string slug, int price, bool special)
     {
         this.name = name;
         this.description = description;
         this.slug = slug;
         this.special = special;
         this.quantity = 1;
+        this.type = type;
+        this.price = price;
     }
 
 }

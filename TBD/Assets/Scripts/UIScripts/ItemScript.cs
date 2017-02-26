@@ -17,8 +17,8 @@ public class ItemScript : MonoBehaviour {
 		itemMenu.SetActive(isActive);
 		pause = FindObjectOfType<PauseScript>();
 		inventory = FindObjectOfType<InventoryManager>();
-		Item it1 = new Item("First Item", "This is a very long description", "?", false);
-		Item it2 = new Item("Multiple Item", "How bout them items", "What", 3, false);
+		Item it1 = new Item("First Item", "This is a very long description", "Equipment", "?", 30, false);
+		Item it2 = new Item("Multiple Item", "How bout them items", "Equipment", "What", 3, 30, false);
 		inventory.addItem(it1);
 		inventory.addItem(it2);
 		foreach (Item i in inventory.items) {
