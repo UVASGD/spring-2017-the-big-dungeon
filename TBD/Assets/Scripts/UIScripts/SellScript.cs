@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuyScript : MonoBehaviour
+public class SellScript : MonoBehaviour
 {
     private GameObject itemsMenu;
     private GameObject itemsMenuBackground;
-    private GameObject moneyBackground;
     private GameObject viewingPanel;
+    private GameObject moneyBackground;
     private GameObject[] items;
     private GameObject arrow;
     private GameObject detailsBackground;
@@ -21,7 +21,7 @@ public class BuyScript : MonoBehaviour
     private int arrowIndex;
     private int itemIndex;
     private int totalOptions;
-    private List<Item> shopInventory;
+    private List<Item> playerInventory;
     public bool isActive;
     public bool isConfirmationActive;
     private GameObject confirmationBackground;
@@ -39,14 +39,7 @@ public class BuyScript : MonoBehaviour
         isYes = true;
         inventory = InventoryManager.instance;
         //Fills the shop inventory with test items, in reality individual shop's inventory will be passed in
-        shopInventory = new List<Item>();
-        shopInventory.Add(new Item("Helmet", "For all your helmet needs", "Equipment", "helm", 60, false));
-        for (int i = 0; i < 6; i++)
-        {
-            Item test = new Item("Item " + i, "Item " + i, "Equipment", "item", i, false);
-            shopInventory.Add(test);
-        }
-        shopInventory.Add(new Item("Potion", "A potion", "Consumable", "potion", 30, false));
+        playerInventory = inventory.items;
         arrowIndex = 0;
         itemIndex = 0;
         itemsMenu = transform.GetChild(0).gameObject;
@@ -62,18 +55,17 @@ public class BuyScript : MonoBehaviour
         totalOptions = viewingPanel.transform.childCount;
         items = new GameObject[totalOptions];
         //Update the Details Box if there only if there are items in the shop
-        if (shopInventory.Count > 0)
+        if (playerInventory.Count > 0)
         {
             updateDetails();
         }
         //Fill in the necessary items
         for (int i = 0; i < totalOptions; i++)
         {
-
             items[i] = viewingPanel.transform.GetChild(i).gameObject;
-            if (i < shopInventory.Count)
+            if (i < playerInventory.Count)
             {
-                items[i].GetComponent<Text>().text = shopInventory[i].name;
+                items[i].GetComponent<Text>().text = playerInventory[i].name;
             }
             else
             {
@@ -91,7 +83,7 @@ public class BuyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.H))
         {
             toggle();
             updateDetails();
@@ -123,14 +115,14 @@ public class BuyScript : MonoBehaviour
                     {
                         items[i].GetComponent<Text>().text = items[i - 1].GetComponent<Text>().text;
                     }
-                    items[0].GetComponent<Text>().text = shopInventory[itemIndex].name;
+                    items[0].GetComponent<Text>().text = playerInventory[itemIndex].name;
                     updateDetails();
                 }
             }
             //Continue Down list of items
             else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
             {
-                if (arrowIndex < totalOptions - 1 && arrowIndex < shopInventory.Count - 1)
+                if (arrowIndex < totalOptions - 1 && arrowIndex < playerInventory.Count - 1)
                 {
                     itemIndex++;
                     arrowIndex++;
@@ -142,14 +134,14 @@ public class BuyScript : MonoBehaviour
                 }
                 else if (arrowIndex == totalOptions - 1)
                 {
-                    if (itemIndex < shopInventory.Count - 1)
+                    if (itemIndex < playerInventory.Count - 1)
                     {
                         itemIndex++;
                         for (int i = 0; i < totalOptions - 1; i++)
                         {
                             items[i].GetComponent<Text>().text = items[i + 1].GetComponent<Text>().text;
                         }
-                        items[totalOptions - 1].GetComponent<Text>().text = shopInventory[itemIndex].name;
+                        items[totalOptions - 1].GetComponent<Text>().text = playerInventory[itemIndex].name;
                         updateDetails();
                     }
                 }
@@ -159,7 +151,7 @@ public class BuyScript : MonoBehaviour
             {
                 confirmationBackground.SetActive(true);
                 isConfirmationActive = true;
-                confirmationBackground.transform.GetChild(0).GetComponent<Text>().text = "Are you sure you want to buy " + shopInventory[itemIndex].name + "?";
+                confirmationBackground.transform.GetChild(0).GetComponent<Text>().text = "Are you sure you want to sell " + playerInventory[itemIndex].name + "?";
             }
         }
         //if shop is pulled and asking for confirmation
@@ -198,23 +190,23 @@ public class BuyScript : MonoBehaviour
                 //if hovering over "yes". Edit player's inventory, shop's inventory and indices and gui information
                 if (isYes)
                 {
-                    //If player doesn't have enough money
-                    if (inventory.money < shopInventory[itemIndex].price)
+                    //If item is special
+                    if (playerInventory[itemIndex].special)
                     {
                         denialBackground.SetActive(true);
                         isDenied = true;
                     }
                     else
                     {
-
-                        inventory.addItem(shopInventory[itemIndex]);
-                        inventory.money -= shopInventory[itemIndex].price;
-                        shopInventory.Remove(shopInventory[itemIndex]);
+                        inventory.money += playerInventory[itemIndex].price;
+                        inventory.destroyItem(playerInventory[itemIndex]);
                         updateMoney();
+                        //Wasn't sure if item should go in shop so player can potentially buyback 
+                        
                         //If there are less items than spots for text in gui
-                        if (shopInventory.Count < totalOptions)
+                        if (playerInventory.Count < totalOptions)
                         {
-                            if (shopInventory.Count == arrowIndex)
+                            if (playerInventory.Count == arrowIndex)
                             {
                                 arrowIndex--;
                                 itemIndex--;
@@ -228,9 +220,9 @@ public class BuyScript : MonoBehaviour
                             {
                                 for (int i = 0; i < totalOptions - arrowIndex; i++)
                                 {
-                                    if (itemIndex + i < shopInventory.Count)
+                                    if (itemIndex + i < playerInventory.Count)
                                     {
-                                        items[arrowIndex + i].GetComponent<Text>().text = shopInventory[itemIndex + i].name;
+                                        items[arrowIndex + i].GetComponent<Text>().text = playerInventory[itemIndex + i].name;
                                     }
                                     else
                                     {
@@ -240,26 +232,25 @@ public class BuyScript : MonoBehaviour
                                 }
 
                             }
-                            if (shopInventory.Count > 0)
+                            if (playerInventory.Count > 0)
                                 updateDetails();
                             else
                                 turnOff();
                         }
                         else
                         {
-                            if (itemIndex == shopInventory.Count)
+                            if (itemIndex == playerInventory.Count)
                             {
                                 itemIndex--;
                                 for (int i = 0; i < totalOptions; i++)
                                 {
-                                    items[arrowIndex - i].GetComponent<Text>().text = shopInventory[itemIndex - i].name;
+                                    items[arrowIndex - i].GetComponent<Text>().text = playerInventory[itemIndex - i].name;
                                 }
-                            }
-                            else
+                            }else
                             {
                                 for (int i = 0; i < totalOptions - arrowIndex; i++)
                                 {
-                                    items[arrowIndex + i].GetComponent<Text>().text = shopInventory[itemIndex + i].name;
+                                    items[arrowIndex + i].GetComponent<Text>().text = playerInventory[itemIndex + i].name;
                                 }
                             }
                             
@@ -294,9 +285,9 @@ public class BuyScript : MonoBehaviour
     }
     private void updateDetails()
     {
-        priceText.GetComponent<Text>().text = "Price: " + shopInventory[itemIndex].price;
-        typeText.GetComponent<Text>().text = "Type: " + shopInventory[itemIndex].type;
-        descriptionText.GetComponent<Text>().text = "Description: " + shopInventory[itemIndex].description;
+        priceText.GetComponent<Text>().text = "Price: " + playerInventory[itemIndex].price;
+        typeText.GetComponent<Text>().text = "Type: " + playerInventory[itemIndex].type;
+        descriptionText.GetComponent<Text>().text = "Description: " + playerInventory[itemIndex].description;
     }
     public void turnOff()
     {
@@ -304,23 +295,23 @@ public class BuyScript : MonoBehaviour
         isConfirmationActive = false;
         isDenied = false;
         denialBackground.SetActive(isActive);
-        moneyBackground.SetActive(false);
         detailsBackground.SetActive(isActive);
         itemsMenuBackground.SetActive(isActive);
         confirmationBackground.SetActive(isActive);
+        moneyBackground.SetActive(isActive);
         arrow.GetComponent<RectTransform>().anchoredPosition = startPosition;
         player.frozen = false;
     }
     public void turnOn()
     {
+        updateMoney();
         isActive = true;
         detailsBackground.SetActive(isActive);
         itemsMenuBackground.SetActive(isActive);
-        moneyBackground.SetActive(isActive);
         player.frozen = true;
         itemIndex = 0;
         arrowIndex = 0;
-        updateMoney();
+
     }
     public void updateMoney()
     {
@@ -344,5 +335,16 @@ public class BuyScript : MonoBehaviour
         player.frozen = isActive;
         itemIndex = 0;
         arrowIndex = 0;
+        for (int i = 0; i < totalOptions; i++)
+        {            items[i] = viewingPanel.transform.GetChild(i).gameObject;
+            if (i < playerInventory.Count)
+            {
+                items[i].GetComponent<Text>().text = playerInventory[i].name;
+            }
+            else
+            {
+                items[i].GetComponent<Text>().text = "";
+            }
+        }
     }
 }
