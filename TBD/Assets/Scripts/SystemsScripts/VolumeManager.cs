@@ -35,11 +35,6 @@ public class VolumeManager : MonoBehaviour {
 			catch { }
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
 	public void updateMusicVolume(float volume) {
 		currentMusicVolumeLevel = volume;
@@ -75,5 +70,20 @@ public class VolumeManager : MonoBehaviour {
 
 	public float getCurrentSFXVolumeLevel() {
 		return currentSFXVolumeLevel;
+	}
+
+	public void findVCObjects(){
+		vcObjects = FindObjectsOfType<VolumeController> ();
+		for (int i = 0; i < vcObjects.Length; i++) {
+			try {
+				vcObjects[i].GetComponentInParent<MusicController>();
+				vcObjects[i].SetAudioLevel(currentMusicVolumeLevel);
+			} catch { }
+			try {
+				vcObjects[i].GetComponentInParent<SFXManager>();
+				vcObjects[i].SetAudioLevel(currentSFXVolumeLevel);
+			}
+			catch { }
+		}
 	}
 }

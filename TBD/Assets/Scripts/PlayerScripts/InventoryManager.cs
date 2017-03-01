@@ -126,3 +126,17 @@ public class Item
     }
 
 }
+
+[Serializable]
+public class Equipment : Item
+{
+	public int str { get; set; }
+	public int def { get; set; }
+    public int hp { get; set; }
+    public Equipment(string name, string desc, int str, int def, int hp) : base(name, desc, "???", false)
+	{
+		this.str = str;
+		this.def = def;
+        this.hp = hp;
+	}
+}
