@@ -133,7 +133,7 @@ public class Equipment : Item
 	public int str { get; set; }
 	public int def { get; set; }
     public int hp { get; set; }
-    public Equipment(string name, string desc, int str, int def, int hp) : base(name, desc, "???", false)
+    public Equipment(string name, string desc, int str, int def, int hp) : base(name, desc, "equipment", "???", 0, false)
 	{
 		this.str = str;
 		this.def = def;

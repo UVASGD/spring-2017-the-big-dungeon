@@ -17,10 +17,8 @@ public class ItemScript : MonoBehaviour {
 		itemMenu.SetActive(isActive);
 		pause = FindObjectOfType<PauseScript>();
 		inventory = FindObjectOfType<InventoryManager>();
-		//Item it1 = new Item("First Item", "This is a very long description", "Equipment", "?", 30, false);
-		//Item it2 = new Item("Multiple Item", "How bout them items", "Equipment", "What", 3, 30, false);
-		Item it1 = new Item("First Item", "This is a very long description", "?", false);
-		Item it2 = new Item("Multiple Item", "How bout them items", "What", 3, false);
+		Item it1 = new Item("First Item", "This is a very long description", "Equipment", "?", 30, false);
+		Item it2 = new Item("Multiple Item", "How bout them items", "Equipment", "What", 3, 30, false);
 		Equipment armor = new Equipment("Basic Armor", "Adds defense and hp", 0, 1, 10);
 		Equipment weapon = new Equipment("Basic Weapon","Adds strength", 1, 0, 0);		
 		inventory.addItem(it1);
@@ -34,7 +32,7 @@ public class ItemScript : MonoBehaviour {
 			Text newText = newItem.GetComponent<Text>();
 			newText.text = i.name;
 			if (i.quantity > 1) {
-				newText.text += " (x" + i.quantity + ")";
+				newText.text += " (*" + i.quantity + ")";
 			}
 			newItem.transform.SetParent(blankItem.transform.parent);
 			newItem.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);

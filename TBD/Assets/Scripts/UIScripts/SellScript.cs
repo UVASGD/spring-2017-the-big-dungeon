@@ -73,7 +73,7 @@ public class SellScript : MonoBehaviour
             items[i] = viewingPanel.transform.GetChild(i).gameObject;
             if (i < playerInventory.Count)
             {
-                items[i].GetComponent<Text>().text = playerInventory[i].name + " (" + playerInventory[i].quantity + ")";
+                items[i].GetComponent<Text>().text = playerInventory[i].name + " (*" + playerInventory[i].quantity + ")";
             }
             else
             {
@@ -123,7 +123,7 @@ public class SellScript : MonoBehaviour
                     {
                         items[i].GetComponent<Text>().text = items[i - 1].GetComponent<Text>().text;
                     }
-                    items[0].GetComponent<Text>().text = playerInventory[itemIndex].name + " (" + playerInventory[itemIndex].quantity + ")";
+                    items[0].GetComponent<Text>().text = playerInventory[itemIndex].name + " (*" + playerInventory[itemIndex].quantity + ")";
                     updateDetails();
                 }
             }
@@ -149,7 +149,7 @@ public class SellScript : MonoBehaviour
                         {
                             items[i].GetComponent<Text>().text = items[i + 1].GetComponent<Text>().text;
                         }
-                        items[totalOptions - 1].GetComponent<Text>().text = playerInventory[itemIndex].name + " (" + playerInventory[itemIndex].quantity + ")";
+                        items[totalOptions - 1].GetComponent<Text>().text = playerInventory[itemIndex].name + " (*" + playerInventory[itemIndex].quantity + ")";
                         updateDetails();
                     }
                 }
@@ -270,7 +270,7 @@ public class SellScript : MonoBehaviour
                                 {
                                     if (itemIndex + i < playerInventory.Count)
                                     {
-                                        items[arrowIndex + i].GetComponent<Text>().text = playerInventory[itemIndex + i].name + " (" + playerInventory[itemIndex + i].quantity + ")";
+                                        items[arrowIndex + i].GetComponent<Text>().text = playerInventory[itemIndex + i].name + " (*" + playerInventory[itemIndex + i].quantity + ")";
                                     }
                                     else
                                     {
@@ -292,13 +292,13 @@ public class SellScript : MonoBehaviour
                                 itemIndex--;
                                 for (int i = 0; i < totalOptions; i++)
                                 {
-                                    items[arrowIndex - i].GetComponent<Text>().text = playerInventory[itemIndex - i].name + " (" + playerInventory[itemIndex - i].quantity + ")";
+                                    items[arrowIndex - i].GetComponent<Text>().text = playerInventory[itemIndex - i].name + " (*" + playerInventory[itemIndex - i].quantity + ")";
                                 }
                             }else
                             {
                                 for (int i = 0; i < totalOptions - arrowIndex; i++)
                                 {
-                                    items[arrowIndex + i].GetComponent<Text>().text = playerInventory[itemIndex + i].name + " (" + playerInventory[itemIndex + i].quantity + ")";
+                                    items[arrowIndex + i].GetComponent<Text>().text = playerInventory[itemIndex + i].name + " (*" + playerInventory[itemIndex + i].quantity + ")";
                                 }
                             }
                             
@@ -346,9 +346,9 @@ public class SellScript : MonoBehaviour
     {
         confirmationBackground.SetActive(true);
         isConfirmationActive = true;
-        confirmationBackground.transform.GetChild(0).GetComponent<Text>().text = "Are you sure you want to sell " + playerInventory[itemIndex].name + " (" + quantityNum +") for " +
-            playerInventory[itemIndex].price * quantityNum + " gold?";
-    }
+		confirmationBackground.transform.GetChild(0).GetComponent<Text>().text = "Confirm sale?";
+		//confirmationBackground.transform.GetChild(0).GetComponent<Text>().text = "Are you sure you want to sell " + playerInventory[itemIndex].name + " (" + quantityNum +") for " + playerInventory[itemIndex].price * quantityNum + " gold?";
+	}
     public void turnOff()
     {
         isActive = false;
@@ -401,7 +401,7 @@ public class SellScript : MonoBehaviour
             items[i] = viewingPanel.transform.GetChild(i).gameObject;
             if (i < playerInventory.Count)
             {
-                items[i].GetComponent<Text>().text = playerInventory[i].name + " (" + playerInventory[i].quantity + ")";
+                items[i].GetComponent<Text>().text = playerInventory[i].name + " (*" + playerInventory[i].quantity + ")";
             }
             else
             {
