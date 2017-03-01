@@ -81,7 +81,7 @@ public class BuyScript : MonoBehaviour
             items[i] = viewingPanel.transform.GetChild(i).gameObject;
             if (i < shopInventory.Count)
             {
-                items[i].GetComponent<Text>().text = shopInventory[i].name;
+                items[i].GetComponent<Text>().text = shopInventory[i].name + " (" + shopInventory[i].quantity + ")";
             }
             else
             {
@@ -131,7 +131,7 @@ public class BuyScript : MonoBehaviour
                     {
                         items[i].GetComponent<Text>().text = items[i - 1].GetComponent<Text>().text;
                     }
-                    items[0].GetComponent<Text>().text = shopInventory[itemIndex].name;
+                    items[0].GetComponent<Text>().text = shopInventory[itemIndex].name + " (" + shopInventory[itemIndex].quantity + ")";
                     updateDetails();
                 }
             }
@@ -157,7 +157,7 @@ public class BuyScript : MonoBehaviour
                         {
                             items[i].GetComponent<Text>().text = items[i + 1].GetComponent<Text>().text;
                         }
-                        items[totalOptions - 1].GetComponent<Text>().text = shopInventory[itemIndex].name;
+                        items[totalOptions - 1].GetComponent<Text>().text = shopInventory[itemIndex].name + " (" + shopInventory[itemIndex].quantity + ")";
                         updateDetails();
                     }
                 }
@@ -288,7 +288,7 @@ public class BuyScript : MonoBehaviour
                                 {
                                     if (itemIndex + i < shopInventory.Count)
                                     {
-                                        items[arrowIndex + i].GetComponent<Text>().text = shopInventory[itemIndex + i].name;
+                                        items[arrowIndex + i].GetComponent<Text>().text = shopInventory[itemIndex + i].name + " (" + shopInventory[itemIndex + i].quantity + ")";
                                     }
                                     else
                                     {
@@ -310,14 +310,14 @@ public class BuyScript : MonoBehaviour
                                 itemIndex--;
                                 for (int i = 0; i < totalOptions; i++)
                                 {
-                                    items[arrowIndex - i].GetComponent<Text>().text = shopInventory[itemIndex - i].name;
+                                    items[arrowIndex - i].GetComponent<Text>().text = shopInventory[itemIndex - i].name + " (" + shopInventory[itemIndex - i].quantity + ")";
                                 }
                             }
                             else
                             {
                                 for (int i = 0; i < totalOptions - arrowIndex; i++)
                                 {
-                                    items[arrowIndex + i].GetComponent<Text>().text = shopInventory[itemIndex + i].name;
+                                    items[arrowIndex + i].GetComponent<Text>().text = shopInventory[itemIndex + i].name + " (" + shopInventory[itemIndex + i].quantity + ")";
                                 }
                             }
                             
@@ -421,7 +421,7 @@ public class BuyScript : MonoBehaviour
             items[i] = viewingPanel.transform.GetChild(i).gameObject;
             if (i < shopInventory.Count)
             {
-                items[i].GetComponent<Text>().text = shopInventory[i].name;
+                items[i].GetComponent<Text>().text = shopInventory[i].name + " (" + shopInventory[i].quantity + ")";
             }
             else
             {
