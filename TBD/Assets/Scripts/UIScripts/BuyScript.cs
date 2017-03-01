@@ -31,19 +31,25 @@ public class BuyScript : MonoBehaviour
     private InventoryManager inventory;
     private GameObject denialBackground;
     private bool isDenied;
+    private GameObject quantityBackground;
+    private GameObject quantityText;
+    private bool quantityAsked;
+    private int quantityNum;
 
     // Use this for initialization
     void Start()
     {
+        quantityNum = 1;
+        quantityAsked = false;
         player = FindObjectOfType<PlayerController>();
         isYes = true;
         inventory = InventoryManager.instance;
         //Fills the shop inventory with test items, in reality individual shop's inventory will be passed in
         shopInventory = new List<Item>();
         shopInventory.Add(new Item("Helmet", "For all your helmet needs", "Equipment", "helm", 60, false));
-        for (int i = 0; i < 6; i++)
+        for (int i = 1; i < 7; i++)
         {
-            Item test = new Item("Item " + i, "Item " + i, "Equipment", "item", i, false);
+            Item test = new Item("Item " + i, "Item " + i, "Equipment", "item", i, i, false);
             shopInventory.Add(test);
         }
         shopInventory.Add(new Item("Potion", "A potion", "Consumable", "potion", 30, false));
@@ -53,12 +59,14 @@ public class BuyScript : MonoBehaviour
         itemsMenuBackground = itemsMenu.transform.GetChild(0).gameObject;
         viewingPanel = itemsMenuBackground.transform.GetChild(0).gameObject;
         detailsBackground = itemsMenu.transform.GetChild(1).gameObject;
-        confirmationBackground = itemsMenu.transform.GetChild(2).gameObject;
-        denialBackground = itemsMenu.transform.GetChild(3).gameObject;
-        moneyBackground = itemsMenu.transform.GetChild(4).gameObject;
+        confirmationBackground = itemsMenu.transform.GetChild(4).gameObject;
+        denialBackground = itemsMenu.transform.GetChild(5).gameObject;
+        quantityBackground = itemsMenu.transform.GetChild(3).gameObject;
+        moneyBackground = itemsMenu.transform.GetChild(2).gameObject;
         priceText = detailsBackground.transform.GetChild(0).gameObject;
         typeText = detailsBackground.transform.GetChild(1).gameObject;
         descriptionText = detailsBackground.transform.GetChild(2).gameObject;
+        quantityText = quantityBackground.transform.GetChild(0).gameObject;
         totalOptions = viewingPanel.transform.childCount;
         items = new GameObject[totalOptions];
         //Update the Details Box if there only if there are items in the shop
@@ -101,7 +109,7 @@ public class BuyScript : MonoBehaviour
             turnOff();
         }
         //If Shop is pulled up and not asking for confirmation
-        if (isActive && !isConfirmationActive)
+        if (isActive && !isConfirmationActive && !quantityAsked)
         {
             //Continue up list of items
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
@@ -157,9 +165,51 @@ public class BuyScript : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.Space))
             {
-                confirmationBackground.SetActive(true);
-                isConfirmationActive = true;
-                confirmationBackground.transform.GetChild(0).GetComponent<Text>().text = "Are you sure you want to buy " + shopInventory[itemIndex].name + "?";
+                if (shopInventory[itemIndex].quantity == 1)
+                {
+                    quantityNum = 1;
+                    displayConfirmation();
+                }else
+                {
+                    quantityNum = 1;
+                    quantityAsked = true;
+                    quantityBackground.SetActive(true);
+                    updateQuantity();
+                }
+                    
+            }
+        } else if (isActive && quantityAsked)
+        {
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                if (quantityNum == shopInventory[itemIndex].quantity)
+                {
+                    quantityNum = 1;
+                }
+                else
+                {
+                    quantityNum++;
+                }
+                updateQuantity();
+            }
+            else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                if (quantityNum == 1)
+                {
+                    quantityNum = shopInventory[itemIndex].quantity;
+
+                }
+                else
+                {
+                    quantityNum--;
+                }
+                updateQuantity();
+            }
+            else if (Input.GetKeyDown(KeyCode.Space))
+            {
+                quantityAsked = false;
+                quantityBackground.SetActive(false);
+                displayConfirmation();
             }
         }
         //if shop is pulled and asking for confirmation
@@ -199,17 +249,25 @@ public class BuyScript : MonoBehaviour
                 if (isYes)
                 {
                     //If player doesn't have enough money
-                    if (inventory.money < shopInventory[itemIndex].price)
+                    if (inventory.money < shopInventory[itemIndex].price * quantityNum)
                     {
                         denialBackground.SetActive(true);
                         isDenied = true;
                     }
                     else
                     {
-
-                        inventory.addItem(shopInventory[itemIndex]);
-                        inventory.money -= shopInventory[itemIndex].price;
-                        shopInventory.Remove(shopInventory[itemIndex]);
+                        if (quantityNum == shopInventory[itemIndex].quantity)
+                        {
+                            inventory.addItem(shopInventory[itemIndex]);
+                            inventory.money -= shopInventory[itemIndex].price * quantityNum;
+                            shopInventory.Remove(shopInventory[itemIndex]);
+                        }
+                        else
+                        {
+                            inventory.addItem(new Item(shopInventory[itemIndex], quantityNum));
+                            shopInventory[itemIndex].quantity -= quantityNum;
+                            inventory.money -= shopInventory[itemIndex].price * quantityNum; 
+                        }
                         updateMoney();
                         //If there are less items than spots for text in gui
                         if (shopInventory.Count < totalOptions)
@@ -303,11 +361,14 @@ public class BuyScript : MonoBehaviour
         isActive = false;
         isConfirmationActive = false;
         isDenied = false;
+        quantityAsked = false;
+        quantityBackground.SetActive(false);
         denialBackground.SetActive(isActive);
         moneyBackground.SetActive(false);
         detailsBackground.SetActive(isActive);
         itemsMenuBackground.SetActive(isActive);
         confirmationBackground.SetActive(isActive);
+
         arrow.GetComponent<RectTransform>().anchoredPosition = startPosition;
         player.frozen = false;
     }
@@ -325,6 +386,17 @@ public class BuyScript : MonoBehaviour
     public void updateMoney()
     {
         moneyBackground.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Gold: " + inventory.money;
+    }
+    private void updateQuantity()
+    {
+        quantityText.GetComponent<Text>().text = quantityNum.ToString();
+    }
+    private void displayConfirmation()
+    {
+        confirmationBackground.SetActive(true);
+        isConfirmationActive = true;
+        confirmationBackground.transform.GetChild(0).GetComponent<Text>().text = "Are you sure you want to buy " + shopInventory[itemIndex].name + " (" + quantityNum + ") for " +
+            shopInventory[itemIndex].price * quantityNum + " gold?";
     }
     public void toggle()
     {
@@ -344,5 +416,17 @@ public class BuyScript : MonoBehaviour
         player.frozen = isActive;
         itemIndex = 0;
         arrowIndex = 0;
+        for (int i = 0; i < totalOptions; i++)
+        {
+            items[i] = viewingPanel.transform.GetChild(i).gameObject;
+            if (i < shopInventory.Count)
+            {
+                items[i].GetComponent<Text>().text = shopInventory[i].name;
+            }
+            else
+            {
+                items[i].GetComponent<Text>().text = "";
+            }
+        }
     }
 }

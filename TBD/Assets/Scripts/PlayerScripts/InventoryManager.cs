@@ -114,5 +114,15 @@ public class Item
         this.type = type;
         this.price = price;
     }
+    //Copy constructor with different quantity
+    public Item(Item item, int quantity)
+    {
+        this.name = item.name;
+        this.description = item.description;
+        this.slug = item.slug;
+        this.quantity = quantity;
+        this.type = item.type;
+        this.price = item.price;
+    }
 
 }

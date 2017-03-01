@@ -26,15 +26,21 @@ public class SellScript : MonoBehaviour
     public bool isConfirmationActive;
     private GameObject confirmationBackground;
     private GameObject confirmationArrow;
+    private GameObject quantityBackground;
     private PlayerController player;
     private bool isYes;
     private InventoryManager inventory;
     private GameObject denialBackground;
+    private GameObject quantityText;
     private bool isDenied;
+    private bool quantityAsked;
+    private int quantityNum;
 
     // Use this for initialization
     void Start()
     {
+        quantityNum = 1;
+        quantityAsked = false;
         player = FindObjectOfType<PlayerController>();
         isYes = true;
         inventory = InventoryManager.instance;
@@ -46,9 +52,11 @@ public class SellScript : MonoBehaviour
         itemsMenuBackground = itemsMenu.transform.GetChild(0).gameObject;
         viewingPanel = itemsMenuBackground.transform.GetChild(0).gameObject;
         detailsBackground = itemsMenu.transform.GetChild(1).gameObject;
-        confirmationBackground = itemsMenu.transform.GetChild(2).gameObject;
-        denialBackground = itemsMenu.transform.GetChild(3).gameObject;
-        moneyBackground = itemsMenu.transform.GetChild(4).gameObject;
+        quantityBackground = itemsMenu.transform.GetChild(3).gameObject;
+        confirmationBackground = itemsMenu.transform.GetChild(4).gameObject;
+        denialBackground = itemsMenu.transform.GetChild(5).gameObject;
+        moneyBackground = itemsMenu.transform.GetChild(2).gameObject;
+        quantityText = quantityBackground.transform.GetChild(0).gameObject;
         priceText = detailsBackground.transform.GetChild(0).gameObject;
         typeText = detailsBackground.transform.GetChild(1).gameObject;
         descriptionText = detailsBackground.transform.GetChild(2).gameObject;
@@ -72,7 +80,7 @@ public class SellScript : MonoBehaviour
                 items[i].GetComponent<Text>().text = "";
             }
         }
-
+        //Get the selector arrows
         confirmationArrow = confirmationBackground.GetComponentInChildren<Animator>().gameObject;
         arrow = itemsMenuBackground.GetComponentInChildren<Animator>().gameObject;
         startPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
@@ -93,7 +101,7 @@ public class SellScript : MonoBehaviour
             turnOff();
         }
         //If Shop is pulled up and not asking for confirmation
-        if (isActive && !isConfirmationActive)
+        if (isActive && !isConfirmationActive && !quantityAsked)
         {
             //Continue up list of items
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
@@ -149,9 +157,49 @@ public class SellScript : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.Space))
             {
-                confirmationBackground.SetActive(true);
-                isConfirmationActive = true;
-                confirmationBackground.transform.GetChild(0).GetComponent<Text>().text = "Are you sure you want to sell " + playerInventory[itemIndex].name + "?";
+                //If there are multiple
+                if (playerInventory[itemIndex].quantity > 1)
+                {
+                    quantityNum = 1;
+                    quantityAsked = true;
+                    quantityBackground.SetActive(true);
+                    updateQuantity();
+                }else
+                {
+                    quantityNum = 1;
+                    displayConfirmation();
+                }
+                
+            }
+        }
+        //If asking the amount to sell
+        else if (isActive && quantityAsked) {
+            if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                if (quantityNum == playerInventory[itemIndex].quantity)
+                {
+                    quantityNum = 1;
+                }else
+                {
+                    quantityNum++;
+                }
+                updateQuantity();
+            } else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                if (quantityNum == 1)
+                {
+                    quantityNum = playerInventory[itemIndex].quantity;
+
+                }else
+                {
+                    quantityNum--;
+                }
+                updateQuantity();
+            } else if (Input.GetKeyDown(KeyCode.Space))
+            {
+                quantityAsked = false;
+                quantityBackground.SetActive(false);
+                displayConfirmation();
             }
         }
         //if shop is pulled and asking for confirmation
@@ -198,8 +246,8 @@ public class SellScript : MonoBehaviour
                     }
                     else
                     {
-                        inventory.money += playerInventory[itemIndex].price;
-                        inventory.destroyItem(playerInventory[itemIndex]);
+                        inventory.money += playerInventory[itemIndex].price * quantityNum;
+                        inventory.destroyItem(playerInventory[itemIndex], quantityNum);
                         updateMoney();
                         //Wasn't sure if item should go in shop so player can potentially buyback 
                         
@@ -289,6 +337,18 @@ public class SellScript : MonoBehaviour
         typeText.GetComponent<Text>().text = "Type: " + playerInventory[itemIndex].type;
         descriptionText.GetComponent<Text>().text = "Description: " + playerInventory[itemIndex].description;
     }
+
+    private void updateQuantity()
+    {
+        quantityText.GetComponent<Text>().text = quantityNum.ToString();
+    }
+    private void displayConfirmation()
+    {
+        confirmationBackground.SetActive(true);
+        isConfirmationActive = true;
+        confirmationBackground.transform.GetChild(0).GetComponent<Text>().text = "Are you sure you want to sell " + playerInventory[itemIndex].name + " (" + quantityNum +") for " +
+            playerInventory[itemIndex].price * quantityNum + " gold?";
+    }
     public void turnOff()
     {
         isActive = false;
@@ -297,6 +357,7 @@ public class SellScript : MonoBehaviour
         denialBackground.SetActive(isActive);
         detailsBackground.SetActive(isActive);
         itemsMenuBackground.SetActive(isActive);
+        quantityBackground.SetActive(isActive);
         confirmationBackground.SetActive(isActive);
         moneyBackground.SetActive(isActive);
         arrow.GetComponent<RectTransform>().anchoredPosition = startPosition;
@@ -336,7 +397,8 @@ public class SellScript : MonoBehaviour
         itemIndex = 0;
         arrowIndex = 0;
         for (int i = 0; i < totalOptions; i++)
-        {            items[i] = viewingPanel.transform.GetChild(i).gameObject;
+        {
+            items[i] = viewingPanel.transform.GetChild(i).gameObject;
             if (i < playerInventory.Count)
             {
                 items[i].GetComponent<Text>().text = playerInventory[i].name;
