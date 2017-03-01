@@ -7,7 +7,7 @@ public class ItemScript : MonoBehaviour {
 
 	private InventoryManager inventory;
 	private GameObject itemMenu;
-	private bool isActive = false;
+	public bool isActive = false;
 	public GameObject blankItem;
 	private PauseScript pause;
 
@@ -47,11 +47,19 @@ public class ItemScript : MonoBehaviour {
 	}
 
 	public void itemsOpened() {
+        isActive = true;
 		itemMenu.SetActive(true);
 	}
 
 	public void itemsClose() {
+        isActive = false;
 		itemMenu.SetActive(false);
 		pause.reopenFromInventory();
 	}
+
+    public void turnOff()
+    {
+        isActive = false;
+        itemMenu.SetActive(false);
+    }
 }

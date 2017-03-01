@@ -19,6 +19,8 @@ public class PauseScript : MonoBehaviour {
 	public bool inOptions = false;
 	private List<GameObject> optionParts = new List<GameObject>();
 	private ItemScript itemMenu;
+    private SellScript sellObject;
+    private BuyScript buyObject;
 	public bool inItems = false;
 	public bool canEscape = false;
 
@@ -30,6 +32,8 @@ public class PauseScript : MonoBehaviour {
 	void Start() {
 		pauseMenu = GetComponentInChildren<Image>().gameObject;
 		pauseMenu.SetActive(isActive);
+        sellObject = FindObjectOfType<SellScript>();
+        buyObject = FindObjectOfType<BuyScript>();
 		itemMenu = FindObjectOfType<ItemScript>();
 		player = FindObjectOfType<PlayerController>();
 		arrow = pauseMenu.GetComponentInChildren<Animator>().gameObject;
@@ -52,7 +56,11 @@ public class PauseScript : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Escape) && canEscape) {
 			exitMenu();
 		}
-		if (Input.GetKeyDown(KeyCode.Return) && !player.talking) {
+		if (Input.GetKeyDown(KeyCode.Return) && !player.talking && !itemMenu.isActive) {
+            if (buyObject != null)
+                buyObject.turnOff();
+            if (sellObject != null)
+                sellObject.turnOff();
 			toggleMenu();
 		}
 		if (isActive && !inOptions && !inItems) {
@@ -133,7 +141,7 @@ public class PauseScript : MonoBehaviour {
 		arrow.GetComponent<RectTransform>().anchoredPosition = startPosition;
 	}
 
-	void exitMenu() {
+	public void exitMenu() {
 		isActive = true;
 		inItems = false;
 		inOptions = false;
