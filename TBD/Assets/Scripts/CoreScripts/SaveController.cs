@@ -65,6 +65,7 @@ public class SaveController : MonoBehaviour {
 	void WriteFromData(SaveData s) {
 		player.transform.position = new Vector2 (s.x, s.y);
         inventory.items = s.inventory;
+        inventory.money = s.money;
 	}
 
 	SaveData WriteToData() {
@@ -72,6 +73,7 @@ public class SaveController : MonoBehaviour {
 		s.x = player.transform.position.x;
 		s.y = player.transform.position.y;
         s.inventory = inventory.items;
+        s.money = inventory.money;
 		return s;
 	}
 
@@ -157,4 +159,5 @@ class SaveData {
 	public float x;
 	public float y;
     public List<Item> inventory;
+    public int money;
 }
