@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BuyScript : MonoBehaviour
 {
+    private SFXManager sfx;
     private GameObject itemsMenu;
     private GameObject itemsMenuBackground;
     private GameObject moneyBackground;
@@ -39,6 +40,7 @@ public class BuyScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        sfx = FindObjectOfType<SFXManager>();
         quantityNum = 1;
         quantityAsked = false;
         player = FindObjectOfType<PlayerController>();
@@ -182,11 +184,7 @@ public class BuyScript : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             {
-                if (quantityNum == shopInventory[itemIndex].quantity)
-                {
-                    quantityNum = 1;
-                }
-                else
+                if (quantityNum < shopInventory[itemIndex].quantity)
                 {
                     quantityNum++;
                 }
@@ -194,14 +192,10 @@ public class BuyScript : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
             {
-                if (quantityNum == 1)
-                {
-                    quantityNum = shopInventory[itemIndex].quantity;
-
-                }
-                else
+                if (quantityNum > 1)
                 {
                     quantityNum--;
+
                 }
                 updateQuantity();
             }
@@ -256,6 +250,7 @@ public class BuyScript : MonoBehaviour
                     }
                     else
                     {
+                        sfx.PlaySFX(sfx.soundEffects[4]);
                         if (quantityNum == shopInventory[itemIndex].quantity)
                         {
                             inventory.addItem(shopInventory[itemIndex]);
@@ -315,10 +310,21 @@ public class BuyScript : MonoBehaviour
                             }
                             else
                             {
-                                for (int i = 0; i < totalOptions - arrowIndex; i++)
+                                if (totalOptions - arrowIndex - 1 == shopInventory.Count - itemIndex)
                                 {
-                                    items[arrowIndex + i].GetComponent<Text>().text = shopInventory[itemIndex + i].name + " (*" + shopInventory[itemIndex + i].quantity + ")";
+                                    itemIndex--;
+                                    for (int i = 0; i < totalOptions; i++)
+                                    {
+                                        items[i].GetComponent<Text>().text = shopInventory[shopInventory.Count - totalOptions + i].name + " (" + shopInventory[shopInventory.Count - totalOptions + i].quantity + ")";
+                                    }
+                                }else
+                                {
+                                    for (int i = 0; i < totalOptions - arrowIndex; i++)
+                                    {
+                                        items[arrowIndex + i].GetComponent<Text>().text = shopInventory[itemIndex + i].name + " (*" + shopInventory[itemIndex + i].quantity + ")";
+                                    }
                                 }
+                                
                             }
                             
                             updateDetails();
@@ -352,7 +358,7 @@ public class BuyScript : MonoBehaviour
     }
     private void updateDetails()
     {
-        priceText.GetComponent<Text>().text = "Price: " + shopInventory[itemIndex].price;
+        priceText.GetComponent<Text>().text = "Buy Price: " + shopInventory[itemIndex].price;
         typeText.GetComponent<Text>().text = "Type: " + shopInventory[itemIndex].type;
         descriptionText.GetComponent<Text>().text = "Description: " + shopInventory[itemIndex].description;
     }

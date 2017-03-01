@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class SellScript : MonoBehaviour
 {
+    //used to change the amount buyers will give player for items
+    private SFXManager sfx;
+    public double buyRate;
     private GameObject itemsMenu;
     private GameObject itemsMenuBackground;
     private GameObject viewingPanel;
@@ -39,6 +42,7 @@ public class SellScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        sfx = FindObjectOfType<SFXManager>();
         quantityNum = 1;
         quantityAsked = false;
         player = FindObjectOfType<PlayerController>();
@@ -246,7 +250,8 @@ public class SellScript : MonoBehaviour
                     }
                     else
                     {
-                        inventory.money += playerInventory[itemIndex].price * quantityNum;
+                        sfx.PlaySFX(sfx.soundEffects[4]);
+                        inventory.money += (int)(playerInventory[itemIndex].price*buyRate) * quantityNum;
                         inventory.destroyItem(playerInventory[itemIndex], quantityNum);
                         updateMoney();
                         //Wasn't sure if item should go in shop so player can potentially buyback 
@@ -296,9 +301,20 @@ public class SellScript : MonoBehaviour
                                 }
                             }else
                             {
-                                for (int i = 0; i < totalOptions - arrowIndex; i++)
+                                if (totalOptions - arrowIndex - 1 == playerInventory.Count - itemIndex)
                                 {
-                                    items[arrowIndex + i].GetComponent<Text>().text = playerInventory[itemIndex + i].name + " (*" + playerInventory[itemIndex + i].quantity + ")";
+                                    itemIndex--;
+                                    for (int i = 0; i < totalOptions; i++)
+                                    {
+                                        items[i].GetComponent<Text>().text = playerInventory[playerInventory.Count - totalOptions + i].name + " (" + playerInventory[playerInventory.Count - totalOptions + i].quantity + ")";
+                                    }
+                                }
+                                else
+                                {
+                                    for (int i = 0; i < totalOptions - arrowIndex; i++)
+                                    {
+                                        items[arrowIndex + i].GetComponent<Text>().text = playerInventory[itemIndex + i].name + " (*" + playerInventory[itemIndex + i].quantity + ")";
+                                    }
                                 }
                             }
                             
@@ -333,7 +349,7 @@ public class SellScript : MonoBehaviour
     }
     private void updateDetails()
     {
-        priceText.GetComponent<Text>().text = "Price: " + playerInventory[itemIndex].price;
+        priceText.GetComponent<Text>().text = "Sell Price: " + (int)(playerInventory[itemIndex].price*buyRate);
         typeText.GetComponent<Text>().text = "Type: " + playerInventory[itemIndex].type;
         descriptionText.GetComponent<Text>().text = "Description: " + playerInventory[itemIndex].description;
     }
