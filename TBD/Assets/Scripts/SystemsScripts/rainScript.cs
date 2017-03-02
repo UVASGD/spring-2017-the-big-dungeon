@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class rainScript : MonoBehaviour {
     public bool isActive;
-    private ParticleSystem pSys;
+	private ParticleSystem pSys;
+	private ParticleSystem.EmissionModule myEmissionModule;
+	public float myRate = 100f;
+
 	// Use this for initialization
 	void Start () {
         isActive = false;
         pSys = this.GetComponent<ParticleSystem>();
         pSys.Stop();
         pSys.Clear();
+		myEmissionModule = pSys.emission;
+		myEmissionModule.rate = new ParticleSystem.MinMaxCurve(myRate);
 	}
 	
 	// Update is called once per frame
@@ -29,4 +34,9 @@ public class rainScript : MonoBehaviour {
             }
         }
 	}
+
+	public void updateRate(float newRate){
+		myEmissionModule.rate = new ParticleSystem.MinMaxCurve(newRate);
+	}
+
 }
