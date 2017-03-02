@@ -54,7 +54,7 @@ public class ItemScript : MonoBehaviour {
 	public void itemsClose() {
         isActive = false;
 		itemMenu.SetActive(false);
-		pause.reopenFromInventory();
+        pause.reopenFromInventory();
 	}
 
     public void turnOff()

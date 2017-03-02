@@ -54,9 +54,9 @@ public class PauseScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Escape) && canEscape) {
-			exitMenu();
+            exitMenu();
 		}
-		if (Input.GetKeyDown(KeyCode.Return) && !player.talking && !itemMenu.isActive) {
+		if (Input.GetKeyDown(KeyCode.Return) && !player.talking && !inItems && !inOptions) {
             if (buyObject != null)
                 buyObject.turnOff();
             if (sellObject != null)
@@ -98,7 +98,7 @@ public class PauseScript : MonoBehaviour {
 						itemMenu.itemsOpened();
 						inItems = true;
 						canEscape = false;
-						toggleMenu();
+						//toggleMenu();
 						break;
 					//Player
 					case 3:
@@ -134,6 +134,7 @@ public class PauseScript : MonoBehaviour {
 
 	void toggleMenu() {
 		isActive = !isActive;
+        Debug.Log(isActive);
 		pauseMenu.SetActive(isActive);
 		player.frozen = isActive;
 		player.inMenu = isActive;
@@ -168,13 +169,15 @@ public class PauseScript : MonoBehaviour {
 	}
 
 	public void reopenFromInventory() {
-		inItems = false;
-		canEscape = true;
-		toggleMenu();
+        //toggleMenu();
+        inItems = false;
+		canEscape = false;
+		
 		index = 2;
-		Vector2 arrowPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
-		arrowPosition -= yOffset * index;
-		arrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
+		//Vector2 arrowPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
+		//arrowPosition -= yOffset * index;
+		//arrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
+        //canEscape = true;
 	}
 
 }
