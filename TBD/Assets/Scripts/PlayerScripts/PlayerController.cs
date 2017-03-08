@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
 	private Animator anim;
 	private Rigidbody2D rbody;
 	private CameraFollow cam;
+    private PlayerStats stats;
 
 	public bool frozen = false;
 
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour {
 
 	public bool inMenu = false;
 	public bool talking = false;
+    public bool alive = true;
 
 	// Use this for initialization
 	void Start () {
@@ -31,6 +33,7 @@ public class PlayerController : MonoBehaviour {
 		rbody = GetComponent<Rigidbody2D>();
 		sfxMan = FindObjectOfType<SFXManager>();
 		cam = FindObjectOfType<CameraFollow>();
+        stats = FindObjectOfType<PlayerStats>();
 
 		if (playerStepSounds.Length > 0) {
 			currentStep = playerStepSounds[Random.Range(0, playerStepSounds.Length)];
@@ -46,7 +49,7 @@ public class PlayerController : MonoBehaviour {
 
 			if (movement_vector != Vector2.zero) {
 				anim.SetBool("is_walking", true);
-				anim.SetFloat("input_x", movement_vector.x);
+                anim.SetFloat("input_x", movement_vector.x);
 				anim.SetFloat("input_y", movement_vector.y);
 				if (stepsOn)
 					timer += Time.deltaTime;
@@ -66,7 +69,7 @@ public class PlayerController : MonoBehaviour {
 		if (frozen) {
 			anim.SetBool("is_walking", false);
 			timer = 0;
-		}
+        }
 	}
 
 	void PlayNextSound() {
