@@ -12,8 +12,8 @@ public class PlayerStats : MonoBehaviour {
 		stats.Add(new BaseStat("defense", 11, "Damage Taken"));
 		stats.Add(new BaseStat("HP", 12, "Health"));
     }
-
-    public int getStatValue(string statName)
+    //base stat + modifier
+    public int getCurrentValue(string statName)
 	{
 		foreach (BaseStat s in stats) {
             if (String.Compare(s.statName, statName) == 0) 
@@ -23,7 +23,7 @@ public class PlayerStats : MonoBehaviour {
 		}
         return 0;
     }
-
+    //positive value if adding. Negative value if taking away.
 	public void modifyStat(string statName, int modifier)
     {
 		foreach (BaseStat s in stats)
