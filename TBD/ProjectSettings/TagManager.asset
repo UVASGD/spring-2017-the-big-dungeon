@@ -9,6 +9,7 @@ TagManager:
   - grass
   - path
   - map
+  - BattleManager
   layers:
   - Default
   - TransparentFX
