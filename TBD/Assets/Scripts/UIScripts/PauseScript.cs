@@ -169,15 +169,15 @@ public class PauseScript : MonoBehaviour {
 	}
 
 	public void reopenFromInventory() {
-        //toggleMenu();
+        toggleMenu();
         inItems = false;
 		canEscape = false;
 		
 		index = 2;
-		//Vector2 arrowPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
-		//arrowPosition -= yOffset * index;
-		//arrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
-        //canEscape = true;
+		Vector2 arrowPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
+		arrowPosition -= yOffset * index;
+		arrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
+        canEscape = true;
 	}
 
 }

@@ -112,6 +112,7 @@ public class BuyScript : MonoBehaviour
         {
             sellObject.turnOff();
             inventoryMenu.turnOff();
+            pauseMenu.OptionsClose();
             pauseMenu.exitMenu();
             toggle();
             updateDetails();
