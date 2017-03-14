@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BuyScript : MonoBehaviour
 {
+    private SFXManager sfx;
     private GameObject itemsMenu;
     private GameObject itemsMenuBackground;
     private GameObject moneyBackground;
@@ -35,15 +36,23 @@ public class BuyScript : MonoBehaviour
     private GameObject quantityText;
     private bool quantityAsked;
     private int quantityNum;
+    private SellScript sellObject;
+    private PauseScript pauseMenu;
+    private ItemScript inventoryMenu;
 
     // Use this for initialization
     void Start()
     {
+        //Initializes variables
+        sfx = FindObjectOfType<SFXManager>();
         quantityNum = 1;
         quantityAsked = false;
         player = FindObjectOfType<PlayerController>();
         isYes = true;
         inventory = InventoryManager.instance;
+        sellObject = FindObjectOfType<SellScript>();
+        pauseMenu = FindObjectOfType<PauseScript>();
+        inventoryMenu = FindObjectOfType<ItemScript>();
         //Fills the shop inventory with test items, in reality individual shop's inventory will be passed in
         shopInventory = new List<Item>();
         shopInventory.Add(new Item("Helmet", "For all your helmet needs", "Equipment", "helm", 60, false));
@@ -101,6 +110,10 @@ public class BuyScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
+            sellObject.turnOff();
+            inventoryMenu.turnOff();
+            pauseMenu.OptionsClose();
+            pauseMenu.exitMenu();
             toggle();
             updateDetails();
         }
@@ -118,20 +131,13 @@ public class BuyScript : MonoBehaviour
                 {
                     arrowIndex--;
                     itemIndex--;
-                    Vector2 arrowPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
-                    arrowPosition += itemsYOffset;
-                    arrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
-                    arrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+                    moveArrowUp();
                     updateDetails();
                 }
                 else if (arrowIndex == 0 && itemIndex > 0)
                 {
                     itemIndex--;
-                    for (int i = totalOptions - 1; i >= 1; i--)
-                    {
-                        items[i].GetComponent<Text>().text = items[i - 1].GetComponent<Text>().text;
-                    }
-                    items[0].GetComponent<Text>().text = shopInventory[itemIndex].name + " (*" + shopInventory[itemIndex].quantity + ")";
+                    updateItems();
                     updateDetails();
                 }
             }
@@ -142,10 +148,7 @@ public class BuyScript : MonoBehaviour
                 {
                     itemIndex++;
                     arrowIndex++;
-                    Vector2 arrowPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
-                    arrowPosition -= itemsYOffset;
-                    arrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
-                    arrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+                    moveArrowDown();
                     updateDetails();
                 }
                 else if (arrowIndex == totalOptions - 1)
@@ -153,16 +156,12 @@ public class BuyScript : MonoBehaviour
                     if (itemIndex < shopInventory.Count - 1)
                     {
                         itemIndex++;
-                        for (int i = 0; i < totalOptions - 1; i++)
-                        {
-                            items[i].GetComponent<Text>().text = items[i + 1].GetComponent<Text>().text;
-                        }
-                        items[totalOptions - 1].GetComponent<Text>().text = shopInventory[itemIndex].name + " (*" + shopInventory[itemIndex].quantity + ")";
+                        updateItems();
                         updateDetails();
                     }
                 }
-                //select an item
             }
+            //select an item
             else if (Input.GetKeyDown(KeyCode.Space))
             {
                 if (shopInventory[itemIndex].quantity == 1)
@@ -182,11 +181,7 @@ public class BuyScript : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
             {
-                if (quantityNum == shopInventory[itemIndex].quantity)
-                {
-                    quantityNum = 1;
-                }
-                else
+                if (quantityNum < shopInventory[itemIndex].quantity)
                 {
                     quantityNum++;
                 }
@@ -194,12 +189,7 @@ public class BuyScript : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
             {
-                if (quantityNum == 1)
-                {
-                    quantityNum = shopInventory[itemIndex].quantity;
-
-                }
-                else
+                if (quantityNum > 1)
                 {
                     quantityNum--;
                 }
@@ -221,11 +211,7 @@ public class BuyScript : MonoBehaviour
                 //if arrow hovering over "No"
                 if (!isYes)
                 {
-
-                    Vector2 arrowPosition = confirmationArrow.GetComponent<RectTransform>().anchoredPosition;
-                    arrowPosition -= confirmationXOffset;
-                    confirmationArrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
-                    confirmationArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+                    moveConfirmationArrowLeft();
                     isYes = true;
                 }
 
@@ -235,10 +221,7 @@ public class BuyScript : MonoBehaviour
                 //if arrow hovering over "Yes"
                 if (isYes)
                 {
-                    Vector2 arrowPosition = confirmationArrow.GetComponent<RectTransform>().anchoredPosition;
-                    arrowPosition += confirmationXOffset;
-                    confirmationArrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
-                    confirmationArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+                    moveConfirmationArrowRight();
                     isYes = false;
                 }
 
@@ -256,6 +239,7 @@ public class BuyScript : MonoBehaviour
                     }
                     else
                     {
+                        sfx.PlaySFX(sfx.soundEffects[4]);
                         if (quantityNum == shopInventory[itemIndex].quantity)
                         {
                             inventory.addItem(shopInventory[itemIndex]);
@@ -276,27 +260,12 @@ public class BuyScript : MonoBehaviour
                             {
                                 arrowIndex--;
                                 itemIndex--;
-                                Vector2 arrowPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
-                                arrowPosition += itemsYOffset;
-                                arrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
-                                arrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
-                                items[arrowIndex + 1].GetComponent<Text>().text = "";
+                                updateItems();
+                                moveArrowUp();
                             }
                             else
                             {
-                                for (int i = 0; i < totalOptions - arrowIndex; i++)
-                                {
-                                    if (itemIndex + i < shopInventory.Count)
-                                    {
-                                        items[arrowIndex + i].GetComponent<Text>().text = shopInventory[itemIndex + i].name + " (*" + shopInventory[itemIndex + i].quantity + ")";
-                                    }
-                                    else
-                                    {
-                                        items[arrowIndex + i].GetComponent<Text>().text = "";
-                                    }
-
-                                }
-
+                                updateItems();
                             }
                             if (shopInventory.Count > 0)
                                 updateDetails();
@@ -308,17 +277,19 @@ public class BuyScript : MonoBehaviour
                             if (itemIndex == shopInventory.Count)
                             {
                                 itemIndex--;
-                                for (int i = 0; i < totalOptions; i++)
-                                {
-                                    items[arrowIndex - i].GetComponent<Text>().text = shopInventory[itemIndex - i].name + " (*" + shopInventory[itemIndex - i].quantity + ")";
-                                }
+                                updateItems();
                             }
                             else
                             {
-                                for (int i = 0; i < totalOptions - arrowIndex; i++)
+                                if (totalOptions - arrowIndex - 1 == shopInventory.Count - itemIndex)
                                 {
-                                    items[arrowIndex + i].GetComponent<Text>().text = shopInventory[itemIndex + i].name + " (*" + shopInventory[itemIndex + i].quantity + ")";
+                                    itemIndex--;
+                                    updateItems();
+                                }else
+                                {
+                                    updateItems();
                                 }
+                                
                             }
                             
                             updateDetails();
@@ -329,10 +300,7 @@ public class BuyScript : MonoBehaviour
                 }
                 else
                 {
-                    Vector2 arrowPosition = confirmationArrow.GetComponent<RectTransform>().anchoredPosition;
-                    arrowPosition -= confirmationXOffset;
-                    confirmationArrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
-                    confirmationArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+                    moveConfirmationArrowLeft();
                     confirmationBackground.SetActive(false);
                     isConfirmationActive = false;
                     isYes = true;
@@ -350,12 +318,15 @@ public class BuyScript : MonoBehaviour
             }
         }
     }
+
+    //Updates the details window
     private void updateDetails()
     {
-        priceText.GetComponent<Text>().text = "Price: " + shopInventory[itemIndex].price;
+        priceText.GetComponent<Text>().text = "Buy Price: " + shopInventory[itemIndex].price;
         typeText.GetComponent<Text>().text = "Type: " + shopInventory[itemIndex].type;
         descriptionText.GetComponent<Text>().text = "Description: " + shopInventory[itemIndex].description;
     }
+    //Turns off the buy windows
     public void turnOff()
     {
         isActive = false;
@@ -372,25 +343,33 @@ public class BuyScript : MonoBehaviour
         arrow.GetComponent<RectTransform>().anchoredPosition = startPosition;
         player.frozen = false;
     }
+
+    //Sets buy to be active
     public void turnOn()
     {
         isActive = true;
-        detailsBackground.SetActive(isActive);
-        itemsMenuBackground.SetActive(isActive);
-        moneyBackground.SetActive(isActive);
+        detailsBackground.SetActive(true);
+        itemsMenuBackground.SetActive(true);
+        moneyBackground.SetActive(true);
         player.frozen = true;
         itemIndex = 0;
         arrowIndex = 0;
         updateMoney();
     }
+
+    //Updates player's gold displayed
     public void updateMoney()
     {
         moneyBackground.transform.GetChild(0).gameObject.GetComponent<Text>().text = "Gold: " + inventory.money;
     }
+
+    //Updates quantity displayed
     private void updateQuantity()
     {
         quantityText.GetComponent<Text>().text = quantityNum.ToString();
     }
+
+    //Displays confirmation of sale window
     private void displayConfirmation()
     {
         confirmationBackground.SetActive(true);
@@ -399,6 +378,60 @@ public class BuyScript : MonoBehaviour
 		confirmationBackground.transform.GetChild(0).GetComponent<Text>().text = "Confirm purchase?";
 
 	}
+
+    //Updates the list of items displayed in the shop window
+    private void updateItems()
+    {
+        for (int i = 0; i < totalOptions; i++)
+        {
+            if (itemIndex - arrowIndex + i < shopInventory.Count)
+            {
+                items[i].GetComponent<Text>().text = shopInventory[itemIndex - arrowIndex + i].name + " (*" + shopInventory[itemIndex - arrowIndex + i].quantity + ")";
+            }
+            else
+            {
+                items[i].GetComponent<Text>().text = "";
+            }
+        }
+    }
+
+    //Moves selector arrow up on the screen
+    private void moveArrowUp()
+    {
+        Vector2 arrowPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
+        arrowPosition += itemsYOffset;
+        arrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
+        arrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+    }
+
+    //Moves the confirmation arrow left on the screen
+    private void moveConfirmationArrowLeft()
+    {
+        Vector2 arrowPosition = confirmationArrow.GetComponent<RectTransform>().anchoredPosition;
+        arrowPosition -= confirmationXOffset;
+        confirmationArrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
+        confirmationArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+    }
+
+    //Moves the confirmation arrow right on the screen
+    private void moveConfirmationArrowRight()
+    {
+        Vector2 arrowPosition = confirmationArrow.GetComponent<RectTransform>().anchoredPosition;
+        arrowPosition += confirmationXOffset;
+        confirmationArrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
+        confirmationArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+    }
+
+    //Moves the selector arrow down on the screen
+    private void moveArrowDown()
+    {
+        Vector2 arrowPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
+        arrowPosition -= itemsYOffset;
+        arrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
+        arrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+    }
+
+    //toggle whether buy is active
     public void toggle()
     {
         updateMoney();
