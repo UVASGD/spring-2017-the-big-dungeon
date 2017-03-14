@@ -17,3 +17,5 @@ EditorBuildSettings:
     path: Assets/Scenes/Main/0_Start_Menu.unity
   - enabled: 1
     path: Assets/Scenes/Main/1_Main_Scene.unity
+  - enabled: 1
+    path: Assets/Scenes/Main/2_Battle_Scene.unity
