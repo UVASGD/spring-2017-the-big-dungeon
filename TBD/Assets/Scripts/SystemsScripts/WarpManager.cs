@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Warp : MonoBehaviour {
+public class WarpManager : MonoBehaviour {
 
     public PlayerController player;
     public Transform warpTarget;
@@ -30,7 +30,7 @@ public class Warp : MonoBehaviour {
 
 			other.gameObject.transform.position = warpTarget.position;
 			Camera.main.transform.position = warpTarget.position;
-			Camera.main.GetComponent<CameraFollow>().setCurrentRoom(targetRoom);
+			Camera.main.GetComponent<CameraManager>().setCurrentRoom(targetRoom);
 
 			yield return StartCoroutine(sf.FadeToClear());
 			player.frozen = false;

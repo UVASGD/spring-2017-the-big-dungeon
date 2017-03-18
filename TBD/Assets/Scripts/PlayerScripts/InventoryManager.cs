@@ -11,7 +11,7 @@ public class InventoryManager : MonoBehaviour
     public int money;
     public int maxSize = 20;
 	//private int currentSize;
-	private ItemScript inventoryMenu;
+	private InventoryUI inventoryMenu;
 
 	private void Awake()
     {
@@ -30,7 +30,7 @@ public class InventoryManager : MonoBehaviour
         //amount for testing
         money = 80;
 		DontDestroyOnLoad(gameObject);
-		inventoryMenu = FindObjectOfType<ItemScript>();
+		inventoryMenu = FindObjectOfType<InventoryUI>();
 
 		Item it1 = new Item("First Item", "This is a very long description", "Equipment", "?", 30, false);
 		Item it2 = new Item("Multiple Item", "How bout them items", "Equipment", "What", 3, 30, false);

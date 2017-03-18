@@ -10,6 +10,7 @@ public class SFXManager : MonoBehaviour {
 	public List<GroundType> myGroundTypes = new List<GroundType>();
 	public string currentground = "none";
 	public bool debugOn = false;
+	private bool started = false;
 
 	// Use this for initialization
 	void Start () {
@@ -18,6 +19,7 @@ public class SFXManager : MonoBehaviour {
 		if (myGroundTypes.Count > 0 && player != null) {
 			debug("Initializing ground");
 			setGroundType(myGroundTypes[0]);
+			started = true;
 		}
 	}
 	
@@ -25,6 +27,11 @@ public class SFXManager : MonoBehaviour {
 	void Update () {
 		if (player == null) {
 			player = FindObjectOfType<PlayerController>();
+		}
+		if (!started && player != null) {
+			debug("Initializing ground");
+			setGroundType(myGroundTypes[0]);
+			started = true;
 		}
 	}
 

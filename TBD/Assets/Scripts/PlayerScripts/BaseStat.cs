@@ -18,7 +18,7 @@ public class BaseStat {
         modifier = 0;
     }
 
-    public int finalValue()
+    public int currentValue()
     {
         return baseVal + modifier;
     }

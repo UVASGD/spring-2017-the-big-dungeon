@@ -6,7 +6,7 @@ using System.IO;
 using System;
 using System.Reflection;
 
-public class CreditsScript : MonoBehaviour {
+public class CreditScrollUI : MonoBehaviour {
 
 	private List<string> creditsLines = new List<string>();
 	public TextAsset inputFile;
@@ -26,16 +26,16 @@ public class CreditsScript : MonoBehaviour {
 
 	public float scrollSpeed = 0.3f;
 
-	private MenuScript ms;
-	private MusicController mc;
+	private MainMenuUI ms;
+	private MusicManager mc;
 
 	private float waitTimer = 0.0f;
 	public float creditWaitTime = 10.0f;
 
 	// Use this for initialization
 	void Start () {
-		ms = FindObjectOfType<MenuScript>();
-		mc = FindObjectOfType<MusicController>();
+		ms = FindObjectOfType<MainMenuUI>();
+		mc = FindObjectOfType<MusicManager>();
 		origPosition = GetComponent<RectTransform>().anchoredPosition;
 		middleOfScreen = -origPosition.y/2.0f;
 		string wholeFile = inputFile.text;

@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemScript : MonoBehaviour {
+public class InventoryUI : MonoBehaviour {
 
-	private InventoryManager inventory;
 	private GameObject itemMenu;
 	public bool isActive = false;
 	public GameObject blankItem;
-	private PauseScript pause;
+	private PauseMenuUI pause;
 	private GameObject itemPanel;
 	public bool debugOn = false;
 
@@ -17,8 +16,7 @@ public class ItemScript : MonoBehaviour {
 	void Start () {
 		itemMenu = GetComponentInChildren<Image>().gameObject;
 		itemMenu.SetActive(isActive);
-		pause = FindObjectOfType<PauseScript>();
-		inventory = FindObjectOfType<InventoryManager>();
+		pause = FindObjectOfType<PauseMenuUI>();
 		itemPanel = itemMenu.GetComponentInChildren<VerticalLayoutGroup>().gameObject;
 	}
 	

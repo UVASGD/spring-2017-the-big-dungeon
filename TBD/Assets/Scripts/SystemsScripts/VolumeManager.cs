@@ -25,7 +25,7 @@ public class VolumeManager : MonoBehaviour {
 
 		for (int i = 0; i < vcObjects.Length; i++) {
 			try {
-				vcObjects[i].GetComponentInParent<MusicController>();
+				//vcObjects[i].GetComponentInParent<MusicManager>();
 				vcObjects[i].SetAudioLevel(currentMusicVolumeLevel);
 			} catch { }
 			try {
@@ -43,7 +43,7 @@ public class VolumeManager : MonoBehaviour {
 		}
 		for (int i = 0; i < vcObjects.Length; i++) {
 			try {
-				string test = vcObjects[i].GetComponentInParent<MusicController>().name;
+				string test = vcObjects[i].GetComponentInParent<MusicManager>().name;
 				vcObjects[i].SetAudioLevel(currentMusicVolumeLevel);
 			}
 			catch { }
@@ -76,7 +76,7 @@ public class VolumeManager : MonoBehaviour {
 		vcObjects = FindObjectsOfType<VolumeController> ();
 		for (int i = 0; i < vcObjects.Length; i++) {
 			try {
-				vcObjects[i].GetComponentInParent<MusicController>();
+				vcObjects[i].GetComponentInParent<MusicManager>();
 				vcObjects[i].SetAudioLevel(currentMusicVolumeLevel);
 			} catch { }
 			try {

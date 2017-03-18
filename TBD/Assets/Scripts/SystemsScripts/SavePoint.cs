@@ -4,23 +4,20 @@ using UnityEngine;
 
 public class SavePoint : MonoBehaviour {
 
-	PlayerController player;
-
-	public SaveUIController suic;
+	public SaveMenuUI suic;
 
 	bool withinRange;
 
 	// Use this for initialization
 	void Start () {
-		player = FindObjectOfType<PlayerController> ();
-		suic = FindObjectOfType<SaveUIController> ();
+		suic = FindObjectOfType<SaveMenuUI> ();
 		withinRange = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (withinRange) {
-			suic = FindObjectOfType<SaveUIController>();
+			suic = FindObjectOfType<SaveMenuUI>();
 			if (Input.GetKeyDown (KeyCode.Space) && !suic.selection) {
 				suic.SetSelectionMenu (true);
 			}

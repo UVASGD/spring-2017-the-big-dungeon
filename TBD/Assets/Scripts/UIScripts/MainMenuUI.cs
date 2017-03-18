@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class MenuScript : MonoBehaviour {
+public class MainMenuUI : MonoBehaviour {
 
 	public Canvas quitMenu;
 	public Button startText;
@@ -106,7 +106,7 @@ public class MenuScript : MonoBehaviour {
 		}
 		credits.enabled = true;
 		mainMenuOff();
-		credits.GetComponentInChildren<CreditsScript>().startCredits();
+		credits.GetComponentInChildren<CreditScrollUI>().startCredits();
 	}
 
 	public void endOfCredits() {

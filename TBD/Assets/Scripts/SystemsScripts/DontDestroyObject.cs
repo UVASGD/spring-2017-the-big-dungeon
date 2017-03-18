@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class DontDestroy : MonoBehaviour {
+public class DontDestroyObject : MonoBehaviour {
 
 	private static bool audioExists;
 

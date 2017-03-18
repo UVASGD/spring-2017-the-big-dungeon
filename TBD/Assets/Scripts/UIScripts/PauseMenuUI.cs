@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class PauseScript : MonoBehaviour {
+public class PauseMenuUI : MonoBehaviour {
 
 	private GameObject pauseMenu;
 	private bool isActive = false;
@@ -18,9 +18,9 @@ public class PauseScript : MonoBehaviour {
 	private Canvas optionsMenu;
 	public bool inOptions = false;
 	private List<GameObject> optionParts = new List<GameObject>();
-	private ItemScript itemMenu;
-    private SellScript sellObject;
-    private BuyScript buyObject;
+	private InventoryUI inventoryMenu;
+    private SellMenuUI sellObject;
+    private BuyMenuUI buyObject;
 	public bool inItems = false;
 	public bool canEscape = false;
 
@@ -33,14 +33,14 @@ public class PauseScript : MonoBehaviour {
 	void Start() {
 		pauseMenu = GetComponentInChildren<Image>().gameObject;
 		pauseMenu.SetActive(isActive);
-        sellObject = FindObjectOfType<SellScript>();
-        buyObject = FindObjectOfType<BuyScript>();
-		itemMenu = FindObjectOfType<ItemScript>();
+        sellObject = FindObjectOfType<SellMenuUI>();
+        buyObject = FindObjectOfType<BuyMenuUI>();
+		inventoryMenu = FindObjectOfType<InventoryUI>();
 		player = FindObjectOfType<PlayerController>();
 		arrow = pauseMenu.GetComponentInChildren<Animator>().gameObject;
 		startPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
 		save = FindObjectOfType<SaveController>();
-		optionsMenu = FindObjectOfType<SettingScript>().gameObject.GetComponent<Canvas>();
+		optionsMenu = FindObjectOfType<OptionsMenuUI>().gameObject.GetComponent<Canvas>();
 		foreach (Image i in optionsMenu.GetComponentsInChildren<Image>()) {
 			optionParts.Add(i.gameObject);
 		}
@@ -96,7 +96,7 @@ public class PauseScript : MonoBehaviour {
 					//Item
 					case 2:
 						debug("Open ITEM");
-						itemMenu.itemsOpened();
+						inventoryMenu.itemsOpened();
 						inItems = true;
 						canEscape = false;
 						//toggleMenu();

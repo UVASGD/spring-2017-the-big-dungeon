@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SaveUIController : MonoBehaviour {
+public class SaveMenuUI : MonoBehaviour {
 
 	public Image confirmationWindow;
 	public Image selectionWindow;

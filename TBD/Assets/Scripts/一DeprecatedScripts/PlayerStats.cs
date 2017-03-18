@@ -12,18 +12,20 @@ public class PlayerStats : MonoBehaviour {
 		stats.Add(new BaseStat("defense", 11, "Damage Taken"));
 		stats.Add(new BaseStat("HP", 12, "Health"));
     }
+
     //base stat + modifier
     public int getCurrentValue(string statName)
 	{
 		foreach (BaseStat s in stats) {
             if (String.Compare(s.statName, statName) == 0) 
 			{
-				return s.finalValue();
+				return s.currentValue();
 			}
 		}
         return 0;
     }
-    //positive value if adding. Negative value if taking away.
+
+	//positive value if adding. Negative value if taking away.
 	public void modifyStat(string statName, int modifier)
     {
 		foreach (BaseStat s in stats)

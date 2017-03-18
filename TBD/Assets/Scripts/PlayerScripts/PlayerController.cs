@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerController : MonoBehaviour {
 
@@ -8,8 +9,7 @@ public class PlayerController : MonoBehaviour {
 	private SFXManager sfxMan;
 	private Animator anim;
 	private Rigidbody2D rbody;
-	private CameraFollow cam;
-    private PlayerStats stats;
+	private CameraManager cam;
 
 	public bool frozen = false;
 	public bool debugOn = false;
@@ -27,15 +27,20 @@ public class PlayerController : MonoBehaviour {
 	public bool talking = false;
     public bool alive = true;
 
+	public List<BaseStat> stats = new List<BaseStat>();
+
 	// Use this for initialization
 	void Start () {
 
         anim = GetComponent<Animator>();
 		rbody = GetComponent<Rigidbody2D>();
 		sfxMan = FindObjectOfType<SFXManager>();
-		cam = FindObjectOfType<CameraFollow>();
-        stats = FindObjectOfType<PlayerStats>();
+		cam = FindObjectOfType<CameraManager>();
+		stats.Add(new BaseStat("strength", 10, "Damage Dealt"));
+		stats.Add(new BaseStat("defense", 11, "Damage Taken"));
+		stats.Add(new BaseStat("HP", 12, "Health"));
 
+		debug(getCurrentStatValue("HP") + "");
 	}
 	
 	// Update is called once per frame
@@ -71,7 +76,7 @@ public class PlayerController : MonoBehaviour {
 	void PlayNextSound() {
 		AudioSource lastStep = currentStep;
 		while (currentStep == lastStep && playerStepSounds.Length > 1) {
-			currentStep = playerStepSounds[Random.Range(0, playerStepSounds.Length)];
+			currentStep = playerStepSounds[UnityEngine.Random.Range(0, playerStepSounds.Length)];
 		}
 		if (lastStep != null)
             sfxMan.StopSFX(lastStep);
@@ -113,13 +118,42 @@ public class PlayerController : MonoBehaviour {
 			stepsOn = true;
 			if (currentStep != null)
 				currentStep.Stop();
-			currentStep = playerStepSounds[Random.Range(0, playerStepSounds.Length)];
+			currentStep = playerStepSounds[UnityEngine.Random.Range(0, playerStepSounds.Length)];
 		}
 	}
 
 	void debug(string line) {
 		if (debugOn) {
 			Debug.Log(line);
+		}
+	}
+
+	//base stat + modifier
+	public int getCurrentStatValue(string statName) {
+		foreach (BaseStat s in stats) {
+			if (String.Compare(s.statName, statName) == 0) {
+				return s.currentValue();
+			}
+		}
+		return 0;
+	}
+
+	//base stat
+	public int getBaseStatValue(string statName) {
+		foreach (BaseStat s in stats) {
+			if (String.Compare(s.statName, statName) == 0) {
+				return s.baseVal;
+			}
+		}
+		return 0;
+	}
+
+	//positive value if adding. Negative value if taking away.
+	public void changeCurrentStatValue(string statName, int modifier) {
+		foreach (BaseStat s in stats) {
+			if (String.Compare(s.statName, statName) == 0) {
+				s.modifier += modifier;
+			}
 		}
 	}
 

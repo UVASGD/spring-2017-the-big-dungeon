@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MusicController : MonoBehaviour {
+public class MusicManager : MonoBehaviour {
 
 	public static List<AudioSource> musicTracks = new List<AudioSource>();
 	public static int currentTrack;
@@ -26,7 +26,6 @@ public class MusicController : MonoBehaviour {
 	private bool waitingOnSwitch = false;
 	private SaveController sc;
 	private bool switching = false;
-	private bool canSwitch = true;
 	private static bool started = false;
 
 	// Use this for initialization

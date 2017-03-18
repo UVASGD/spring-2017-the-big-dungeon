@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SellScript : MonoBehaviour
+public class SellMenuUI : MonoBehaviour
 {
     //used to change the amount buyers will give player for items
     private SFXManager sfx;
@@ -38,9 +38,9 @@ public class SellScript : MonoBehaviour
     private bool isDenied;
     private bool quantityAsked;
     private int quantityNum;
-    private BuyScript buyObject;
-    private PauseScript pauseMenu;
-    private ItemScript inventoryMenu;
+    private BuyMenuUI buyObject;
+    private PauseMenuUI pauseMenu;
+    private InventoryUI inventoryMenu;
 
     // Use this for initialization
     void Start()
@@ -51,9 +51,9 @@ public class SellScript : MonoBehaviour
         quantityAsked = false;
         player = FindObjectOfType<PlayerController>();
         isYes = true;
-        buyObject = FindObjectOfType<BuyScript>();
-        pauseMenu = FindObjectOfType<PauseScript>();
-        inventoryMenu = FindObjectOfType<ItemScript>();
+        buyObject = FindObjectOfType<BuyMenuUI>();
+        pauseMenu = FindObjectOfType<PauseMenuUI>();
+        inventoryMenu = FindObjectOfType<InventoryUI>();
         inventory = InventoryManager.instance;
         playerInventory = inventory.items;
         arrowIndex = 0;

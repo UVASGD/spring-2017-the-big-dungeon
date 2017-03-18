@@ -7,7 +7,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System;
 
-public class SettingScript : MonoBehaviour {
+public class OptionsMenuUI : MonoBehaviour {
 
 	public Toggle fullscreenToggle;
 	public Dropdown resolutionDropdown;
@@ -22,14 +22,14 @@ public class SettingScript : MonoBehaviour {
 	private GameSettings gameSettings;
 
 	public VolumeManager volMan;
-	public MenuScript menu;
-	public PauseScript pause;
+	public MainMenuUI menu;
+	public PauseMenuUI pause;
 
 	// Use this for initialization
 	void Start () {
-		menu = FindObjectOfType<MenuScript>();
+		menu = FindObjectOfType<MainMenuUI>();
 		volMan = FindObjectOfType<VolumeManager>();
-		pause = FindObjectOfType<PauseScript>();
+		pause = FindObjectOfType<PauseMenuUI>();
 		musicVolumeSlider.value = volMan.getCurrentMusicVolumeLevel();
 		sfxVolumeSlider.value = volMan.getCurrentSFXVolumeLevel();
 

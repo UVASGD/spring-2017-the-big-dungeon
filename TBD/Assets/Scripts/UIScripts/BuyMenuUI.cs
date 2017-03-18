@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuyScript : MonoBehaviour
+public class BuyMenuUI : MonoBehaviour
 {
     private SFXManager sfx;
     private GameObject itemsMenu;
@@ -36,9 +36,9 @@ public class BuyScript : MonoBehaviour
     private GameObject quantityText;
     private bool quantityAsked;
     private int quantityNum;
-    private SellScript sellObject;
-    private PauseScript pauseMenu;
-    private ItemScript inventoryMenu;
+    private SellMenuUI sellObject;
+    private PauseMenuUI pauseMenu;
+    private InventoryUI inventoryMenu;
 
     // Use this for initialization
     void Start()
@@ -50,9 +50,9 @@ public class BuyScript : MonoBehaviour
         player = FindObjectOfType<PlayerController>();
         isYes = true;
         inventory = InventoryManager.instance;
-        sellObject = FindObjectOfType<SellScript>();
-        pauseMenu = FindObjectOfType<PauseScript>();
-        inventoryMenu = FindObjectOfType<ItemScript>();
+        sellObject = FindObjectOfType<SellMenuUI>();
+        pauseMenu = FindObjectOfType<PauseMenuUI>();
+        inventoryMenu = FindObjectOfType<InventoryUI>();
         //Fills the shop inventory with test items, in reality individual shop's inventory will be passed in
         shopInventory = new List<Item>();
         shopInventory.Add(new Item("Helmet", "For all your helmet needs", "Equipment", "helm", 60, false));

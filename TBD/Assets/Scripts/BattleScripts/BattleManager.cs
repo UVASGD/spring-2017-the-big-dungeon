@@ -12,7 +12,7 @@ public class BattleManager : MonoBehaviour
     // Battle components that we dynamically load
     private BattleMenu battleMenu = null;
     private BattleInfo battleInfo = null;
-	private MusicController music;
+	private MusicManager music;
 
 	// State machine
 	private bool inBattle = false;
@@ -34,7 +34,7 @@ public class BattleManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-		music = FindObjectOfType<MusicController>();
+		music = FindObjectOfType<MusicManager>();
 	}
 
     void Update()

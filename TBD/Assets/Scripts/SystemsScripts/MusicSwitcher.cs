@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class MusicSwitcher : MonoBehaviour {
 
-	private MusicController mc;
+	private MusicManager mc;
 	public int newTrack;
 	public bool switchOnStart;
 
 	// Use this for initialization
 	void Start () {
-		mc = FindObjectOfType<MusicController> ();
+		mc = FindObjectOfType<MusicManager> ();
 		if (switchOnStart) {
 			mc.SwitchTrack (newTrack);
 			gameObject.SetActive (false);

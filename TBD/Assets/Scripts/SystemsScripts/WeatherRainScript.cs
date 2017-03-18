@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class rainScript : MonoBehaviour {
+public class WeatherRainScript : MonoBehaviour {
     public bool isActive;
 	private ParticleSystem pSys;
 	private ParticleSystem.EmissionModule myEmissionModule;
@@ -15,7 +15,7 @@ public class rainScript : MonoBehaviour {
         pSys.Stop();
         pSys.Clear();
 		myEmissionModule = pSys.emission;
-		myEmissionModule.rate = new ParticleSystem.MinMaxCurve(myRate);
+		myEmissionModule.rateOverTime = new ParticleSystem.MinMaxCurve(myRate);
 	}
 	
 	// Update is called once per frame
@@ -36,7 +36,7 @@ public class rainScript : MonoBehaviour {
 	}
 
 	public void updateRate(float newRate){
-		myEmissionModule.rate = new ParticleSystem.MinMaxCurve(newRate);
+		myEmissionModule.rateOverTime = new ParticleSystem.MinMaxCurve(newRate);
 	}
 
 }

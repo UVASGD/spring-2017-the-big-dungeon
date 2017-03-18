@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 
-[RequireComponent (typeof (MusicController))]
+[RequireComponent (typeof (MusicManager))]
 [RequireComponent (typeof (InventoryManager))]
 [RequireComponent (typeof (PlayerController))]
 [RequireComponent (typeof (VolumeManager))]
@@ -21,13 +21,13 @@ public class SaveController : MonoBehaviour {
 	public GameObject player;
     public InventoryManager inventory;
 	public bool isContinuing = false;
-	private MusicController music;
+	private MusicManager music;
 	private VolumeManager volumeMan;
 	public bool debugOn = false;
 
 	// Use this for initialization
 	void Start () {
-		music = FindObjectOfType<MusicController> ();
+		music = FindObjectOfType<MusicManager> ();
 		volumeMan = FindObjectOfType<VolumeManager> ();
 		volumeMan.findVCObjects ();
 		SceneManager.sceneLoaded += OnLevelFinishedLoading;
@@ -102,7 +102,7 @@ public class SaveController : MonoBehaviour {
 
 	void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode) {
 		if (music == null) {
-			music = FindObjectOfType<MusicController> ();
+			music = FindObjectOfType<MusicManager> ();
 		}
 		if (debugOn)
 			Debug.Log (scene.name);
@@ -155,7 +155,7 @@ public class SaveController : MonoBehaviour {
 		if (music == null) {
 			if (debugOn)
 				Debug.Log ("Remembering music");
-			music = FindObjectOfType<MusicController> ();
+			music = FindObjectOfType<MusicManager> ();
 			music.SwitchTrack(requestedTrack, requestedFadeOutSpeed, requestedFadeInSpeed);
 		}
 	}

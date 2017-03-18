@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class fogScript : MonoBehaviour {
+public class WeatherSnowScript : MonoBehaviour {
     public bool isActive;
     private ParticleSystem pSys;
 	private ParticleSystem.EmissionModule myEmissionModule;
 	public float myRate = 100f;
-
 	// Use this for initialization
 	void Start () {
         isActive = false;
@@ -15,26 +14,29 @@ public class fogScript : MonoBehaviour {
         pSys.Stop();
         pSys.Clear();
 		myEmissionModule = pSys.emission;
-		myEmissionModule.rate = new ParticleSystem.MinMaxCurve(myRate);
+		myEmissionModule.rateOverTime = new ParticleSystem.MinMaxCurve(myRate);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKeyDown(KeyCode.F))
-        { 
+        if (Input.GetKeyDown(KeyCode.C))
+        {
             isActive = !isActive;
             if (isActive)
             {
                 pSys.Play();
-            }else
+            }
+            else
             {
                 pSys.Stop();
                 pSys.Clear();
             }
         }
+		
 	}
 
 	public void updateRate(float newRate){
-		myEmissionModule.rate = new ParticleSystem.MinMaxCurve(newRate);
+		myEmissionModule.rateOverTime = new ParticleSystem.MinMaxCurve(newRate);
 	}
+
 }
