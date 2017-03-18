@@ -129,6 +129,7 @@ public class SaveController : MonoBehaviour {
 				}
 			break;
 		case 2:
+			music.SwitchTrack (4, 0.6f, 0.8f);
 			break;
 		default:
 			music.SwitchTrack (0);
