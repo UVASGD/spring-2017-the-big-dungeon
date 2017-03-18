@@ -53,15 +53,12 @@ public class PlayerController : MonoBehaviour {
 		sfxMan = FindObjectOfType<SFXManager>();
 		cam = FindObjectOfType<CameraManager>();
 		statsMenu = FindObjectOfType<PlayerStatsUI> ();
-		BaseStat strength = new BaseStat ("strength", 10, "Damage Dealt");
-		BaseStat defense = new BaseStat ("defense", 11, "Damage Taken");
-		BaseStat HP = new BaseStat ("HP", 12, "Health");
+		BaseStat strength = new BaseStat ("strength", 10, "Damage Dealt", -2);
+		BaseStat defense = new BaseStat ("defense", 11, "Damage Taken", 0);
+		BaseStat HP = new BaseStat ("HP", 12, "Health", 5);
 		stats.Add(HP);
 		stats.Add(strength);
 		stats.Add(defense);
-		changeCurrentStatValue ("HP", 5);
-		changeCurrentStatValue ("strength", -2);
-		changeCurrentStatValue ("defense", 0);
 		statsMenu.addStat (HP);
 		statsMenu.addStat (strength);
 		statsMenu.addStat (defense);
@@ -168,20 +165,10 @@ public class PlayerController : MonoBehaviour {
 	//base stat
 	public int getBaseStatValue(string statName) {
 		foreach (BaseStat s in stats) {
-			if (String.Compare(s.statName, statName) == 0) {
+			if (String.Compare (s.statName, statName) == 0) {
 				return s.baseVal;
 			}
 		}
 		return 0;
 	}
-
-	//positive value if adding. Negative value if taking away.
-	public void changeCurrentStatValue(string statName, int modifier) {
-		foreach (BaseStat s in stats) {
-			if (String.Compare(s.statName, statName) == 0) {
-				s.modifier += modifier;
-			}
-		}
-	}
-
 }
