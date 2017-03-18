@@ -14,11 +14,10 @@ public class CameraManager : MonoBehaviour {
     public float minPosition = -10f;
     public float maxPosition = 10f;
 
-	public bool freeze { get; set; }
+	public bool freeze = false;
 
 	// Use this for initialization
 	void Start () {
-		this.freeze = false;
         mycam = GetComponent<Camera>();
 		target = FindObjectOfType<PlayerController> ().transform;
 	}

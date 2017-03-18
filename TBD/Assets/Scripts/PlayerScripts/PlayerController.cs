@@ -29,7 +29,6 @@ public class PlayerController : MonoBehaviour {
     public bool alive = true;
 
 	public List<BaseStat> stats = new List<BaseStat>();
-	private PlayerStatsUI statsMenu;
 
 	private void Awake()
 	{
@@ -52,17 +51,9 @@ public class PlayerController : MonoBehaviour {
 		rbody = GetComponent<Rigidbody2D>();
 		sfxMan = FindObjectOfType<SFXManager>();
 		cam = FindObjectOfType<CameraManager>();
-		statsMenu = FindObjectOfType<PlayerStatsUI> ();
-		BaseStat strength = new BaseStat ("strength", 10, "Damage Dealt", -2);
-		BaseStat defense = new BaseStat ("defense", 11, "Damage Taken", 0);
-		BaseStat HP = new BaseStat ("HP", 12, "Health", 5);
-		stats.Add(HP);
-		stats.Add(strength);
-		stats.Add(defense);
-		statsMenu.addStat (HP);
-		statsMenu.addStat (strength);
-		statsMenu.addStat (defense);
-
+		stats.Add(new BaseStat("strength", 10, "Damage Dealt"));
+		stats.Add(new BaseStat("defense", 11, "Damage Taken"));
+		stats.Add(new BaseStat("HP", 12, "Health"));
 
 		debug(getCurrentStatValue("HP") + "");
 	}
@@ -165,10 +156,20 @@ public class PlayerController : MonoBehaviour {
 	//base stat
 	public int getBaseStatValue(string statName) {
 		foreach (BaseStat s in stats) {
-			if (String.Compare (s.statName, statName) == 0) {
+			if (String.Compare(s.statName, statName) == 0) {
 				return s.baseVal;
 			}
 		}
 		return 0;
 	}
+
+	//positive value if adding. Negative value if taking away.
+	public void changeCurrentStatValue(string statName, int modifier) {
+		foreach (BaseStat s in stats) {
+			if (String.Compare(s.statName, statName) == 0) {
+				s.modifier += modifier;
+			}
+		}
+	}
+
 }

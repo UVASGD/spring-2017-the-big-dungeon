@@ -12,6 +12,7 @@ public class InventoryManager : MonoBehaviour
     public int maxSize = 20;
 	//private int currentSize;
 	private InventoryUI inventoryMenu;
+	private SaveController sc;
 
 	private void Awake()
     {
@@ -40,7 +41,7 @@ public class InventoryManager : MonoBehaviour
 		addItem(it2);
 		addItem(armor);
 		addItem(weapon);
-		// Debug.Log ("I have " + items.Count + " items");
+		Debug.Log ("I have " + items.Count + " items");
 
 	}
 	public void refreshItems() {
@@ -57,7 +58,7 @@ public class InventoryManager : MonoBehaviour
     }
     public void addItem(Item item)
     {
-		// Debug.Log ("Adding " + item.name);
+		Debug.Log ("Adding " + item.name);
         //If item already in inventory, increment quantity of item
         for (int i = 0; i < items.Count; i++)
         {

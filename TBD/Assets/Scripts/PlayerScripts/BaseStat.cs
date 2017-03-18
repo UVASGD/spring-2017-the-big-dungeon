@@ -15,19 +15,12 @@ public class BaseStat {
         this.statName = statName;
         this.baseVal = baseVal;
         this.description = description;
-        this.modifier = 0;
+        modifier = 0;
     }
-
-	public BaseStat(string statName, int baseVal, string description, int modifier)
-	{
-		this.statName = statName;
-		this.baseVal = baseVal;
-		this.description = description;
-		this.modifier = modifier;
-	}
 
     public int currentValue()
     {
         return baseVal + modifier;
     }
+
 }
