@@ -8,4 +8,4 @@ G - Toggle Buy Menu, H - Toggle Sell Menu
 
 O - Save Current Point, P - Return to Last Point
 
-B - Enter Battle Scene
+B - Enter Battle Scene (ONLY available if start scene from 0_Start_Menu)
