@@ -65,14 +65,14 @@ public class SaveController : MonoBehaviour {
 		}
 	}
 
-	void WriteFromData(SaveData s) {
-		player = FindObjectOfType<PlayerController>().gameObject;
+	public void WriteFromData(SaveData s) {
+		player = GameObject.FindGameObjectWithTag("Player");
 		player.transform.position = new Vector2 (s.x, s.y);
         inventory.items = s.inventory;
         inventory.money = s.money;
 	}
 
-	SaveData WriteToData() {
+	public SaveData WriteToData() {
 		SaveData s = new SaveData ();
 		s.x = player.transform.position.x;
 		s.y = player.transform.position.y;
@@ -167,7 +167,7 @@ public class SaveController : MonoBehaviour {
 }
 
 [Serializable]
-class SaveData {
+public class SaveData {
 	//Any saved fields must be in here. currently just position:
 	public float x;
 	public float y;

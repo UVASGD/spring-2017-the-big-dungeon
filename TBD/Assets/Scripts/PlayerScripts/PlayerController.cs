@@ -5,6 +5,7 @@ using System;
 
 public class PlayerController : MonoBehaviour {
 
+	public static PlayerController instance = null;
 
 	private SFXManager sfxMan;
 	private Animator anim;
@@ -29,8 +30,22 @@ public class PlayerController : MonoBehaviour {
 
 	public List<BaseStat> stats = new List<BaseStat>();
 
+	private void Awake()
+	{
+		if (instance == null)
+		{
+			instance = this;
+		}
+		else if (instance != this)
+		{
+			Destroy(gameObject);
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
+
+		DontDestroyOnLoad (gameObject);
 
         anim = GetComponent<Animator>();
 		rbody = GetComponent<Rigidbody2D>();
