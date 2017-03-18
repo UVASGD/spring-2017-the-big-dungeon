@@ -64,6 +64,7 @@ public class SaveController : MonoBehaviour {
 	}
 
 	void WriteFromData(SaveData s) {
+		player = FindObjectOfType<PlayerController>().gameObject;
 		player.transform.position = new Vector2 (s.x, s.y);
         inventory.items = s.inventory;
         inventory.money = s.money;

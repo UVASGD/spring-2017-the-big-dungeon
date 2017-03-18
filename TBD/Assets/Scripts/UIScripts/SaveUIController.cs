@@ -23,6 +23,8 @@ public class SaveUIController : MonoBehaviour {
 
 	float cooldown;
 
+	public bool debugOn = false;
+
 	// Use this for initialization
 	void Start () {
 		confirmation = false;
@@ -60,7 +62,7 @@ public class SaveUIController : MonoBehaviour {
 				selIndex++;
 				SelectArrow.rectTransform.anchoredPosition = selectArrowInit - selIndex * (new Vector2 (0, SelectArrowOffset));
 			} else if(Input.GetKeyDown(KeyCode.Space)) {
-				Debug.Log (selIndex);
+				debug(selIndex + "");
 				if (selIndex < 3) {
 					SetConfirmationWindow (true);
 				} else {
@@ -82,7 +84,7 @@ public class SaveUIController : MonoBehaviour {
 		selIndex = 0;
 		SelectArrow.rectTransform.anchoredPosition = selectArrowInit;
 		player.frozen = false;
-		Debug.Log ("EXIT");
+		debug("EXIT");
 		cooldown = 0.1f;
 	}
 
@@ -105,5 +107,11 @@ public class SaveUIController : MonoBehaviour {
 		confirmation = status;
 		confirmationWindow.gameObject.SetActive (status);
 		player.frozen = (confirmation || selection);
+	}
+
+	void debug(string line) {
+		if (debugOn) {
+			Debug.Log(line);
+		}
 	}
 }
