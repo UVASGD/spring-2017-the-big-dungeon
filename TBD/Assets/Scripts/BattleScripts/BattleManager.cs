@@ -14,6 +14,8 @@ public class BattleManager : MonoBehaviour
     private BattleInfo battleInfo = null;
 	private MusicManager music;
 
+	private SaveData tempSave;
+
 	// State machine
 	private bool inBattle = false;
     private Queue<BattleState> stateQueue = new Queue<BattleState>();
@@ -77,6 +79,7 @@ public class BattleManager : MonoBehaviour
     {
         this.inBattle = true;
         this.stateQueue.Enqueue(new PlayerState());
+		this.tempSave = FindObjectOfType<SaveController> ().WriteToData ();
         SceneManager.LoadScene("2_Battle_Scene");
     }
 
@@ -100,6 +103,7 @@ public class BattleManager : MonoBehaviour
         SceneManager.LoadScene("1_Main_Scene");
 		music.SwitchTrack(0);
 		this.inBattle = false;
+		FindObjectOfType<SaveController> ().WriteFromData (this.tempSave);
     }
 
     public void addState(BattleState battleState)

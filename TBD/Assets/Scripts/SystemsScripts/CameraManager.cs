@@ -14,6 +14,7 @@ public class CameraManager : MonoBehaviour {
     public float minPosition = -10f;
     public float maxPosition = 10f;
 
+	public bool freeze = false;
 
 	// Use this for initialization
 	void Start () {
@@ -24,8 +25,11 @@ public class CameraManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         float scalefactor = 4.5f;
-        mycam.orthographicSize = (Screen.height / 100f) / scalefactor;
-		if ((target != null)) {
+		mycam.orthographicSize = (Screen.height / 100f) / scalefactor;
+		if(target == null) {
+			target = FindObjectOfType<PlayerController> ().transform;
+		}
+		if(target != null && !freeze) {
 			Vector3 targetPosition = new Vector3 (0, 0, 0);
 			if (currentRoom) {
 				currentBounds = currentRoom.GetComponent<Tiled2Unity.TiledMap> ().GetMapRectInPixelsScaled ();
