@@ -17,7 +17,7 @@ public class InventoryUI : MonoBehaviour {
 		itemMenu = GetComponentInChildren<Image>().gameObject;
 		itemMenu.SetActive(isActive);
 		pause = FindObjectOfType<PauseMenuUI>();
-		itemPanel = itemMenu.GetComponentInChildren<VerticalLayoutGroup>().gameObject;
+		itemPanel = itemMenu.GetComponentInChildren<GridLayoutGroup>().gameObject;
 	}
 	
 	// Update is called once per frame

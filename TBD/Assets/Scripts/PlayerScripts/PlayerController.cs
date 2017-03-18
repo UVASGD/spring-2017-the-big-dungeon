@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour {
     public bool alive = true;
 
 	public List<BaseStat> stats = new List<BaseStat>();
+    public int level = 1;
+    public int currentExp = 0;
 	private PlayerStatsUI statsMenu;
 
 	private void Awake()
@@ -42,7 +44,6 @@ public class PlayerController : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
-
 	// Use this for initialization
 	void Start () {
 
@@ -65,7 +66,7 @@ public class PlayerController : MonoBehaviour {
 
 
 		debug(getCurrentStatValue("HP") + "");
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -171,4 +172,36 @@ public class PlayerController : MonoBehaviour {
 		}
 		return 0;
 	}
+
+    //currently only need 1000 XP to get to the next lvl
+    public int getNewLevel()
+    {
+        Double calculatedLvl = currentExp / 1000;
+        return (int) Math.Floor(calculatedLvl) + 1;
+    }
+
+    //returns true if leveled up
+    public bool addExp(int exp)
+    {
+        currentExp += exp;
+        int newlvl = getNewLevel();
+        if(newlvl > level)
+        {
+            levelUp(newlvl - level);
+            level = newlvl;
+            return true;
+        }
+
+        return false;
+    }
+
+    //adds 2 to every base stat for each level up
+    public void levelUp(int numoflevels)
+    {
+        foreach (BaseStat s in stats) {
+            s.modifier += 2 * numoflevels;
+        }
+
+        level += numoflevels;
+    }
 }
