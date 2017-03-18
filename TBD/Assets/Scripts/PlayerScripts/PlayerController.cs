@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour {
     public bool alive = true;
 
 	public List<BaseStat> stats = new List<BaseStat>();
+	private PlayerStatsUI statsMenu;
 
 	private void Awake()
 	{
@@ -51,9 +52,20 @@ public class PlayerController : MonoBehaviour {
 		rbody = GetComponent<Rigidbody2D>();
 		sfxMan = FindObjectOfType<SFXManager>();
 		cam = FindObjectOfType<CameraManager>();
-		stats.Add(new BaseStat("strength", 10, "Damage Dealt"));
-		stats.Add(new BaseStat("defense", 11, "Damage Taken"));
-		stats.Add(new BaseStat("HP", 12, "Health"));
+		statsMenu = FindObjectOfType<PlayerStatsUI> ();
+		BaseStat strength = new BaseStat ("strength", 10, "Damage Dealt");
+		BaseStat defense = new BaseStat ("defense", 11, "Damage Taken");
+		BaseStat HP = new BaseStat ("HP", 12, "Health");
+		stats.Add(HP);
+		stats.Add(strength);
+		stats.Add(defense);
+		changeCurrentStatValue ("HP", 5);
+		changeCurrentStatValue ("strength", -2);
+		changeCurrentStatValue ("defense", 0);
+		statsMenu.addStat (HP);
+		statsMenu.addStat (strength);
+		statsMenu.addStat (defense);
+
 
 		debug(getCurrentStatValue("HP") + "");
 	}

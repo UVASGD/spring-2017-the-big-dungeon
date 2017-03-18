@@ -21,8 +21,10 @@ public class PauseMenuUI : MonoBehaviour {
 	private InventoryUI inventoryMenu;
     private SellMenuUI sellObject;
     private BuyMenuUI buyObject;
+	private PlayerStatsUI statsMenu;
 	public bool inItems = false;
 	public bool canEscape = false;
+	public bool inStats = false;
 
 	public int totalOptions = 7;
 	public bool debugOn = false;
@@ -36,6 +38,7 @@ public class PauseMenuUI : MonoBehaviour {
         sellObject = FindObjectOfType<SellMenuUI>();
         buyObject = FindObjectOfType<BuyMenuUI>();
 		inventoryMenu = FindObjectOfType<InventoryUI>();
+		statsMenu = FindObjectOfType<PlayerStatsUI>();
 		player = FindObjectOfType<PlayerController>();
 		arrow = pauseMenu.GetComponentInChildren<Animator>().gameObject;
 		startPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
@@ -57,14 +60,14 @@ public class PauseMenuUI : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Escape) && canEscape) {
             exitMenu();
 		}
-		if (Input.GetKeyDown(KeyCode.Return) && !player.talking && !inItems && !inOptions) {
+		if (Input.GetKeyDown(KeyCode.Return) && !player.talking && !inItems && !inOptions && !inStats) {
             if (buyObject != null)
                 buyObject.turnOff();
             if (sellObject != null)
                 sellObject.turnOff();
 			toggleMenu();
 		}
-		if (isActive && !inOptions && !inItems) {
+		if (isActive && !inOptions && !inItems && !inStats) {
 			if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
 				if (index > 0) {
 					index--;
@@ -103,7 +106,10 @@ public class PauseMenuUI : MonoBehaviour {
 						break;
 					//Player
 					case 3:
-						debug("Open PLAYER");
+						debug ("Open PLAYER");
+						statsMenu.statsOpened ();
+						inStats = true;
+						canEscape = false;
 						break;
 					//Option
 					case 4:
@@ -128,7 +134,7 @@ public class PauseMenuUI : MonoBehaviour {
 				}
 			}
 		}
-		if (inOptions || inItems || isActive) {
+		if (inOptions || inItems || isActive || inStats) {
 			player.frozen = true;
 		}
 	}
@@ -146,6 +152,7 @@ public class PauseMenuUI : MonoBehaviour {
 	public void exitMenu() {
 		isActive = true;
 		inItems = false;
+		inStats = false;
 		inOptions = false;
 		canEscape = false;
 		toggleMenu();
@@ -179,6 +186,18 @@ public class PauseMenuUI : MonoBehaviour {
 		arrowPosition -= yOffset * index;
 		arrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
         canEscape = true;
+	}
+
+	public void reopenFromStats() {
+		toggleMenu();
+		inStats = false;
+		canEscape = false;
+
+		index = 3;
+		Vector2 arrowPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
+		arrowPosition -= yOffset * index;
+		arrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
+		canEscape = true;
 	}
 
 	void debug(string line) {
