@@ -6,7 +6,7 @@ public class SavePoint : MonoBehaviour {
 
 	PlayerController player;
 
-	SaveUIController suic;
+	public SaveUIController suic;
 
 	bool withinRange;
 
@@ -20,6 +20,7 @@ public class SavePoint : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (withinRange) {
+			suic = FindObjectOfType<SaveUIController>();
 			if (Input.GetKeyDown (KeyCode.Space) && !suic.selection) {
 				suic.SetSelectionMenu (true);
 			}

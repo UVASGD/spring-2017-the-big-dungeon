@@ -10,8 +10,10 @@ public class InventoryManager : MonoBehaviour
     public List<Item> items = new List<Item>();
     public int money;
     public int maxSize = 20;
-    //private int currentSize;
-    private void Awake()
+	//private int currentSize;
+	private ItemScript inventoryMenu;
+
+	private void Awake()
     {
         //Make sure only ever one InventoryManager
         if (instance == null)
@@ -27,8 +29,19 @@ public class InventoryManager : MonoBehaviour
     {
         //amount for testing
         money = 80;
-        DontDestroyOnLoad(gameObject);
-    }
+		DontDestroyOnLoad(gameObject);
+		inventoryMenu = FindObjectOfType<ItemScript>();
+
+		Item it1 = new Item("First Item", "This is a very long description", "Equipment", "?", 30, false);
+		Item it2 = new Item("Multiple Item", "How bout them items", "Equipment", "What", 3, 30, false);
+		Equipment armor = new Equipment("Basic Armor", "Adds defense and hp", 0, 1, 10);
+		Equipment weapon = new Equipment("Basic Weapon", "Adds strength", 1, 0, 0);
+		addItem(it1);
+		addItem(it2);
+		addItem(armor);
+		addItem(weapon);
+		
+	}
     public int spaceRemaining()
     {
         return maxSize - items.Count;
@@ -41,12 +54,14 @@ public class InventoryManager : MonoBehaviour
             if (items[i].name.Equals(item.name))
             {
                 items[i].quantity += item.quantity;
-                return;
+				inventoryMenu.updateItems(item);
+				return;
             }
         }
         //If not, add the item
         items.Add(item);
-    }
+		inventoryMenu.addItem(item);
+	}
 
     //Can't implement this yet
     public void dropItem()
@@ -59,10 +74,16 @@ public class InventoryManager : MonoBehaviour
     {
         if (items.Contains(item))
         {
-            if (quantity >= item.quantity)
-                items.Remove(item);
-            else
-                item.quantity -= quantity;
+            if (quantity >= item.quantity) {
+				items.Remove(item);
+				inventoryMenu.removeItem(item);
+			}
+			else {
+				item.quantity -= quantity;
+				Debug.Log("Called here");
+				inventoryMenu.updateItems(item);
+			}
+                
             return true;
         }
         return false;
@@ -73,7 +94,8 @@ public class InventoryManager : MonoBehaviour
         if (items.Contains(item))
         {
             items.Remove(item);
-            return true;
+			inventoryMenu.removeItem(item);
+			return true;
         }
         return false;
     }

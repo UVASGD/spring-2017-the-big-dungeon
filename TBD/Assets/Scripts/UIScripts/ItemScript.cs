@@ -10,6 +10,8 @@ public class ItemScript : MonoBehaviour {
 	public bool isActive = false;
 	public GameObject blankItem;
 	private PauseScript pause;
+	private GameObject itemPanel;
+	public bool debugOn = false;
 
 	// Use this for initialization
 	void Start () {
@@ -17,26 +19,7 @@ public class ItemScript : MonoBehaviour {
 		itemMenu.SetActive(isActive);
 		pause = FindObjectOfType<PauseScript>();
 		inventory = FindObjectOfType<InventoryManager>();
-		Item it1 = new Item("First Item", "This is a very long description", "Equipment", "?", 30, false);
-		Item it2 = new Item("Multiple Item", "How bout them items", "Equipment", "What", 3, 30, false);
-		Equipment armor = new Equipment("Basic Armor", "Adds defense and hp", 0, 1, 10);
-		Equipment weapon = new Equipment("Basic Weapon","Adds strength", 1, 0, 0);		
-		inventory.addItem(it1);
-		inventory.addItem(it2);
-		inventory.addItem(armor);
-		inventory.addItem(weapon);
-		
-		foreach (Item i in inventory.items) {
-			GameObject newItem = Instantiate(blankItem, blankItem.transform.position, blankItem.transform.rotation);
-			newItem.SetActive(true);
-			Text newText = newItem.GetComponent<Text>();
-			newText.text = i.name;
-			if (i.quantity > 1) {
-				newText.text += " (*" + i.quantity + ")";
-			}
-			newItem.transform.SetParent(blankItem.transform.parent);
-			newItem.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
-		}
+		itemPanel = itemMenu.GetComponentInChildren<VerticalLayoutGroup>().gameObject;
 	}
 	
 	// Update is called once per frame
@@ -62,4 +45,47 @@ public class ItemScript : MonoBehaviour {
         isActive = false;
         itemMenu.SetActive(false);
     }
+
+	public void updateItems(Item i) {
+		debug("Updating for item " + i.name);
+		foreach (Transform child in itemPanel.transform) {
+			Text itemText = child.GetComponent<Text>();
+			string[] result = itemText.text.Split(new string[] { " (*" }, System.StringSplitOptions.None);
+			if (result[0] == i.name) {
+				itemText.text = i.name + " (*" + i.quantity + ")";
+			}
+		}
+	}
+
+	public void removeItem(Item i) {
+		debug("Removing item " + i.name);
+		foreach (Transform child in itemPanel.transform) {
+			Text itemText = child.GetComponent<Text>();
+			string[] result = itemText.text.Split(new string[] { " (*" }, System.StringSplitOptions.None);
+			if (result[0] == i.name) {
+				Destroy(child.gameObject);
+			}
+		}
+	}
+
+	public void addItem(Item i) {
+		debug("Adding item " + i.name);
+		GameObject newItem = Instantiate(blankItem, blankItem.transform.position, blankItem.transform.rotation);
+		newItem.SetActive(true);
+		Text newText = newItem.GetComponent<Text>();
+		newText.text = i.name;
+		if (i.quantity > 1) {
+			newText.text += " (*" + i.quantity + ")";
+		}
+		newItem.transform.SetParent(blankItem.transform.parent);
+		newItem.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+	}
+
+	void debug(string line) {
+		if (debugOn) {
+			Debug.Log(line);
+		}
+	}
+
+
 }

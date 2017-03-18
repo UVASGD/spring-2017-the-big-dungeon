@@ -25,6 +25,7 @@ public class PauseScript : MonoBehaviour {
 	public bool canEscape = false;
 
 	public int totalOptions = 7;
+	public bool debugOn = false;
 
 
 
@@ -90,11 +91,11 @@ public class PauseScript : MonoBehaviour {
 						break;
 					//Bag
 					case 1:
-						Debug.Log("Open BAG");
+						debug("Open BAG");
 						break;
 					//Item
 					case 2:
-						Debug.Log("Open ITEM");
+						debug("Open ITEM");
 						itemMenu.itemsOpened();
 						inItems = true;
 						canEscape = false;
@@ -102,11 +103,11 @@ public class PauseScript : MonoBehaviour {
 						break;
 					//Player
 					case 3:
-						Debug.Log("Open PLAYER");
+						debug("Open PLAYER");
 						break;
 					//Option
 					case 4:
-						Debug.Log("Open OPTION");
+						debug("Open OPTION");
 						OptionsOpened();
 						break;
 					//Save
@@ -134,7 +135,7 @@ public class PauseScript : MonoBehaviour {
 
 	void toggleMenu() {
 		isActive = !isActive;
-        Debug.Log(isActive);
+		debug(isActive + "");
 		pauseMenu.SetActive(isActive);
 		player.frozen = isActive;
 		player.inMenu = isActive;
@@ -178,6 +179,12 @@ public class PauseScript : MonoBehaviour {
 		arrowPosition -= yOffset * index;
 		arrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
         canEscape = true;
+	}
+
+	void debug(string line) {
+		if (debugOn) {
+			Debug.Log(line);
+		}
 	}
 
 }

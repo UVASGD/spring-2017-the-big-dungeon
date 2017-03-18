@@ -10,6 +10,7 @@ TagManager:
   - path
   - map
   - BattleManager
+  - itempanel
   layers:
   - Default
   - TransparentFX
