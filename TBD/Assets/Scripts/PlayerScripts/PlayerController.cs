@@ -29,6 +29,9 @@ public class PlayerController : MonoBehaviour {
     public bool alive = true;
 
 	public List<BaseStat> stats = new List<BaseStat>();
+    public int level = 1;
+    public int currentExp = 0;
+	private PlayerStatsUI statsMenu;
 
 	private void Awake()
 	{
@@ -41,7 +44,6 @@ public class PlayerController : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
-
 	// Use this for initialization
 	void Start () {
 
@@ -51,12 +53,20 @@ public class PlayerController : MonoBehaviour {
 		rbody = GetComponent<Rigidbody2D>();
 		sfxMan = FindObjectOfType<SFXManager>();
 		cam = FindObjectOfType<CameraManager>();
-		stats.Add(new BaseStat("strength", 10, "Damage Dealt"));
-		stats.Add(new BaseStat("defense", 11, "Damage Taken"));
-		stats.Add(new BaseStat("HP", 12, "Health"));
+		statsMenu = FindObjectOfType<PlayerStatsUI> ();
+		BaseStat strength = new BaseStat ("strength", 10, "Damage Dealt", -2);
+		BaseStat defense = new BaseStat ("defense", 11, "Damage Taken", 0);
+		BaseStat HP = new BaseStat ("HP", 12, "Health", 5);
+		stats.Add(HP);
+		stats.Add(strength);
+		stats.Add(defense);
+		statsMenu.addStat (HP);
+		statsMenu.addStat (strength);
+		statsMenu.addStat (defense);
+
 
 		debug(getCurrentStatValue("HP") + "");
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -156,20 +166,42 @@ public class PlayerController : MonoBehaviour {
 	//base stat
 	public int getBaseStatValue(string statName) {
 		foreach (BaseStat s in stats) {
-			if (String.Compare(s.statName, statName) == 0) {
+			if (String.Compare (s.statName, statName) == 0) {
 				return s.baseVal;
 			}
 		}
 		return 0;
 	}
 
-	//positive value if adding. Negative value if taking away.
-	public void changeCurrentStatValue(string statName, int modifier) {
-		foreach (BaseStat s in stats) {
-			if (String.Compare(s.statName, statName) == 0) {
-				s.modifier += modifier;
-			}
-		}
-	}
+    //currently only need 1000 XP to get to the next lvl
+    public int getNewLevel()
+    {
+        Double calculatedLvl = currentExp / 1000;
+        return (int) Math.Floor(calculatedLvl) + 1;
+    }
 
+    //returns true if leveled up
+    public bool addExp(int exp)
+    {
+        currentExp += exp;
+        int newlvl = getNewLevel();
+        if(newlvl > level)
+        {
+            levelUp(newlvl - level);
+            level = newlvl;
+            return true;
+        }
+
+        return false;
+    }
+
+    //adds 2 to every base stat for each level up
+    public void levelUp(int numoflevels)
+    {
+        foreach (BaseStat s in stats) {
+            s.modifier += 2 * numoflevels;
+        }
+
+        level += numoflevels;
+    }
 }
