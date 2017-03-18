@@ -114,6 +114,7 @@ public class BuyMenuUI : MonoBehaviour
             inventoryMenu.turnOff();
             pauseMenu.OptionsClose();
             pauseMenu.exitMenu();
+			updateMoney ();
             toggle();
             updateDetails();
         }

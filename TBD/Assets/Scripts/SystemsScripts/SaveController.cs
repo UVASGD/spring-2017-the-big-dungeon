@@ -24,6 +24,7 @@ public class SaveController : MonoBehaviour {
 	private MusicManager music;
 	private VolumeManager volumeMan;
 	public bool debugOn = false;
+	private InventoryManager inventoryManager;
 
 	// Use this for initialization
 	void Start () {
@@ -46,6 +47,7 @@ public class SaveController : MonoBehaviour {
 		} else {
 			Destroy (gameObject);
 		}
+		inventoryManager = FindObjectOfType<InventoryManager> ();
 	}
 	
 	// Update is called once per frame
@@ -127,6 +129,9 @@ public class SaveController : MonoBehaviour {
 				sf.BlackOut();
 				StartCoroutine(sf.Wait(1.0f));
 				LoadFrom("default");
+				if (inventoryManager == null)
+					inventoryManager = FindObjectOfType<InventoryManager> ();
+				inventoryManager.refreshItems ();
 				}
 			break;
 		case 2:
