@@ -23,6 +23,7 @@ public class SaveController : MonoBehaviour {
 	public bool isContinuing = false;
 	private MusicController music;
 	private VolumeManager volumeMan;
+	public bool debugOn = false;
 
 	// Use this for initialization
 	void Start () {
@@ -102,10 +103,12 @@ public class SaveController : MonoBehaviour {
 		if (music == null) {
 			music = FindObjectOfType<MusicController> ();
 		}
-		Debug.Log (scene.name);
+		if (debugOn)
+			Debug.Log (scene.name);
 		Scene currentScene = SceneManager.GetSceneByName(scene.name);
 		int buildIndex = currentScene.buildIndex;
-		Debug.Log ("Music from level load " + buildIndex);
+		if (debugOn)
+			Debug.Log ("Music from level load " + buildIndex);
 		switch (buildIndex) {
 		case 0:
 			music.SwitchTrack (2);
@@ -123,7 +126,9 @@ public class SaveController : MonoBehaviour {
 				sf.BlackOut();
 				StartCoroutine(sf.Wait(1.0f));
 				LoadFrom("default");
-			}
+				}
+			break;
+		case 2:
 			break;
 		default:
 			music.SwitchTrack (0);
@@ -146,7 +151,8 @@ public class SaveController : MonoBehaviour {
 
 	public void rememberMusic(int requestedTrack, float requestedFadeOutSpeed = 0.4f, float requestedFadeInSpeed = 0.2f){
 		if (music == null) {
-			Debug.Log ("Remembering music");
+			if (debugOn)
+				Debug.Log ("Remembering music");
 			music = FindObjectOfType<MusicController> ();
 			music.SwitchTrack(requestedTrack, requestedFadeOutSpeed, requestedFadeInSpeed);
 		}

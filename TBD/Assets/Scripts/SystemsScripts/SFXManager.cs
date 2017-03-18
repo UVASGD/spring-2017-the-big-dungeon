@@ -8,13 +8,15 @@ public class SFXManager : MonoBehaviour {
 
 	public List<AudioSource> soundEffects = new List<AudioSource>();
 	public List<GroundType> myGroundTypes = new List<GroundType>();
-	public string currentground;
+	public string currentground = "none";
+	public bool debugOn = false;
 
 	// Use this for initialization
 	void Start () {
 		soundEffects.AddRange(GetComponentsInChildren<AudioSource>());
 		player = FindObjectOfType<PlayerController>();
 		if (myGroundTypes.Count > 0 && player != null) {
+			debug("Initializing ground");
 			setGroundType(myGroundTypes[0]);
 		}
 	}
@@ -23,9 +25,6 @@ public class SFXManager : MonoBehaviour {
 	void Update () {
 		if (player == null) {
 			player = FindObjectOfType<PlayerController>();
-		}
-		if (myGroundTypes.Count > 0 && player != null) {
-			setGroundType(myGroundTypes[0]);
 		}
 	}
 
@@ -47,13 +46,21 @@ public class SFXManager : MonoBehaviour {
 			setGroundType(myGroundTypes[2]);
 		}
 		else
+			debug("Changing to default ground type");
 			setGroundType(myGroundTypes[0]);
 	}
 
 	public void setGroundType(GroundType ground) {
 		if (currentground != ground.name) {
+			debug("Setting ground type from type " + ground.name);
 			player.UpdateGround(ground.stepSounds);
 			currentground = ground.name;
+		}
+	}
+
+	void debug(string line) {
+		if (debugOn) {
+			Debug.Log(line);
 		}
 	}
 }

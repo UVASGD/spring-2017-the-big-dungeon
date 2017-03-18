@@ -54,3 +54,4 @@ MonoBehaviour:
   player: {fileID: 0}
   inventory: {fileID: 0}
   isContinuing: 0
+  debugOn: 0

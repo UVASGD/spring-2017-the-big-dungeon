@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
     private PlayerStats stats;
 
 	public bool frozen = false;
+	public bool debugOn = false;
 
 	public AudioSource[] playerStepSounds;
 	
@@ -35,11 +36,6 @@ public class PlayerController : MonoBehaviour {
 		cam = FindObjectOfType<CameraFollow>();
         stats = FindObjectOfType<PlayerStats>();
 
-		if (playerStepSounds.Length > 0) {
-			currentStep = playerStepSounds[Random.Range(0, playerStepSounds.Length)];
-			stepsOn = true;
-			sfxMan.GroundChange("default");
-		}
 	}
 	
 	// Update is called once per frame
@@ -89,8 +85,8 @@ public class PlayerController : MonoBehaviour {
 		if (other.tag == "map") {
 			cam.setCurrentRoom(other.gameObject);
 		}
-
 		if (stepsOn) {
+			debug("Steps are on from entering something");
 			if (other.transform.tag == "path") {
 				sfxMan.GroundChange("path");
 			}
@@ -104,17 +100,26 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerExit2D(Collider2D other) {
 		if (stepsOn) {
+			debug("Steps are on from exiting something");
 			sfxMan.GroundChange("default");
 		}
 	}
 
 	public void UpdateGround(AudioSource[] stepSounds) {
+		debug("Updating the current ground!");
 		if (playerStepSounds != null) {
+			debug("Setting the sounds now");
 			playerStepSounds = stepSounds;
 			stepsOn = true;
 			if (currentStep != null)
 				currentStep.Stop();
 			currentStep = playerStepSounds[Random.Range(0, playerStepSounds.Length)];
+		}
+	}
+
+	void debug(string line) {
+		if (debugOn) {
+			Debug.Log(line);
 		}
 	}
 

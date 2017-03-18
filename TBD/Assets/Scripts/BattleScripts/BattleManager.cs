@@ -12,9 +12,10 @@ public class BattleManager : MonoBehaviour
     // Battle components that we dynamically load
     private BattleMenu battleMenu = null;
     private BattleInfo battleInfo = null;
+	private MusicController music;
 
-    // State machine
-    private bool inBattle = false;
+	// State machine
+	private bool inBattle = false;
     private Queue<BattleState> stateQueue = new Queue<BattleState>();
 
     private void Awake()
@@ -33,15 +34,17 @@ public class BattleManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-    }
+		music = FindObjectOfType<MusicController>();
+	}
 
     void Update()
     {
         // This is just for testing
         if (Input.GetKeyUp(KeyCode.B) && !this.inBattle)
         {
-            // Make some dummy enemies and add them
-            enemies.Add(new Enemy("Troll", "Really big and tough", 100, 75, 200, 4));
+			music.SwitchTrack(4);
+			// Make some dummy enemies and add them
+			enemies.Add(new Enemy("Troll", "Really big and tough", 100, 75, 200, 4));
             enemies.Add(new Enemy("Troll #2", "Really big and tough", 100, 75, 200, 4));
             StartBattle();
         }
@@ -95,7 +98,8 @@ public class BattleManager : MonoBehaviour
         Destroy(this.battleInfo);
         this.battleInfo = null;
         SceneManager.LoadScene("1_Main_Scene");
-        this.inBattle = false;
+		music.SwitchTrack(0);
+		this.inBattle = false;
     }
 
     public void addState(BattleState battleState)
