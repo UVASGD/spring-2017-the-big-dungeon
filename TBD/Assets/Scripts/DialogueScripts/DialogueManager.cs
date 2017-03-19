@@ -28,12 +28,11 @@ public class DialogueManager : MonoBehaviour {
 	private bool dialogueEnd;
     private bool dialogueDuringOutput;
     private DialogueHolder caller;
+    private NPCManager npcManager;
     private int x;
 
     public string characterName;
     public Sprite faceSprite;
-
-    public List<NPC> actors;
 
     public bool isCutscene = false;
 
@@ -42,6 +41,7 @@ public class DialogueManager : MonoBehaviour {
     {
         player = FindObjectOfType<PlayerController>();
         dBox.SetActive(this.dialogueActive);
+        npcManager = FindObjectOfType<NPCManager>();
     }
 
     void Update()
@@ -164,12 +164,9 @@ public class DialogueManager : MonoBehaviour {
                         this.dialogueSpeed[ret.Length] = Speed.Regular;
                         break;
                     case "setnpc":
-                        if (this.isCutscene)
-                        {
-                            NPC npc = actors.First(item => item.npcName == tokenstr.Split(new Char[] { ':' })[1]);
-                            dFace.sprite = npc.npcSprite;
-                            dName.text = npc.npcName;
-                        }
+                        NPC npc = npcManager.getNPC(tokenstr.Split(new Char[] { ':' })[1]);
+                        dFace.sprite = npc.npcSprite;
+                        dName.text = npc.npcName;
                         break;
                     default:
 					    break;

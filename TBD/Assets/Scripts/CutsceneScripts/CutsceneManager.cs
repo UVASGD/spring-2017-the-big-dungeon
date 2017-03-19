@@ -4,7 +4,6 @@ using UnityEngine;
 public class CutsceneManager : MonoBehaviour
 {
 	
-	private Camera mainCamera;
 	private CameraManager cameraManager;
 	private PlayerController player;
     private DialogueManager dMan;
@@ -29,7 +28,6 @@ public class CutsceneManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		mainCamera = Camera.main;
 		cameraManager = FindObjectOfType<CameraManager>();
 		player = FindObjectOfType<PlayerController> ();
         dMan = FindObjectOfType<DialogueManager>();
@@ -57,7 +55,7 @@ public class CutsceneManager : MonoBehaviour
         return this.cutsceneIsActive;
     }
 
-	public void StartCutscene(List<string> dialogueLines, Dictionary<string, int> dialogueLabels, int dialogueState, List<NPC> actors, bool wasStateSet)
+	public void StartCutscene(List<string> dialogueLines, Dictionary<string, int> dialogueLabels, int dialogueState, bool wasStateSet)
 	{
 
         this.cutsceneIsActive = true;
@@ -79,7 +77,6 @@ public class CutsceneManager : MonoBehaviour
         dMan.dialogueLines = dialogueLines;
         dMan.dialogueLabels = dialogueLabels;
         dMan.dialogueState = dialogueState;
-        dMan.actors = actors;
         dMan.hasDialogueStateBeenSet = wasStateSet;
         dMan.initialFrame = true;
 

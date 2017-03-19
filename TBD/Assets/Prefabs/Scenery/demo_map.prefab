@@ -155,7 +155,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4675776543965262}
   - component: {fileID: 61732445572844698}
-  - component: {fileID: 114170131486108418}
+  - component: {fileID: 114021690086966456}
   m_Layer: 0
   m_Name: TestCutscene
   m_TagString: Untagged
@@ -709,8 +709,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1426147241436866}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.424245, y: -6.894663, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 4.67, y: -14.57, z: 0}
+  m_LocalScale: {x: 2.673449, y: 4.4492593, z: 1.5611386}
   m_Children: []
   m_Father: {fileID: 4246892325888548}
   m_RootOrder: 11
@@ -1606,6 +1606,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InitialOpacity: 1
+--- !u!114 &114021690086966456
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1426147241436866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a928c572893f4549b697a1bd1fb967e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerOnEnter: 1
+  dialogueFile: Assets/Resources/Text/CutsceneTest.txt
+  actors:
+  - {fileID: 0}
 --- !u!114 &114035387209715102
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1678,20 +1693,6 @@ MonoBehaviour:
   ExportScale: 0.01
   MapWidthInPixels: 1600
   MapHeightInPixels: 1600
---- !u!114 &114170131486108418
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1426147241436866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 503ba7e96721b774181c5c8702cd2438, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueFile: Assets/Resources/Text/Rocky.txt
-  characterName: Rocky
-  faceSprite: {fileID: 0}
 --- !u!114 &114185120674549052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1812,12 +1813,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1286143051274074}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 503ba7e96721b774181c5c8702cd2438, type: 3}
+  m_Script: {fileID: 11500000, guid: 59f4c63acdf300c41b15f74f8db10f20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueFile: Assets/Resources/Text/Rocky.txt
   characterName: Rocky
-  faceSprite: {fileID: 0}
+  faceSprite: {fileID: 21300000, guid: 710775a3dde656a4d9e6a8ad0d8241e8, type: 3}
 --- !u!114 &114577903384277182
 MonoBehaviour:
   m_ObjectHideFlags: 1

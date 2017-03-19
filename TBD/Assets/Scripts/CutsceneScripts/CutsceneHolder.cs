@@ -16,7 +16,6 @@ public class CutsceneHolder : MonoBehaviour
     // These variables will be set in the UI
     public bool triggerOnEnter;
     public string dialogueFile;
-    public List<NPC> actors = new List<NPC>();
 
     private bool withinTalkingRange = false;
     private bool hasCutsceneRun = false;
@@ -65,7 +64,7 @@ public class CutsceneHolder : MonoBehaviour
             if (!this.cutsceneManager.IsCutsceneActive())
             {
                 this.hasCutsceneRun = true;
-                this.cutsceneManager.StartCutscene(dialogueLines, dialogueLabels, dialogueState, actors, hasDialogueStateBeenSet);
+                this.cutsceneManager.StartCutscene(dialogueLines, dialogueLabels, dialogueState, hasDialogueStateBeenSet);
             }
         }
     }
@@ -91,7 +90,7 @@ public class CutsceneHolder : MonoBehaviour
                 if (!this.cutsceneManager.IsCutsceneActive())
                 {
                     this.hasCutsceneRun = true;
-                    this.cutsceneManager.StartCutscene(dialogueLines, dialogueLabels, dialogueState, actors, hasDialogueStateBeenSet);
+                    this.cutsceneManager.StartCutscene(dialogueLines, dialogueLabels, dialogueState, hasDialogueStateBeenSet);
                 }
             }
         }
