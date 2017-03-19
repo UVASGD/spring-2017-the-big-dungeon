@@ -1318,12 +1318,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1472944259639594}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 503ba7e96721b774181c5c8702cd2438, type: 3}
+  m_Script: {fileID: 11500000, guid: 59f4c63acdf300c41b15f74f8db10f20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueFile: Assets/Resources/Text/Introduction.txt
-  characterName: 
-  faceSprite: {fileID: 0}
+  characterName: Wee Lass
+  faceSprite: {fileID: 21300000, guid: d0b5a50473409c047b09b2a13d9341c7, type: 3}
 --- !u!114 &114183324686288758
 MonoBehaviour:
   m_ObjectHideFlags: 1

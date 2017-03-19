@@ -1,0 +1,3 @@
+﻿start:
+	{fast}{setnpc:Cutscene Test}This is a cutscene! WoWzErS!
+	{fast}Isn't that super cool :O{end}
