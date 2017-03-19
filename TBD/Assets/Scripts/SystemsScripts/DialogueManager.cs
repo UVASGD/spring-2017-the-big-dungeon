@@ -33,6 +33,10 @@ public class DialogueManager : MonoBehaviour {
     public string characterName;
     public Sprite faceSprite;
 
+    public List<NPC> actors;
+
+    public bool isCutscene = false;
+
     // Use this for initialization
     void Start()
     {
@@ -69,21 +73,33 @@ public class DialogueManager : MonoBehaviour {
                         StopCoroutine(this.ulHolder);
                         this.ulHolder = null;
                     }
-                    player.frozen = false;
 
                     // Update caller information so we can save our state
-                    this.caller.UpdateDialogueState(this.dialogueState);
-                    this.caller.UpdateHasDialogueStateBeenSet(this.hasDialogueStateBeenSet);
-                    this.caller.faceSprite = this.faceSprite;
-                    this.caller.characterName = this.characterName;
+                    if (this.caller != null)
+                    {
+                        this.caller.UpdateDialogueState(this.dialogueState);
+                        this.caller.UpdateHasDialogueStateBeenSet(this.hasDialogueStateBeenSet);
+                        this.caller.faceSprite = this.faceSprite;
+                        this.caller.characterName = this.characterName;
+                        this.caller = null;
+                    }
 
-                    this.dialogueState = 0;
-                    this.hasDialogueStateBeenSet = false;
-                    this.faceSprite = null;
                     this.dFace.sprite = null;
                     this.dName.text = "";
+                    this.faceSprite = null;
                     this.characterName = null;
-                    this.caller = null;
+                    this.dialogueState = 0;
+                    this.hasDialogueStateBeenSet = false;
+
+                    // Make sure we properly end a cutscene vs regular dialogue
+                    if (this.isCutscene)
+                    {
+                        FindObjectOfType<CutsceneManager>().EndCutscene();
+                    } else
+                    {
+                        player.frozen = false;
+                    }
+                    
 
                 } else
                 {
@@ -146,6 +162,14 @@ public class DialogueManager : MonoBehaviour {
                         break;
                     case "endspeed":
                         this.dialogueSpeed[ret.Length] = Speed.Regular;
+                        break;
+                    case "setnpc":
+                        if (this.isCutscene)
+                        {
+                            NPC npc = actors.First(item => item.npcName == tokenstr.Split(new Char[] { ':' })[1]);
+                            dFace.sprite = npc.npcSprite;
+                            dName.text = npc.npcName;
+                        }
                         break;
                     default:
 					    break;

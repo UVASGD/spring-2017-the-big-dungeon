@@ -11,6 +11,9 @@ TagManager:
   - map
   - BattleManager
   - itempanel
+  - blank
+  - cutscene-bottom
+  - cutscene-top
   layers:
   - Default
   - TransparentFX
@@ -50,4 +53,10 @@ TagManager:
     locked: 0
   - name: weather
     uniqueID: 3324868403
+    locked: 0
+  - name: Cutscene Bars
+    uniqueID: 172153213
+    locked: 0
+  - name: Dialogue
+    uniqueID: 1509848163
     locked: 0
