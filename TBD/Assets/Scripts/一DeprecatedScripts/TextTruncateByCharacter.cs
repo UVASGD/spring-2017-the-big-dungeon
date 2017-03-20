@@ -9,12 +9,15 @@ public class TextTruncateByCharacter : MonoBehaviour {
 
 	RectTransform parentRect;
 	GridLayoutGroup grid;
+	RectTransform parentPanel;
 
 	float cellSize,textLength;
 
 	void Start () {
 		parentRect = GetComponent<RectTransform>();
 		grid = GetComponentInParent<GridLayoutGroup> ();
+		parentPanel = GetComponentInParent<RectTransform>();
+		
 		Debug.Log (grid.cellSize.x);
 		cellSize = grid.cellSize.x;
 		text = GetComponent<Text> ();

@@ -32,7 +32,7 @@ public class InventoryManager : MonoBehaviour
 		DontDestroyOnLoad(gameObject);
 		inventoryMenu = FindObjectOfType<InventoryUI>();
 
-		Item it1 = new Item("First Item", "This is a very long description", "Equipment", "?", 30, false);
+		Item it1 = new Item("First Item", "This is a very long description", "Equipment", "?", 2, 30, false);
 		Item it2 = new Item("Multiple Item", "How bout them items", "Equipment", "What", 3, 30, false);
 		Equipment armor = new Equipment("Basic Armor", "Adds defense and hp", 0, 1, 10);
 		Equipment weapon = new Equipment("Basic Weapon", "Adds strength", 1, 0, 0);
@@ -40,14 +40,16 @@ public class InventoryManager : MonoBehaviour
 		addItem(it2);
 		addItem(armor);
 		addItem(weapon);
-		// Debug.Log ("I have " + items.Count + " items");
 
+		
+		// Debug.Log ("I have " + items.Count + " items");
 	}
+
 	public void refreshItems() {
 		foreach (Item i in items) {
 			if (inventoryMenu == null)
 				inventoryMenu = FindObjectOfType<InventoryUI>();
-			inventoryMenu.addItem (i);
+			inventoryMenu.refreshItemListUI();
 		}
 	}
 
@@ -55,22 +57,22 @@ public class InventoryManager : MonoBehaviour
     {
         return maxSize - items.Count;
     }
+
     public void addItem(Item item)
     {
 		// Debug.Log ("Adding " + item.name);
-        //If item already in inventory, increment quantity of item
-        for (int i = 0; i < items.Count; i++)
-        {
-            if (items[i].name.Equals(item.name))
-            {
-                items[i].quantity += item.quantity;
-				inventoryMenu.updateItems(item);
-				return;
-            }
-        }
-        //If not, add the item
-        items.Add(item);
-		inventoryMenu.addItem(item);
+		//If item already in inventory, increment quantity of item
+		if (items.Contains(item)) {
+			Item currentItem = items[items.IndexOf(item)];
+			currentItem.quantity += item.quantity;
+			inventoryMenu.updateItemQuantityUI(currentItem);
+			return;
+		}
+		//If not, add the item
+		else {
+			items.Add(item);
+			inventoryMenu.addNewItemUI(item);
+		}
 	}
 
     //Can't implement this yet
@@ -82,33 +84,55 @@ public class InventoryManager : MonoBehaviour
     //Destroy A Specified Number of Items
     public bool destroyItem(Item item, int quantity)
     {
-        if (items.Contains(item))
-        {
-            if (quantity >= item.quantity) {
-				items.Remove(item);
-				inventoryMenu.removeItem(item);
+		if (items.Contains(item)) {
+			Item currentItem = items[items.IndexOf(item)];
+			if (quantity >= currentItem.quantity) {
+				inventoryMenu.removeItemUI(currentItem);
+				items.Remove(currentItem);
 			}
 			else {
-				item.quantity -= quantity;
-				Debug.Log("Called here");
-				inventoryMenu.updateItems(item);
+				currentItem.quantity -= quantity;
+				inventoryMenu.updateItemQuantityUI(currentItem);
+				return true;
 			}
-                
-            return true;
-        }
-        return false;
+			return true;
+		}
+		return false;
     }
+
     //Destroy All Items Passed In
     public bool destroyItem(Item item)
     {
-        if (items.Contains(item))
-        {
-            items.Remove(item);
-			inventoryMenu.removeItem(item);
+		if (items.Contains(item)) {
+			Item currentItem = items[items.IndexOf(item)];
+			inventoryMenu.removeItemUI(item);
+			items.Remove(currentItem);
 			return true;
-        }
-        return false;
+		}
+		return false;
     }
+
+	public int quantityItem(Item item) {
+		if (items.Contains(item)) {
+			Item currentItem = items[items.IndexOf(item)];
+			return currentItem.quantity;
+		}
+		return -1;
+	}
+
+	/*
+	public void testItem(Item item) {
+		if (items.Contains(item)) {
+			Debug.Log("Contains");
+			Debug.Log(items.IndexOf(item));
+		}
+		for (int i = 0; i < items.Count; i++) {
+			if (items[i].name.Equals(item.name)) {
+				Debug.Log("Equals name");
+			}
+		}
+	} */
+
     // Update is called once per frame
     void Update()
     {
@@ -156,6 +180,26 @@ public class Item
         this.type = item.type;
         this.price = item.price;
     }
+
+
+	public override bool Equals(object obj) {
+		if (obj == null)
+			return false;
+		Item equalItem = obj as Item;
+		if (equalItem == null)
+			return false;
+		return Equals(equalItem);
+	}
+
+	public bool Equals(Item i) {
+		if (i == null)
+			return false;
+		return this.name.Equals(i.name);
+	}
+
+	public override int GetHashCode() {
+		return this.name.GetHashCode();
+	}
 
 }
 
