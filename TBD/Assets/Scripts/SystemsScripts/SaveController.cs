@@ -69,7 +69,10 @@ public class SaveController : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag("Player");
 		player.transform.position = new Vector2 (s.x, s.y);
         inventory.items = s.inventory;
-        inventory.money = s.money;
+		foreach (Item i in s.inventory) {
+			Debug.Log(i.name);
+		}
+		inventory.money = s.money;
 	}
 
 	public SaveData WriteToData() {
@@ -125,14 +128,13 @@ public class SaveController : MonoBehaviour {
 			for (int i = 0; i < maps.Length; ++i) {
 				maps[i].AddComponent<MapSaver>();
 			}
+			inventory.addStartItems(isContinuing);
 			if (isContinuing) {
 				sf.BlackOut();
 				StartCoroutine(sf.Wait(1.0f));
 				LoadFrom("default");
-				if (inventoryManager == null)
-					inventoryManager = FindObjectOfType<InventoryManager> ();
-				inventoryManager.refreshItems ();
-				}
+				inventory.refreshItems();
+			}
 			break;
 		case 2:
 			music.SwitchTrack (4, 0.6f, 0.8f);
@@ -152,6 +154,7 @@ public class SaveController : MonoBehaviour {
 		return isContinuing;
 	}
 
+	
 	public void setContinuing(bool set) {
 		isContinuing = set;
 	}

@@ -12,6 +12,9 @@ public class InventoryManager : MonoBehaviour
     public int maxSize = 20;
 	//private int currentSize;
 	private InventoryUI inventoryMenu;
+	private SaveController sc;
+	private bool notResetYet = true;
+	private bool readyForRemove = false;
 
 	private void Awake()
     {
@@ -31,25 +34,25 @@ public class InventoryManager : MonoBehaviour
         money = 80;
 		DontDestroyOnLoad(gameObject);
 		inventoryMenu = FindObjectOfType<InventoryUI>();
-
-		Item it1 = new Item("First Item", "This is a very long description", "Equipment", "?", 2, 30, false);
-		Item it2 = new Item("Multiple Item", "How bout them items", "Equipment", "What", 3, 30, false);
-		Equipment armor = new Equipment("Basic Armor", "Adds defense and hp", 0, 1, 10);
-		Equipment weapon = new Equipment("Basic Weapon", "Adds strength", 1, 0, 0);
-		addItem(it1);
-		addItem(it2);
-		addItem(armor);
-		addItem(weapon);
-
-		
-		// Debug.Log ("I have " + items.Count + " items");
+		sc = FindObjectOfType<SaveController>();
 	}
 
 	public void refreshItems() {
-		foreach (Item i in items) {
-			if (inventoryMenu == null)
-				inventoryMenu = FindObjectOfType<InventoryUI>();
-			inventoryMenu.refreshItemListUI();
+		if (inventoryMenu == null)
+			inventoryMenu = FindObjectOfType<InventoryUI>();
+		inventoryMenu.refreshItemListUI();
+	}
+
+	public void addStartItems(bool isContinuing) {
+		if (!isContinuing) {
+			Item it1 = new Item("First Item", "This is a very long description", "Equipment", "?", 2, 30, false);
+			Item it2 = new Item("Multiple Item", "How bout them items", "Equipment", "What", 3, 30, false);
+			Equipment armor = new Equipment("Basic Armor", "Adds defense and hp", 0, 1, 10);
+			Equipment weapon = new Equipment("Basic Weapon", "Adds strength", 1, 0, 0);
+			addItem(it1);
+			addItem(it2);
+			addItem(armor);
+			addItem(weapon);
 		}
 	}
 
@@ -60,7 +63,8 @@ public class InventoryManager : MonoBehaviour
 
     public void addItem(Item item)
     {
-		// Debug.Log ("Adding " + item.name);
+		if (inventoryMenu == null)
+			inventoryMenu = FindObjectOfType<InventoryUI>();
 		//If item already in inventory, increment quantity of item
 		if (items.Contains(item)) {
 			Item currentItem = items[items.IndexOf(item)];
@@ -84,8 +88,14 @@ public class InventoryManager : MonoBehaviour
     //Destroy A Specified Number of Items
     public bool destroyItem(Item item, int quantity)
     {
+		if (sc == null)
+			sc = FindObjectOfType<SaveController>();
+		bool scContinuing = sc.getContinuing();
 		if (items.Contains(item)) {
 			Item currentItem = items[items.IndexOf(item)];
+			Debug.Log(item.name + " " + quantity + " " + currentItem.quantity);
+			if (inventoryMenu == null)
+				inventoryMenu = FindObjectOfType<InventoryUI>();
 			if (quantity >= currentItem.quantity) {
 				inventoryMenu.removeItemUI(currentItem);
 				items.Remove(currentItem);
@@ -136,8 +146,11 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if (sc == null) {
+			sc = FindObjectOfType<SaveController>();
+		}
 
-    }
+	}
 }
 
 [Serializable]

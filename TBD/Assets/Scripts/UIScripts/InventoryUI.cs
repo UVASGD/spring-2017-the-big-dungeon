@@ -84,14 +84,22 @@ public class InventoryUI : MonoBehaviour {
     }
 
 	public void refreshItemListUI() {
+		if (inventory == null)
+			inventory = FindObjectOfType<InventoryManager>();
 		items = inventory.items;
 		foreach (Item i in items) {
-				addNewItemUI(i);
+			addNewItemUI(i);
 		}
 	}
 
 	public void updateItemQuantityUI(Item i) {
-		items = inventory.items;
+		if (itemPanel == null) {
+			if (itemMenu == null)
+				itemMenu = GetComponentInChildren<Image>().gameObject;
+			itemPanel = itemMenu.GetComponentInChildren<GridLayoutGroup>().gameObject;
+		}
+		if (inventory == null)
+			items = inventory.items;
 		foreach (Transform child in itemPanel.transform) {
 			Text itemText = child.GetComponent<Text>();
 			// Potential problem with truncated characters
@@ -110,6 +118,8 @@ public class InventoryUI : MonoBehaviour {
 	}
 
 	public void addNewItemUI(Item i) {
+		if (inventory == null)
+			inventory = FindObjectOfType<InventoryManager>();
 		items = inventory.items;
 		GameObject newItem = Instantiate(blankItem, blankItem.transform.position, blankItem.transform.rotation);
 		newItem.SetActive(true);
@@ -127,8 +137,15 @@ public class InventoryUI : MonoBehaviour {
 	}
 
 	public void removeItemUI(Item i) {
+		if (inventory == null)
+			inventory = FindObjectOfType<InventoryManager>();
 		items = inventory.items;
-		Transform child = itemPanel.transform.GetChild((items.IndexOf(i)+1));
+		if (itemPanel == null) {
+			if (itemMenu == null)
+				itemMenu = GetComponentInChildren<Image>().gameObject;
+			itemPanel = itemMenu.GetComponentInChildren<GridLayoutGroup>().gameObject;
+		}
+		Transform child = itemPanel.transform.GetChild((items.IndexOf(i) + 1));
 		Destroy(child.gameObject);
 	}
 
