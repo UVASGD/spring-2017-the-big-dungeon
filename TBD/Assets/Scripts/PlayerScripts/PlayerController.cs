@@ -110,7 +110,6 @@ public class PlayerController : MonoBehaviour {
 
     }
 
-
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "map") {
 			cam.setCurrentRoom(other.gameObject);

@@ -77,6 +77,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1286143051274074
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4471435463231838}
+  - component: {fileID: 61385898968114420}
+  - component: {fileID: 114486383217754584}
+  m_Layer: 0
+  m_Name: Rocky
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1301814939010566
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,9 +172,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4675776543965262}
   - component: {fileID: 61732445572844698}
-  - component: {fileID: 114170131486108418}
+  - component: {fileID: 114021690086966456}
   m_Layer: 0
-  m_Name: Rocky
+  m_Name: TestCutscene
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -580,11 +597,9 @@ Transform:
   - {fileID: 4435663575015926}
   - {fileID: 4454739299796710}
   - {fileID: 4818227359273342}
-  - {fileID: 4675776543965262}
-  - {fileID: 4463721580489274}
-  - {fileID: 4200724546254260}
+  - {fileID: 4471435463231838}
   - {fileID: 4366281958051628}
-  - {fileID: 4831611056086150}
+  - {fileID: 4675776543965262}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -672,18 +687,18 @@ Transform:
   m_Father: {fileID: 4246892325888548}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4463721580489274
+--- !u!4 &4471435463231838
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1090221552006844}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.42, y: -8.49, z: 0}
+  m_GameObject: {fileID: 1286143051274074}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 10.42424, y: -6.894663, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4246892325888548}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4501698603701260
 Transform:
@@ -758,11 +773,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1426147241436866}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.42424, y: -6.894663, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 4.67, y: -14.57, z: 0}
+  m_LocalScale: {x: 2.673449, y: 4.4492593, z: 1.5611386}
   m_Children: []
   m_Father: {fileID: 4246892325888548}
-  m_RootOrder: 9
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4775504791605546
 Transform:
@@ -1600,34 +1615,20 @@ PolygonCollider2D:
       - {x: 9.92, y: -15.36}
       - {x: 9.92, y: -15.67}
       - {x: 10.24, y: -15.67}
---- !u!61 &61289567767336084
+--- !u!61 &61385898968114420
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1090221552006844}
+  m_GameObject: {fileID: 1286143051274074}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0013122559, y: -0.015896797}
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
---- !u!61 &61443116232769822
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1692458450569532}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.7525474, y: 0.639174}
 --- !u!61 &61491849374522314
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -1696,6 +1697,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InitialOpacity: 1
+--- !u!114 &114021690086966456
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1426147241436866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a928c572893f4549b697a1bd1fb967e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerOnEnter: 1
+  dialogueFile: Assets/Resources/Text/CutsceneTest.txt
+  actors:
+  - {fileID: 0}
 --- !u!114 &114035387209715102
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1782,20 +1798,6 @@ MonoBehaviour:
   ExportScale: 0.01
   MapWidthInPixels: 1600
   MapHeightInPixels: 1600
---- !u!114 &114170131486108418
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1426147241436866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 503ba7e96721b774181c5c8702cd2438, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueFile: Assets/Resources/Text/Rocky.txt
-  characterName: Rocky
-  faceSprite: {fileID: 0}
 --- !u!114 &114185120674549052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1920,6 +1922,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1874989c5e2da094ea00112c6a895694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114486383217754584
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1286143051274074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f4c63acdf300c41b15f74f8db10f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueFile: Assets/Resources/Text/Rocky.txt
+  characterName: Rocky
+  faceSprite: {fileID: 21300000, guid: 710775a3dde656a4d9e6a8ad0d8241e8, type: 3}
 --- !u!114 &114577903384277182
 MonoBehaviour:
   m_ObjectHideFlags: 1

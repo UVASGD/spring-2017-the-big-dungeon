@@ -233,7 +233,9 @@ public class SellMenuUI : MonoBehaviour
                     }
                     else
                     {
-                        sfx.PlaySFX(sfx.soundEffects[4]);
+						if (sfx == null)
+							sfx = FindObjectOfType<SFXManager>();
+						sfx.PlaySFX(sfx.soundEffects[4]);
                         inventory.money += (int)(playerInventory[itemIndex].price*buyRate) * quantityNum;
                         inventory.destroyItem(playerInventory[itemIndex], quantityNum);
                         updateMoney();

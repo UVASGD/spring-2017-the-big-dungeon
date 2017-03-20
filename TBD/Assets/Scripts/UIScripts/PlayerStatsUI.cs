@@ -23,7 +23,7 @@ public class PlayerStatsUI : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Escape) && pause.inItems) {
+		if (Input.GetKeyDown(KeyCode.Escape) && pause.inStats) {
 			statsClose();
 		}
 	}

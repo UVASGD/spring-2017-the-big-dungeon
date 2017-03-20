@@ -1,5 +1,5 @@
 ﻿start:
-	{face:rocky}{drag}Hello There!
+	{setnpc:Rocky}{drag}Hello There!
 	{slow}My name is Rocky!
 	{fast}How are you?
 	{hyper}I'm actually doing pretty well myself, thanks for asking.

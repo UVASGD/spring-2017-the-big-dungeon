@@ -240,7 +240,9 @@ public class BuyMenuUI : MonoBehaviour
                     }
                     else
                     {
-                        sfx.PlaySFX(sfx.soundEffects[4]);
+						if (sfx == null)
+							sfx = FindObjectOfType<SFXManager>();
+						sfx.PlaySFX(sfx.soundEffects[4]);
                         if (quantityNum == shopInventory[itemIndex].quantity)
                         {
                             inventory.addItem(shopInventory[itemIndex]);
