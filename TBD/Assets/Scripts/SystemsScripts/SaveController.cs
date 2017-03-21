@@ -67,9 +67,6 @@ public class SaveController : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag("Player");
 		player.transform.position = new Vector2 (s.x, s.y);
         inventory.items = s.inventory;
-		foreach (Item i in s.inventory) {
-			Debug.Log(i.name);
-		}
 		inventory.money = s.money;
 	}
 

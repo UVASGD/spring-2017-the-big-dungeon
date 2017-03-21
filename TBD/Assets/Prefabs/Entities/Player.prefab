@@ -232,6 +232,8 @@ MonoBehaviour:
   inMenu: 0
   talking: 0
   alive: 1
+  level: 1
+  currentExp: 0
 --- !u!114 &114573703440443688
 MonoBehaviour:
   m_ObjectHideFlags: 1

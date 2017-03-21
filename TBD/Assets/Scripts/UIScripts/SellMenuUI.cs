@@ -258,7 +258,7 @@ public class SellMenuUI : MonoBehaviour
                             if (playerInventory.Count > 0)
                                 updateDetails();
                             else
-                                turnOff();
+                                playerEmpty();
                         }
                         else
                         {
@@ -308,9 +308,13 @@ public class SellMenuUI : MonoBehaviour
     //Updates the details menu
     private void updateDetails()
     {
-        priceText.GetComponent<Text>().text = "Sell Price: " + (int)(playerInventory[itemIndex].price*buyRate);
-        typeText.GetComponent<Text>().text = "Type: " + playerInventory[itemIndex].type;
-        descriptionText.GetComponent<Text>().text = "Description: " + playerInventory[itemIndex].description;
+		if (playerInventory.Count > 0) {
+			priceText.GetComponent<Text>().text = "Sell Price: " + (int)(playerInventory[itemIndex].price * buyRate);
+			typeText.GetComponent<Text>().text = "Type: " + playerInventory[itemIndex].type;
+			descriptionText.GetComponent<Text>().text = "Description: " + playerInventory[itemIndex].description;
+		} else {
+			playerEmpty();
+		}
     }
 
     //Updates the quantity displayed
@@ -343,6 +347,11 @@ public class SellMenuUI : MonoBehaviour
         arrow.GetComponent<RectTransform>().anchoredPosition = startPosition;
         player.frozen = false;
     }
+
+	public void playerEmpty() {
+		Debug.Log("Player's inventory is empty, perhaps throw up a UI for this.");
+		turnOff();
+	}
 
     //Start the Sell window
     public void turnOn()
