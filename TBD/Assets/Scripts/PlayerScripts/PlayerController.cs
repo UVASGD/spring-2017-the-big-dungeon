@@ -60,11 +60,11 @@ public class PlayerController : MonoBehaviour {
 		stats.Add(HP);
 		stats.Add(strength);
 		stats.Add(defense);
-		statsMenu.addStat (HP);
-		statsMenu.addStat (strength);
-		statsMenu.addStat (defense);
-
-
+		if (statsMenu != null) {
+			statsMenu.addStat(HP);
+			statsMenu.addStat(strength);
+			statsMenu.addStat(defense);
+		}
 		debug(getCurrentStatValue("HP") + "");
     }
 	

@@ -147,6 +147,7 @@ public class PauseMenuUI : MonoBehaviour {
 		player.inMenu = isActive;
 		index = 0;
 		arrow.GetComponent<RectTransform>().anchoredPosition = startPosition;
+		canEscape = !canEscape;
 	}
 
 	public void exitMenu() {
@@ -154,7 +155,6 @@ public class PauseMenuUI : MonoBehaviour {
 		inItems = false;
 		inStats = false;
 		inOptions = false;
-		canEscape = false;
 		toggleMenu();
 	}
 
@@ -179,25 +179,21 @@ public class PauseMenuUI : MonoBehaviour {
 	public void reopenFromInventory() {
         toggleMenu();
         inItems = false;
-		canEscape = false;
 		
 		index = 2;
 		Vector2 arrowPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
 		arrowPosition -= yOffset * index;
 		arrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
-        canEscape = true;
 	}
 
 	public void reopenFromStats() {
 		toggleMenu();
 		inStats = false;
-		canEscape = false;
 
 		index = 3;
 		Vector2 arrowPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
 		arrowPosition -= yOffset * index;
 		arrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
-		canEscape = true;
 	}
 
 	void debug(string line) {

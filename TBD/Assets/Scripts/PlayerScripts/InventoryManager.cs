@@ -86,7 +86,6 @@ public class InventoryManager : MonoBehaviour
     {
 		if (items.Contains(item)) {
 			Item currentItem = items[items.IndexOf(item)];
-			Debug.Log(item.name + " " + quantity + " " + currentItem.quantity);
 			if (inventoryMenu == null)
 				inventoryMenu = FindObjectOfType<InventoryUI>();
 			if (quantity >= currentItem.quantity) {
