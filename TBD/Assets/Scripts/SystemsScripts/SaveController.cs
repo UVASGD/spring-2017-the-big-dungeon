@@ -24,7 +24,6 @@ public class SaveController : MonoBehaviour {
 	private MusicManager music;
 	private VolumeManager volumeMan;
 	public bool debugOn = false;
-	private InventoryManager inventoryManager;
 
 	// Use this for initialization
 	void Start () {
@@ -47,7 +46,6 @@ public class SaveController : MonoBehaviour {
 		} else {
 			Destroy (gameObject);
 		}
-		inventoryManager = FindObjectOfType<InventoryManager> ();
 	}
 	
 	// Update is called once per frame

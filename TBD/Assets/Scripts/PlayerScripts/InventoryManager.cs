@@ -12,9 +12,6 @@ public class InventoryManager : MonoBehaviour
     public int maxSize = 20;
 	//private int currentSize;
 	private InventoryUI inventoryMenu;
-	private SaveController sc;
-	private bool notResetYet = true;
-	private bool readyForRemove = false;
 
 	private void Awake()
     {
@@ -34,7 +31,6 @@ public class InventoryManager : MonoBehaviour
         money = 80;
 		DontDestroyOnLoad(gameObject);
 		inventoryMenu = FindObjectOfType<InventoryUI>();
-		sc = FindObjectOfType<SaveController>();
 	}
 
 	public void refreshItems() {
@@ -88,9 +84,6 @@ public class InventoryManager : MonoBehaviour
     //Destroy A Specified Number of Items
     public bool destroyItem(Item item, int quantity)
     {
-		if (sc == null)
-			sc = FindObjectOfType<SaveController>();
-		bool scContinuing = sc.getContinuing();
 		if (items.Contains(item)) {
 			Item currentItem = items[items.IndexOf(item)];
 			Debug.Log(item.name + " " + quantity + " " + currentItem.quantity);
@@ -146,9 +139,6 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (sc == null) {
-			sc = FindObjectOfType<SaveController>();
-		}
 
 	}
 }
