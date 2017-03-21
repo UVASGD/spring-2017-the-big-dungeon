@@ -431,7 +431,7 @@ Prefab:
     - target: {fileID: 224849780582751680, guid: a45a24ba414d51941aade472d9667b3d,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -163
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224604913448070866, guid: a45a24ba414d51941aade472d9667b3d,
         type: 2}
@@ -451,7 +451,7 @@ Prefab:
     - target: {fileID: 224604913448070866, guid: a45a24ba414d51941aade472d9667b3d,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -253
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224247251149656036, guid: a45a24ba414d51941aade472d9667b3d,
         type: 2}
@@ -471,7 +471,7 @@ Prefab:
     - target: {fileID: 224247251149656036, guid: a45a24ba414d51941aade472d9667b3d,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -353
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224391689188083900, guid: a45a24ba414d51941aade472d9667b3d,
         type: 2}
@@ -491,7 +491,7 @@ Prefab:
     - target: {fileID: 224391689188083900, guid: a45a24ba414d51941aade472d9667b3d,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -453
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224382116976700068, guid: a45a24ba414d51941aade472d9667b3d,
         type: 2}
@@ -511,7 +511,7 @@ Prefab:
     - target: {fileID: 224382116976700068, guid: a45a24ba414d51941aade472d9667b3d,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -553
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224267561649305264, guid: a45a24ba414d51941aade472d9667b3d,
         type: 2}
@@ -531,7 +531,7 @@ Prefab:
     - target: {fileID: 224267561649305264, guid: a45a24ba414d51941aade472d9667b3d,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -633
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a45a24ba414d51941aade472d9667b3d, type: 2}
