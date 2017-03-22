@@ -15,7 +15,7 @@ public class PauseMenuUI : MonoBehaviour {
 	private SaveController save;
 	private ScreenFader sf;
 	private Vector2 startPosition;
-	private Canvas optionsMenu;
+	public OptionsMenuUI optionsMenu;
 	public bool inOptions = false;
 	private List<GameObject> optionParts = new List<GameObject>();
 	private InventoryUI inventoryMenu;
@@ -43,7 +43,10 @@ public class PauseMenuUI : MonoBehaviour {
 		arrow = pauseMenu.GetComponentInChildren<Animator>().gameObject;
 		startPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
 		save = FindObjectOfType<SaveController>();
-		optionsMenu = FindObjectOfType<OptionsMenuUI>().gameObject.GetComponent<Canvas>();
+
+		if (optionsMenu == null) {
+			optionsMenu = FindObjectOfType<OptionsMenuUI>();
+		}
 		foreach (Image i in optionsMenu.GetComponentsInChildren<Image>()) {
 			optionParts.Add(i.gameObject);
 		}
@@ -57,7 +60,8 @@ public class PauseMenuUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Escape) && canEscape) {
+		if (Input.GetKeyDown(KeyCode.Escape) && canEscape && isActive) {
+			Debug.Log("called " + canEscape + " " + isActive);
             exitMenu();
 		}
 		if (Input.GetKeyDown(KeyCode.Return) && !player.talking && !inItems && !inOptions && !inStats) {
@@ -162,7 +166,7 @@ public class PauseMenuUI : MonoBehaviour {
 		foreach (GameObject g in optionParts) {
 			g.SetActive(true);
 		}
-		optionsMenu.enabled = true;
+		optionsMenu.toggleMenu();
 		inOptions = true;
 		canEscape = false;
 	}
@@ -171,29 +175,23 @@ public class PauseMenuUI : MonoBehaviour {
 		foreach (GameObject g in optionParts) {
 			g.SetActive(false);
 		}
-		optionsMenu.enabled = false;
+		optionsMenu.toggleMenu();
 		inOptions = false;
 		canEscape = true;
 	}
 
 	public void reopenFromInventory() {
-        toggleMenu();
+        //toggleMenu();
         inItems = false;
-		
+		canEscape = true;
 		index = 2;
-		Vector2 arrowPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
-		arrowPosition -= yOffset * index;
-		arrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
 	}
 
 	public void reopenFromStats() {
-		toggleMenu();
+		//toggleMenu();
 		inStats = false;
-
+		canEscape = true;
 		index = 3;
-		Vector2 arrowPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
-		arrowPosition -= yOffset * index;
-		arrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
 	}
 
 	void debug(string line) {

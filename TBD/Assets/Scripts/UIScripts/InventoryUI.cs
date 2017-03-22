@@ -154,7 +154,7 @@ public class InventoryUI : MonoBehaviour {
 				canClick = false;
 			}
 		}
-		if (Input.GetKeyDown(KeyCode.Escape) && pause.inItems && !inInspect && canClick) {
+		if (Input.GetKeyDown(KeyCode.Escape) && isActive && !inInspect && canClick) {
 			Debug.Log("in here");
 			turnOff();
 		}

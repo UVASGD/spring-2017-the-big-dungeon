@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour {
     public int currentExp = 0;
 	private PlayerStatsUI statsMenu;
 
+	private string playerName;
+
 	private void Awake()
 	{
 		if (instance == null)
@@ -57,6 +59,7 @@ public class PlayerController : MonoBehaviour {
 		BaseStat strength = new BaseStat ("strength", 10, "Damage Dealt", -2);
 		BaseStat defense = new BaseStat ("defense", 11, "Damage Taken", 0);
 		BaseStat HP = new BaseStat ("HP", 12, "Health", 5);
+
 		stats.Add(HP);
 		stats.Add(strength);
 		stats.Add(defense);
@@ -109,6 +112,14 @@ public class PlayerController : MonoBehaviour {
             sfxMan.PlaySFX(currentStep);
 
     }
+
+	public void updatePlayerName(string name) {
+		this.playerName = name;
+	}
+
+	public string getPlayerName() {
+		return this.playerName;
+	}
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "map") {

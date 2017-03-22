@@ -12,6 +12,7 @@ public class PlayerStatsUI : MonoBehaviour {
 	private PauseMenuUI pause;
 	private GameObject statPanel;
 	public bool debugOn = false;
+	private PlayerController player;
 
 	// Use this for initialization
 	void Start () {
@@ -19,11 +20,14 @@ public class PlayerStatsUI : MonoBehaviour {
 		statsMenu.SetActive(isActive);
 		pause = FindObjectOfType<PauseMenuUI>();
 		statPanel = statsMenu.GetComponentInChildren<VerticalLayoutGroup>().gameObject;
+		player = FindObjectOfType<PlayerController>();
+
+		statPanel.transform.GetChild(0).gameObject.GetComponent<Text>().text = player.getPlayerName();
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Escape) && pause.inStats) {
+		if (Input.GetKeyDown(KeyCode.Escape) && isActive) {
 			statsClose();
 		}
 	}
@@ -34,6 +38,7 @@ public class PlayerStatsUI : MonoBehaviour {
 	}
 
 	public void statsClose() {
+		Debug.Log("called stats close");
 		isActive = false;
 		statsMenu.SetActive(false);
 		pause.reopenFromStats();
@@ -50,7 +55,7 @@ public class PlayerStatsUI : MonoBehaviour {
 		foreach (Transform child in statPanel.transform) {
 			Text statText = child.GetComponent<Text>();
 			if (statText.text == s.statName) {
-				statText.text = s.statName + ": " + s.baseVal;
+				statText.text = " " + s.statName + ": " + s.baseVal;
 				if (s.modifier > 0)
 					statText.text += " (+" + s.modifier + ")";
 				if (s.modifier < 0)
@@ -64,7 +69,7 @@ public class PlayerStatsUI : MonoBehaviour {
 		GameObject newStat = Instantiate(blankStat, blankStat.transform.position, blankStat.transform.rotation);
 		newStat.SetActive(true);
 		Text newText = newStat.GetComponent<Text>();
-		newText.text = s.statName + ": " + s.baseVal;
+		newText.text = " " + s.statName + ": " + s.baseVal;
 		if (s.modifier > 0)
 			newText.text += " (+" + s.modifier + ")";
 		if (s.modifier < 0)

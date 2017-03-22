@@ -19,17 +19,21 @@ public class SaveController : MonoBehaviour {
 	private static bool saveExists;
 
 	public GameObject player;
-    public InventoryManager inventory;
+	public InventoryManager inventory;
 	public bool isContinuing = false;
 	private MusicManager music;
 	private VolumeManager volumeMan;
 	public bool debugOn = false;
+	private BattleManager bm;
+	private int currentSlot = 0;
+	private string currentName = "";
 
 	// Use this for initialization
 	void Start () {
 		music = FindObjectOfType<MusicManager> ();
 		volumeMan = FindObjectOfType<VolumeManager> ();
 		volumeMan.findVCObjects ();
+		bm = FindObjectOfType<BattleManager>();
 		SceneManager.sceneLoaded += OnLevelFinishedLoading;
 		try {
 			player = FindObjectOfType<PlayerController>().gameObject;
@@ -50,33 +54,62 @@ public class SaveController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.O)) {
-			SaveTo ("default");
-		} else if (Input.GetKeyDown (KeyCode.P)) {
-			LoadFrom ("default");
-		} else if (Input.GetKeyDown (KeyCode.Alpha1)) {
-			LoadFrom ("slot1");
-		} else if (Input.GetKeyDown (KeyCode.Alpha2)) {
-			LoadFrom ("slot2");
-		} else if (Input.GetKeyDown (KeyCode.Alpha3)) {
-			LoadFrom ("slot3");
+		if (player != null) {
+			if (Input.GetKeyDown(KeyCode.O)) {
+				SaveTo("default");
+			}
+			else if (Input.GetKeyDown(KeyCode.P)) {
+				LoadFrom("default");
+			}
+			else if (Input.GetKeyDown(KeyCode.Alpha1)) {
+				LoadFrom("slot1");
+			}
+			else if (Input.GetKeyDown(KeyCode.Alpha2)) {
+				LoadFrom("slot2");
+			}
+			else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+				LoadFrom("slot3");
+			}
 		}
+	}
+
+	public void setCurrentSlot (int slot) {
+		this.currentSlot = slot;
+	}
+
+	public int getCurrentSlot() {
+		return this.currentSlot;
+	}
+
+	public void setCurrentName(string name) {
+		this.currentName = name;
+	}
+
+	public string getCurrentName() {
+		return this.currentName;
 	}
 
 	public void WriteFromData(SaveData s) {
 		player = GameObject.FindGameObjectWithTag("Player");
+		player.GetComponent<PlayerController>().updatePlayerName(s.playerName);
 		player.transform.position = new Vector2 (s.x, s.y);
         inventory.items = s.inventory;
 		inventory.money = s.money;
 	}
 
 	public SaveData WriteToData() {
-		SaveData s = new SaveData ();
+		SaveData s = new SaveData();
+		s.playerName = player.GetComponent<PlayerController>().getPlayerName();
 		s.x = player.transform.position.x;
 		s.y = player.transform.position.y;
         s.inventory = inventory.items;
         s.money = inventory.money;
 		return s;
+	}
+
+	public void SaveToSlot(int slot) {
+		string slotString = "slot" + currentSlot;
+		SaveTo(slotString);
 	}
 
 	public void SaveTo(String path) {
@@ -85,6 +118,11 @@ public class SaveController : MonoBehaviour {
 		SaveData dat = WriteToData ();
 		bf.Serialize (file, dat);
 		file.Close ();
+	}
+
+	public void LoadFromSlot(int slot) {
+		string slotString = "slot" + currentSlot;
+		LoadFrom(slotString);
 	}
 
 	public void LoadFrom(String path) {
@@ -112,6 +150,9 @@ public class SaveController : MonoBehaviour {
 			Debug.Log ("Music from level load " + buildIndex);
 		switch (buildIndex) {
 		case 0:
+			if (bm == null)
+				bm = FindObjectOfType<BattleManager>();
+			bm.setCanBattle(false);
 			music.SwitchTrack (2);
 			break;
 		case 1:
@@ -129,6 +170,10 @@ public class SaveController : MonoBehaviour {
 				StartCoroutine(sf.Wait(1.0f));
 				LoadFrom("default");
 				inventory.refreshItems();
+			} else {
+				//just starting
+				SaveToSlot(currentSlot);
+				player.GetComponent<PlayerController>().updatePlayerName(currentName);
 			}
 			break;
 		case 2:
@@ -167,6 +212,7 @@ public class SaveController : MonoBehaviour {
 [Serializable]
 public class SaveData {
 	//Any saved fields must be in here. currently just position:
+	public string playerName;
 	public float x;
 	public float y;
     public List<Item> inventory;

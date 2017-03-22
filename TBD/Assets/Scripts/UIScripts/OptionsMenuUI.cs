@@ -25,6 +25,8 @@ public class OptionsMenuUI : MonoBehaviour {
 	public MainMenuUI menu;
 	public PauseMenuUI pause;
 
+	private bool isActive = false;
+
 	// Use this for initialization
 	void Start () {
 		menu = FindObjectOfType<MainMenuUI>();
@@ -40,9 +42,22 @@ public class OptionsMenuUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Escape)) {
+		if (Input.GetKeyDown(KeyCode.Escape) && isActive) {
 			OnCancelButtonClick();
 		}
+	}
+
+	public void toggleMenu() {
+		isActive = !isActive;
+		this.gameObject.SetActive(isActive);
+	}
+
+	public void setActive(bool set) {
+		this.isActive = set;
+	}
+
+	public bool getActive() {
+		return this.isActive;
 	}
 
 	void onEnable() {

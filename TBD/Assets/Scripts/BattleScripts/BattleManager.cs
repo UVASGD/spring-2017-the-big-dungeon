@@ -19,6 +19,7 @@ public class BattleManager : MonoBehaviour
 	// State machine
 	private bool inBattle = false;
     private Queue<BattleState> stateQueue = new Queue<BattleState>();
+	private bool canBattle = false;
 
     private void Awake()
     {
@@ -42,7 +43,7 @@ public class BattleManager : MonoBehaviour
     void Update()
     {
         // This is just for testing
-        if (Input.GetKeyUp(KeyCode.B) && !this.inBattle)
+        if (Input.GetKeyUp(KeyCode.B) && !this.inBattle && this.canBattle)
         {
 			music.SwitchTrack(4);
 			// Make some dummy enemies and add them
@@ -51,6 +52,10 @@ public class BattleManager : MonoBehaviour
             StartBattle();
         }
     }
+
+	public void setCanBattle(bool set) {
+		this.canBattle = set;
+	}
 
     public void loadEnemy(Enemy enemy)
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class MainMenuUI : MonoBehaviour {
 
@@ -19,6 +20,17 @@ public class MainMenuUI : MonoBehaviour {
 	private float maxTimer = 6.3f;
 	private bool timerOn = false;
 	private SaveController sc;
+	private BattleManager bm;
+	public Canvas startMenu;
+	public GameObject saveArrow;
+	public GameObject inputField;
+	private int saveIndex = 0;
+	private Vector2 startPosition1;
+	private Vector2 startPosition2;
+	private Vector2 startPosition3;
+
+	private bool saveWait = false;
+
 
 	// Use this for initialization
 	void Start () {
@@ -32,8 +44,15 @@ public class MainMenuUI : MonoBehaviour {
 		exitText = exitText.GetComponent<Button>();
 		optionsMenu = optionsMenu.GetComponent<Canvas>();
 		quitMenu.enabled = false;
+		startMenu.enabled = false;
 		optionsMenu.enabled = false;
 		creditsBackground.SetActive(false);
+		bm = FindObjectOfType<BattleManager>();
+		bm.setCanBattle(false);
+
+		startPosition3 = saveArrow.GetComponent<RectTransform>().anchoredPosition;
+		startPosition2 = startPosition3 + new Vector2(0f, saveArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
+		startPosition1 = startPosition2 + new Vector2(0f, saveArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
 	}
 	
 	// Update is called once per frame
@@ -50,6 +69,50 @@ public class MainMenuUI : MonoBehaviour {
 				}
 			}
 		}
+		if (saveWait)
+			saveWait = false;
+	}
+
+	public void StartPressed() {
+		saveArrow.GetComponent<RectTransform>().anchoredPosition = startPosition1;
+		mainMenuOff();
+		startMenu.enabled = true;
+		saveWait = true;
+	}
+
+	public void StartExitPressed() {
+		startMenu.enabled = false;
+		mainMenuOn();
+	}
+
+	public void buttonPressed() {
+		if (startPosition2 == startPosition3) {
+			startPosition2 = startPosition3 + new Vector2(0f, saveArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
+		}
+		if (startPosition1 == startPosition3) {
+			startPosition1 = startPosition2 + new Vector2(0f, saveArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
+			saveArrow.GetComponent<RectTransform>().anchoredPosition = startPosition1;
+		}
+		if (!saveWait) {
+			int name = int.Parse(EventSystem.current.currentSelectedGameObject.name);
+			switch (name) {
+				case 1:
+					saveArrow.GetComponent<RectTransform>().anchoredPosition = startPosition1;
+					saveArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+					saveIndex = 1;
+					break;
+				case 2:
+					saveArrow.GetComponent<RectTransform>().anchoredPosition = startPosition2;
+					saveArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+					saveIndex = 2;
+					break;
+				case 3:
+					saveArrow.GetComponent<RectTransform>().anchoredPosition = startPosition3;
+					saveArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+					saveIndex = 3;
+					break;
+			}
+		}
 	}
 
 	public void ExitPressed() {
@@ -64,11 +127,16 @@ public class MainMenuUI : MonoBehaviour {
 
 	public void ContinueGame(){
 		sc.setContinuing(true);
+		bm.setCanBattle(true);
 		SceneManager.LoadScene(1);
 	}
 
 	public void StartGame() {
 		sc.setContinuing(false);
+		bm.setCanBattle(true);
+		string saveName = inputField.GetComponent<InputField>().text;
+		sc.setCurrentSlot(saveIndex);
+		sc.setCurrentName(saveName);
 		SceneManager.LoadScene(1);
 	}
 
@@ -89,11 +157,6 @@ public class MainMenuUI : MonoBehaviour {
 	public void CreditsPressed() {
 		timerOn = false;
 		timer = 0.0f;
-		/*
-		Color colorBlack = new Color(0f, 0f, 0f, 255f);
-		foreach (Image i in creditsBackground.GetComponentsInChildren<Image>()) {
-			i.GetComponent<CanvasRenderer>().SetColor(colorBlack);
-		}*/
 		creditsBackground.SetActive(true);
 		mainMenuOff();
 		creditsBackground.GetComponentInChildren<CreditScrollUI>().startCredits();

@@ -16,6 +16,7 @@ TagManager:
   - cutscene-top
   - itemname
   - iteminfo
+  - playername
   layers:
   - Default
   - TransparentFX
