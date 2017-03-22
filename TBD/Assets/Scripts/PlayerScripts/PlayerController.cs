@@ -16,9 +16,14 @@ public class PlayerController : MonoBehaviour {
 	public bool debugOn = false;
 
 	public AudioSource[] playerStepSounds;
-	
-	// How often the step sound occurs
-	private float stepInterval = 0.4f;
+
+    // How often the step sound occurs
+    private float currentSpeed = 2.5f;
+    private float normalSpeed = 2.5f;
+    private float runSpeed = 4.0f;
+    private float slowSpeed = 0.5f;
+
+    private float stepInterval = 0.4f;
 	private float timer = 0.0f;
 	private AudioSource currentStep;
 
@@ -74,10 +79,25 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (!frozen) {
-			Vector2 movement_vector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * 2.5f;
+			Vector2 movement_vector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * currentSpeed;
 
 			if (movement_vector != Vector2.zero) {
-				anim.SetBool("is_walking", true);
+                if (Input.GetKey(KeyCode.LeftShift)) {
+                    currentSpeed = runSpeed;
+                    stepInterval = 0.3f;
+                }
+
+                else if (Input.GetKey(KeyCode.RightShift)) {
+                    currentSpeed = slowSpeed;
+                    stepInterval = 0.48f;
+                }
+
+                else {
+                    currentSpeed = normalSpeed;
+                    stepInterval = 0.4f;
+                }
+
+                anim.SetBool("is_walking", true);
                 anim.SetFloat("input_x", movement_vector.x);
 				anim.SetFloat("input_y", movement_vector.y);
 				if (stepsOn)
