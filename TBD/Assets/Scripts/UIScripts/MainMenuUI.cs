@@ -94,6 +94,23 @@ public class MainMenuUI : MonoBehaviour {
 		mainMenuOn();
 	}
 
+	public void deletePressed() {
+		string name = EventSystem.current.currentSelectedGameObject.name;
+		int num = int.Parse(name.Substring(name.Length - 1));
+		Debug.Log(num);
+		switch (num) {
+			case 1:
+				Debug.Log("Are you sure you want to delete save file 1?");
+				break;
+			case 2:
+				Debug.Log("Are you sure you want to delete save file 2?");
+				break;
+			case 3:
+				Debug.Log("Are you sure you want to delete save file 3?");
+				break;
+		}
+	}
+
 	public void buttonPressed() {
 		if (startPosition2 == startPosition3) {
 			startPosition2 = startPosition3 + new Vector2(0f, saveArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
