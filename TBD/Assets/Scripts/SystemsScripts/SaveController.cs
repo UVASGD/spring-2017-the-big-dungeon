@@ -28,6 +28,8 @@ public class SaveController : MonoBehaviour {
 	private int currentSlot = 0;
 	private string currentName = "";
 
+	public SaveData curData;
+
 	// Use this for initialization
 	void Start () {
 		music = FindObjectOfType<MusicManager> ();
@@ -50,6 +52,7 @@ public class SaveController : MonoBehaviour {
 		} else {
 			Destroy (gameObject);
 		}
+		curData = new SaveData();
 	}
 	
 	// Update is called once per frame
@@ -83,6 +86,7 @@ public class SaveController : MonoBehaviour {
 
 	public void setCurrentName(string name) {
 		this.currentName = name;
+		this.curData.playerName = name;
 	}
 
 	public string getCurrentName() {
@@ -91,50 +95,70 @@ public class SaveController : MonoBehaviour {
 
 	public void WriteFromData(SaveData s) {
 		player = GameObject.FindGameObjectWithTag("Player");
-		player.GetComponent<PlayerController>().updatePlayerName(s.playerName);
-		player.transform.position = new Vector2 (s.x, s.y);
-        inventory.items = s.inventory;
-		inventory.money = s.money;
+		if (player != null) {
+			Debug.Log("loading from data to stuff");
+			player.GetComponent<PlayerController>().updatePlayerName(currentName);
+			player.transform.position = new Vector2(s.x, s.y);
+			inventory.items = s.inventory;
+			inventory.money = s.money;
+			player.GetComponent<PlayerController>().level = s.level;
+		}
+		curData = SaveData.deepCopy(s);
+		setCurrentName(curData.playerName);
 	}
 
 	public SaveData WriteToData() {
 		SaveData s = new SaveData();
-		s.playerName = player.GetComponent<PlayerController>().getPlayerName();
+		s.playerName = currentName;
 		s.x = player.transform.position.x;
 		s.y = player.transform.position.y;
         s.inventory = inventory.items;
         s.money = inventory.money;
+		s.level = player.GetComponent<PlayerController>().level;
+		curData = SaveData.deepCopy(s);
 		return s;
 	}
 
 	public void SaveToSlot(int slot) {
-		string slotString = "slot" + currentSlot;
+		string slotString;
+		slotString = "slot" + slot;
+		if (slot == 0) {
+			slotString = "default";
+		}
 		SaveTo(slotString);
 	}
 
 	public void SaveTo(String path) {
 		BinaryFormatter bf = new BinaryFormatter ();
-		FileStream file = File.Create (Application.persistentDataPath + path + ".dat");
+		FileStream file = File.Create (Application.persistentDataPath + path + ".sav");
 		SaveData dat = WriteToData ();
 		bf.Serialize (file, dat);
 		file.Close ();
 	}
 
 	public void LoadFromSlot(int slot) {
-		string slotString = "slot" + currentSlot;
+		string slotString;
+		slotString = "slot" + slot;
+		if (slot == 0) {
+			slotString = "default";
+		}
 		LoadFrom(slotString);
+		setCurrentSlot(slot);
 	}
 
 	public void LoadFrom(String path) {
-		if (File.Exists (Application.persistentDataPath + path + ".dat")) {
+		if (File.Exists (Application.persistentDataPath + path + ".sav")) {
 			BinaryFormatter bf = new BinaryFormatter ();
-			FileStream file = File.Open (Application.persistentDataPath + path + ".dat", FileMode.Open);
-			SaveData s = (SaveData)bf.Deserialize (file);
+			FileStream file = File.Open (Application.persistentDataPath + path + ".sav", FileMode.Open);
+			SaveData load = bf.Deserialize (file) as SaveData;
 			file.Close ();
-			WriteFromData (s);
-			player = FindObjectOfType<PlayerController>().gameObject;
-			player.GetComponent<Animator>().SetFloat("input_x", 0);
-			player.GetComponent<Animator>().SetFloat("input_y", -1);
+			WriteFromData (load);
+			PlayerController pc = FindObjectOfType<PlayerController>();
+			if (pc != null) {
+				player = pc.gameObject;
+				player.GetComponent<Animator>().SetFloat("input_x", 0);
+				player.GetComponent<Animator>().SetFloat("input_y", -1);
+			}
 		}
 	}
 
@@ -212,9 +236,28 @@ public class SaveController : MonoBehaviour {
 [Serializable]
 public class SaveData {
 	//Any saved fields must be in here. currently just position:
-	public string playerName;
+	
 	public float x;
 	public float y;
     public List<Item> inventory;
     public int money;
+	public int level;
+	[SerializeField]
+	public string playerName;
+
+	public static SaveData deepCopy(SaveData s) {
+		SaveData temp = new SaveData();
+		temp.playerName = s.playerName;
+		temp.x = s.x;
+		temp.y = s.y;
+		temp.inventory = s.inventory;
+		temp.money = s.money;
+		temp.level = s.level;
+		return temp;
+	}
+
+	public void printData() {
+		Debug.Log(this.playerName + " " +  this.x + " " + this.y + " " + this.money + " " + this.level);
+	}
+
 }

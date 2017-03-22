@@ -24,12 +24,13 @@ public class MainMenuUI : MonoBehaviour {
 	public Canvas startMenu;
 	public GameObject saveArrow;
 	public GameObject inputField;
-	private int saveIndex = 0;
+	private int saveIndex = 1;
 	private Vector2 startPosition1;
 	private Vector2 startPosition2;
 	private Vector2 startPosition3;
 
 	private bool saveWait = false;
+	private StartMenuUI[] saveFiles;
 
 
 	// Use this for initialization
@@ -53,6 +54,14 @@ public class MainMenuUI : MonoBehaviour {
 		startPosition3 = saveArrow.GetComponent<RectTransform>().anchoredPosition;
 		startPosition2 = startPosition3 + new Vector2(0f, saveArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
 		startPosition1 = startPosition2 + new Vector2(0f, saveArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
+
+		saveFiles = startMenu.GetComponentsInChildren<StartMenuUI>();
+		int i = 1;
+		foreach (StartMenuUI s in saveFiles) {
+			s.setThisSlot(i);
+			s.updateSaveFiles();
+			++i;
+		}
 	}
 	
 	// Update is called once per frame
