@@ -578,7 +578,7 @@ MonoBehaviour:
   creditsText: {fileID: 114987793623204114}
   exitText: {fileID: 114046669534466848}
   optionsMenu: {fileID: 0}
-  credits: {fileID: 0}
+  creditsBackground: {fileID: 0}
 --- !u!114 &114892487081776748
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -846,7 +846,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -18.2, y: -12}
+  m_AnchoredPosition: {x: -18.199951, y: -12}
   m_SizeDelta: {x: 114.400024, y: 56.700012}
   m_Pivot: {x: 1, y: 1}
 --- !u!224 &224878090491604710

@@ -13,10 +13,10 @@ public class MainMenuUI : MonoBehaviour {
 	public Button creditsText;
 	public Button exitText;
 	public Canvas optionsMenu;
-	public Canvas credits;
+	public GameObject creditsBackground;
 	private Canvas mainMenu;
 	private float timer = 0f;
-	private float maxTimer = 5.3f;
+	private float maxTimer = 6.3f;
 	private bool timerOn = false;
 	private SaveController sc;
 
@@ -33,7 +33,7 @@ public class MainMenuUI : MonoBehaviour {
 		optionsMenu = optionsMenu.GetComponent<Canvas>();
 		quitMenu.enabled = false;
 		optionsMenu.enabled = false;
-		credits.enabled = false;
+		creditsBackground.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -42,25 +42,14 @@ public class MainMenuUI : MonoBehaviour {
 			timer += Time.deltaTime;
 			if (timer > maxTimer) {
 				timer = 0f;
-				credits.enabled = false;
-				Color colorBlack = new Color(0f, 0f, 0f, 255f);
-				foreach (Image i in credits.GetComponentsInChildren<Image>()) {
-					i.GetComponent<CanvasRenderer>().SetColor(colorBlack);
+				creditsBackground.SetActive(false);
+				creditsBackground.GetComponentInChildren<CreditScrollUI>().resetPos();
+				Color colorAlpha = new Color(0f, 0f, 0f, 255f);
+				foreach (Text t in creditsBackground.GetComponentsInChildren<Text>()) {
+					t.color += colorAlpha;
 				}
 			}
 		}
-		/*
-		if (mc.isWaitingOnSwitch()) {
-			Debug.Log("Off now");
-			noButtons = true;
-			mainMenuOff();
-		}
-		if (!mc.isWaitingOnSwitch() && noButtons) {
-			Debug.Log("On now");
-			mainMenuOn();
-			noButtons = false;
-		}
-		*/
 	}
 
 	public void ExitPressed() {
@@ -100,20 +89,21 @@ public class MainMenuUI : MonoBehaviour {
 	public void CreditsPressed() {
 		timerOn = false;
 		timer = 0.0f;
+		/*
 		Color colorBlack = new Color(0f, 0f, 0f, 255f);
-		foreach (Image i in credits.GetComponentsInChildren<Image>()) {
+		foreach (Image i in creditsBackground.GetComponentsInChildren<Image>()) {
 			i.GetComponent<CanvasRenderer>().SetColor(colorBlack);
-		}
-		credits.enabled = true;
+		}*/
+		creditsBackground.SetActive(true);
 		mainMenuOff();
-		credits.GetComponentInChildren<CreditScrollUI>().startCredits();
+		creditsBackground.GetComponentInChildren<CreditScrollUI>().startCredits();
 	}
 
 	public void endOfCredits() {
 		Color colorFade = new Color(0f, 0f, 0f, 0f);
-		foreach (Image i in credits.GetComponentsInChildren<Image>()) {
-			i.GetComponent<CanvasRenderer>().SetAlpha(1f);
-			i.CrossFadeColor(colorFade, maxTimer, true, true);
+		foreach (Text t in creditsBackground.GetComponentsInChildren<Text>()) {
+			t.GetComponent<CanvasRenderer>().SetAlpha(1f);
+			t.CrossFadeColor(colorFade, maxTimer, true, true);
 			timerOn = true;
 		}
 		mainMenuOn();

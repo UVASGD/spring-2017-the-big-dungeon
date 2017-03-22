@@ -31,13 +31,14 @@ public class CreditScrollUI : MonoBehaviour {
 
 	private float waitTimer = 0.0f;
 	public float creditWaitTime = 10.0f;
+	public Text speedText;
 
 	// Use this for initialization
 	void Start () {
 		ms = FindObjectOfType<MainMenuUI>();
 		mc = FindObjectOfType<MusicManager>();
 		origPosition = GetComponent<RectTransform>().anchoredPosition;
-		middleOfScreen = -origPosition.y/2.0f;
+		middleOfScreen = -(origPosition.y-Screen.height)/2.0f;
 		string wholeFile = inputFile.text;
 		creditsLines.AddRange(wholeFile.Split("\n"[0]));
 		foreach (string line in creditsLines) {
@@ -72,14 +73,24 @@ public class CreditScrollUI : MonoBehaviour {
 			}
 		}
 		GetComponent<RectTransform>().sizeDelta = new Vector2(GetComponent<RectTransform>().sizeDelta.x, totalHeight);
-		
+		this.transform.position = this.transform.position + new Vector3(0.0f, -Screen.height, 0.0f);
 	}
 
 	// Update is called once per frame
 	void Update () {
 		if (creditsRolling) {
 			this.transform.position = this.transform.position + new Vector3(0.0f, scrollSpeed, 0.0f);
-			if (GetComponent<RectTransform>().anchoredPosition.y >= GetComponent<RectTransform>().sizeDelta.y - middleOfScreen) {
+			if (Input.GetKeyDown(KeyCode.Space)) {
+				changeScrollSpeed(1f);
+			}
+			if (Input.GetKeyUp(KeyCode.Space)) {
+				changeScrollSpeed(0.3f);
+			}
+			if (Input.GetKeyUp(KeyCode.Escape)) {
+				creditsRolling = false;
+				endCredit();
+			}
+			if (GetComponent<RectTransform>().anchoredPosition.y >= GetComponent<RectTransform>().sizeDelta.y - middleOfScreen - 100) {
 				creditsRolling = false;
 				creditsPause = true;
 			}
@@ -89,20 +100,36 @@ public class CreditScrollUI : MonoBehaviour {
 			if (waitTimer >= creditWaitTime) {
 				creditsPause = false;
 				waitTimer = 0.0f;
-				this.GetComponent<RectTransform>().anchoredPosition = origPosition;
 				endCredit();
 			}
 		}
 	}
 
+	public void resetPos() {
+		this.GetComponent<RectTransform>().anchoredPosition = origPosition;
+		this.transform.position = this.transform.position + new Vector3(0.0f, -Screen.height, 0.0f);
+	}
+
+	public void changeScrollSpeed(float speed) {
+		scrollSpeed = speed;
+	}
+
 	void endCredit() {
 		ms.endOfCredits();
+		if (mc == null)
+			mc = FindObjectOfType<MusicManager>();
 		mc.SwitchTrack(2, 0.2f, 0.1f);
 	}
 
 	public void startCredits() {
 		creditsRolling = true;
+		speedText.color = new Color(1f, 1f, 1f, 0.118f);
+		if (mc == null)
+			mc = FindObjectOfType<MusicManager>();
 		mc.SwitchTrack(3);
+		Color colorFade = new Color(0f, 0f, 0f, 0f);
+		speedText.GetComponent<CanvasRenderer>().SetAlpha(1f);
+		speedText.CrossFadeColor(colorFade, 6f, true, true);
 	}
 
 }
