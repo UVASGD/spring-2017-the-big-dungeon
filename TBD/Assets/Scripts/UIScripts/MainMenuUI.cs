@@ -21,6 +21,7 @@ public class MainMenuUI : MonoBehaviour {
 	private bool timerOn = false;
 	private SaveController sc;
 	private BattleManager bm;
+
 	public Canvas startMenu;
 	public GameObject saveArrow;
 	public GameObject inputField;
@@ -28,12 +29,22 @@ public class MainMenuUI : MonoBehaviour {
 	private Vector2 startPosition1;
 	private Vector2 startPosition2;
 	private Vector2 startPosition3;
-
 	private bool saveWait = false;
 	public StartMenuUI[] saveFiles;
 	public GameObject deleteMenu;
+	public GameObject warningMenu;
+
 	private int curDelete;
 
+	public GameObject continueMenu;
+	public GameObject contArrow;
+	private int contIndex = 1;
+	private Vector2 contPosition1;
+	private Vector2 contPosition2;
+	private Vector2 contPosition3;
+	private bool contWait = false;
+	public ContinueMenuUI[] contFiles;
+	public GameObject warningMenu2;
 
 	// Use this for initialization
 	void Start () {
@@ -57,9 +68,14 @@ public class MainMenuUI : MonoBehaviour {
 		startPosition2 = startPosition3 + new Vector2(0f, saveArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
 		startPosition1 = startPosition2 + new Vector2(0f, saveArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
 		saveArrow.GetComponent<RectTransform>().anchoredPosition = startPosition1;
+		refreshSaveFilesUI();		
 
-		refreshSaveFilesUI();
-		deleteMenu.SetActive(false);
+		contPosition3 = contArrow.GetComponent<RectTransform>().anchoredPosition;
+		contPosition2 = contPosition3 + new Vector2(0f, contArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
+		contPosition1 = contPosition2 + new Vector2(0f, contArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
+		contArrow.GetComponent<RectTransform>().anchoredPosition = contPosition1;
+		refreshContFilesUI();
+		continueMenu.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -78,6 +94,8 @@ public class MainMenuUI : MonoBehaviour {
 		}
 		if (saveWait)
 			saveWait = false;
+		if (contWait)
+			contWait = false;
 	}
 
 	public void refreshSaveFilesUI() {
@@ -85,6 +103,15 @@ public class MainMenuUI : MonoBehaviour {
 		foreach (StartMenuUI s in saveFiles) {
 			s.setThisSlot(i);
 			s.updateSaveFiles();
+			++i;
+		}
+	}
+
+	public void refreshContFilesUI() {
+		int i = 1;
+		foreach (ContinueMenuUI c in contFiles) {
+			c.setThisSlot(i);
+			c.updateContFiles();
 			++i;
 		}
 	}
@@ -105,15 +132,39 @@ public class MainMenuUI : MonoBehaviour {
 
 	public void StartExitPressed() {
 		startMenu.enabled = false;
+		Debug.Log("pls");
+	
+		inputField.transform.FindChild("Placeholder").gameObject.GetComponent<Text>().enabled = true;
+		inputField.GetComponent<InputField>().text = "";
+		inputField.GetComponent<InputField>().customCaretColor = true;
 		mainMenuOn();
+	}
+
+	public void ContExitPressed() {
+		continueMenu.SetActive(false);
+		mainMenuOn();
+	}
+
+	public void continuePressed() {
+		if (startPosition2 == startPosition3) {
+			startPosition2 = startPosition3 + new Vector2(0f, saveArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
+		}
+		if (startPosition1 == startPosition3) {
+			startPosition1 = startPosition2 + new Vector2(0f, saveArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
+			saveArrow.GetComponent<RectTransform>().anchoredPosition = startPosition1;
+		}
+		saveArrow.GetComponent<RectTransform>().anchoredPosition = startPosition1;
+		mainMenuOff();
+		continueMenu.SetActive(true);
+		contWait = true;
 	}
 
 	public void deletePressed() {
 		string name = EventSystem.current.currentSelectedGameObject.name;
 		int num = int.Parse(name.Substring(name.Length - 1));
-		curDelete = num;
-		bool isNewGame = sc.isNewGame(num);
 		switchSaveButton(num);
+		curDelete = saveIndex;
+		bool isNewGame = sc.isNewGame(curDelete);
 		if (!isNewGame) {
 			deleteMenu.SetActive(true);
 		}
@@ -122,6 +173,7 @@ public class MainMenuUI : MonoBehaviour {
 	public void confirmDelete() {
 		sc.deleteSlot(curDelete);
 		refreshSaveFilesUI();
+		refreshContFilesUI();
 		deleteMenu.SetActive(false);
 		curDelete = 0;
 	}
@@ -129,6 +181,28 @@ public class MainMenuUI : MonoBehaviour {
 	public void cancelDelete() {
 		deleteMenu.SetActive(false);
 		curDelete = 0;
+	}
+
+	public void popWarning() {
+		warningMenu.SetActive(true);
+	}
+
+	public void closeWarning() {
+		warningMenu.SetActive(false);
+	}
+
+	public void popWarning2() {
+		warningMenu2.SetActive(true);
+	}
+
+	public void closeWarning2() {
+		warningMenu2.SetActive(false);
+	}
+
+	public void refreshCursor() {
+		inputField.transform.FindChild("Text").gameObject.GetComponent<RectTransform>().pivot = new Vector2 (0.51f, 0.51f);
+		inputField.gameObject.transform.FindChild("Text").gameObject.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+		inputField.GetComponent<InputField>().customCaretColor = false;
 	}
 
 	public void switchSaveButton(int num) {
@@ -151,7 +225,27 @@ public class MainMenuUI : MonoBehaviour {
 		}
 	}
 
-	public void buttonPressed() {
+	public void switchContButton(int num) {
+		switch (num) {
+			case 1:
+				contArrow.GetComponent<RectTransform>().anchoredPosition = contPosition1;
+				contArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+				contIndex = 1;
+				break;
+			case 2:
+				contArrow.GetComponent<RectTransform>().anchoredPosition = contPosition2;
+				contArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+				contIndex = 2;
+				break;
+			case 3:
+				contArrow.GetComponent<RectTransform>().anchoredPosition = contPosition3;
+				contArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+				contIndex = 3;
+				break;
+		}
+	}
+
+	public void buttonStartPressed() {
 		if (startPosition2 == startPosition3) {
 			startPosition2 = startPosition3 + new Vector2(0f, saveArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
 		}
@@ -161,23 +255,21 @@ public class MainMenuUI : MonoBehaviour {
 		}
 		if (!saveWait) {
 			int name = int.Parse(EventSystem.current.currentSelectedGameObject.name);
-			switch (name) {
-				case 1:
-					saveArrow.GetComponent<RectTransform>().anchoredPosition = startPosition1;
-					saveArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
-					saveIndex = 1;
-					break;
-				case 2:
-					saveArrow.GetComponent<RectTransform>().anchoredPosition = startPosition2;
-					saveArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
-					saveIndex = 2;
-					break;
-				case 3:
-					saveArrow.GetComponent<RectTransform>().anchoredPosition = startPosition3;
-					saveArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
-					saveIndex = 3;
-					break;
-			}
+			switchSaveButton(name);
+		}
+	}
+
+	public void buttonContPressed() {
+		if (contPosition2 == contPosition3) {
+			contPosition2 = contPosition3 + new Vector2(0f, contArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
+		}
+		if (contPosition1 == contPosition3) {
+			contPosition1 = contPosition2 + new Vector2(0f, contArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
+			contArrow.GetComponent<RectTransform>().anchoredPosition = contPosition1;
+		}
+		if (!contWait) {
+			int name = int.Parse(EventSystem.current.currentSelectedGameObject.name);
+			switchContButton(name);
 		}
 	}
 
@@ -192,18 +284,33 @@ public class MainMenuUI : MonoBehaviour {
 	}
 
 	public void ContinueGame(){
-		sc.setContinuing(true);
-		bm.setCanBattle(true);
-		SceneManager.LoadScene(1);
+		bool isNew = sc.isNewGame(contIndex);
+		Debug.Log(isNew + " " + contIndex);
+		if (!isNew) {
+			sc.setContinuing(true);
+			sc.setCurrentSlot(contIndex);
+			bm.setCanBattle(true);
+			SceneManager.LoadScene(1);
+		} else {
+			popWarning2();
+		}
+		Debug.Log("continue the game " + contIndex);
 	}
 
 	public void StartGame() {
-		sc.setContinuing(false);
-		bm.setCanBattle(true);
-		string saveName = inputField.GetComponent<InputField>().text;
-		sc.setCurrentSlot(saveIndex);
-		sc.setCurrentName(saveName);
-		SceneManager.LoadScene(1);
+		bool isNew = sc.isNewGame(saveIndex);
+		if (isNew) {
+			sc.setContinuing(false);
+			bm.setCanBattle(true);
+			string saveName = inputField.GetComponent<InputField>().text;
+			sc.setCurrentSlot(saveIndex);
+			sc.setCurrentName(saveName);
+			sc.setNewGame(false);
+			SceneManager.LoadScene(1);
+		} else {
+			popWarning();
+		}
+		
 	}
 
 	public void ExitGame() {

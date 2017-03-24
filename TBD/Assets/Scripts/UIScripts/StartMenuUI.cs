@@ -38,5 +38,13 @@ public class StartMenuUI : MonoBehaviour {
 		sc.LoadFromSlot(thisSlot);
 		fileName.text = sc.getCurrentName();
 		infoText.text = "" + sc.curData.level;
+		if (sc.isNewGame(thisSlot)) {
+			fileName.color = Color.gray;
+			infoText.color = Color.gray;
+		}
+		else {
+			fileName.color = Color.white;
+			infoText.color = Color.white;
+		}
 	}
 }

@@ -133,6 +133,7 @@ public class SaveController : MonoBehaviour {
 	public void WriteFromData(SaveData s) {
 		player = GameObject.FindGameObjectWithTag("Player");
 		if (player != null) {
+			Debug.Log("pls");
 			player.GetComponent<PlayerController>().updatePlayerName(currentName);
 			player.transform.position = new Vector2(s.x, s.y);
 			inventory.items = s.inventory;
@@ -256,7 +257,7 @@ public class SaveController : MonoBehaviour {
 			if (isContinuing) {
 				sf.BlackOut();
 				StartCoroutine(sf.Wait(1.0f));
-				LoadFrom("default");
+				LoadFromSlot(currentSlot);
 				inventory.refreshItems();
 			} else {
 				//just starting

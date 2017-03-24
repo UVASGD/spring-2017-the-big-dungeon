@@ -126,7 +126,7 @@ public class CreditScrollUI : MonoBehaviour {
 		speedText.color = new Color(1f, 1f, 1f, 0.118f);
 		if (mc == null)
 			mc = FindObjectOfType<MusicManager>();
-		mc.SwitchTrack(3);
+		mc.SwitchTrack(5);
 		Color colorFade = new Color(0f, 0f, 0f, 0f);
 		speedText.GetComponent<CanvasRenderer>().SetAlpha(1f);
 		speedText.CrossFadeColor(colorFade, 6f, true, true);
