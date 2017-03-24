@@ -85,16 +85,22 @@ public class PlayerController : MonoBehaviour {
                 if (Input.GetKey(KeyCode.LeftShift)) {
                     currentSpeed = runSpeed;
                     stepInterval = 0.3f;
+                    currentStep.volume = 0.6f;
+                    anim.speed = 2.0f;
                 }
                 //Walk Slower
                 else if (Input.GetKey(KeyCode.RightShift)) {
                     currentSpeed = slowSpeed;
                     stepInterval = 0.48f;
+                    currentStep.volume = 0.1f;
+                    anim.speed = 0.5f;
                 }
                 //Walking
                 else {
                     currentSpeed = normalSpeed;
                     stepInterval = 0.4f;
+                    currentStep.volume = 0.2f;
+                    anim.speed = 1f;
                 }
 
                 anim.SetBool("is_walking", true);
