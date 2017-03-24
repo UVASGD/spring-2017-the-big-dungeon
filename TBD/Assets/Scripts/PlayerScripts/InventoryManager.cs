@@ -42,8 +42,8 @@ public class InventoryManager : MonoBehaviour
 
 	public void addStartItems(bool isContinuing) {
 		if (!isContinuing) {
-			Item it1 = new Item("First Item", "This is a very long description", "Equipment", "?", 2, 30, false);
-			Item it2 = new Item("Multiple Item", "How bout them items", "Equipment", "What", 3, 30, false);
+			Item it1 = new Item("First Item", "This is a very long description", "Equipment", /*"?",*/ 2, 30, false);
+			Item it2 = new Item("Multiple Item", "How bout them items", "Equipment", /*"What",*/ 3, 30, false);
 			Equipment armor = new Equipment("Basic Armor", "Adds defense and hp", 0, 1, 10);
 			Equipment weapon = new Equipment("Basic Weapon", "Adds strength", 1, 0, 0);
 			addItem(it1);
@@ -155,25 +155,25 @@ public class Item
     public bool special { get; set; }
     public string name { get; set; }
     public string description { get; set; }
-    public string slug { get; set; }
+    //public string slug { get; set; }
     public int quantity { get; set; }
     public int price { get; set; }
     public string type { get; set; }
-    public Item(string name, string description, string type, string slug, int quantity, int price, bool special)
+    public Item(string name, string description, string type,/* string slug ,*/ int quantity, int price, bool special)
     {
         this.name = name;
         this.description = description;
-        this.slug = slug;
+        //this.slug = slug;
         this.quantity = quantity;
         this.special = special;
         this.type = type;
         this.price = price;
     }
-    public Item(string name, string description, string type, string slug, int price, bool special)
+    public Item(string name, string description, string type,/* string slug ,*/ int price, bool special)
     {
         this.name = name;
         this.description = description;
-        this.slug = slug;
+        //this.slug = slug;
         this.special = special;
         this.quantity = 1;
         this.type = type;
@@ -184,7 +184,7 @@ public class Item
     {
         this.name = item.name;
         this.description = item.description;
-        this.slug = item.slug;
+        //this.slug = item.slug;
         this.quantity = quantity;
         this.type = item.type;
         this.price = item.price;
@@ -218,7 +218,7 @@ public class Equipment : Item
 	public int str { get; set; }
 	public int def { get; set; }
     public int hp { get; set; }
-    public Equipment(string name, string desc, int str, int def, int hp) : base(name, desc, "equipment", "???", 0, false)
+    public Equipment(string name, string desc, int str, int def, int hp) : base(name, desc, "equipment",/* "???", */ 0, false)
 	{
 		this.str = str;
 		this.def = def;
