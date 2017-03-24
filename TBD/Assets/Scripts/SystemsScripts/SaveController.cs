@@ -30,6 +30,7 @@ public class SaveController : MonoBehaviour {
 	private bool newGame;
 
 	public SaveData curData;
+	private int currentLevel;
 
 	// Use this for initialization
 	void Start () {
@@ -66,12 +67,21 @@ public class SaveController : MonoBehaviour {
 				LoadFrom("default");
 			}
 			else if (Input.GetKeyDown(KeyCode.Alpha1)) {
-				LoadFrom("slot1");
+				SaveTo("slot1", false);
 			}
 			else if (Input.GetKeyDown(KeyCode.Alpha2)) {
-				LoadFrom("slot2");
+				SaveTo("slot2", false);
 			}
 			else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+				SaveTo("slot3", false);
+			}
+			else if (Input.GetKeyDown(KeyCode.Alpha8)) {
+				LoadFrom("slot1");
+			}
+			else if (Input.GetKeyDown(KeyCode.Alpha9)) {
+				LoadFrom("slot2");
+			}
+			else if (Input.GetKeyDown(KeyCode.Alpha0)) {
 				LoadFrom("slot3");
 			}
 		}
@@ -132,16 +142,22 @@ public class SaveController : MonoBehaviour {
 
 	public void WriteFromData(SaveData s) {
 		player = GameObject.FindGameObjectWithTag("Player");
-		if (player != null) {
-			player.GetComponent<PlayerController>().updatePlayerName(currentName);
-			player.transform.position = new Vector2(s.x, s.y);
-			inventory.items = s.inventory;
-			inventory.money = s.money;
-			player.GetComponent<PlayerController>().level = s.level;
-			setNewGame(false);
-		}
 		curData = SaveData.deepCopy(s);
-		setCurrentName(curData.playerName);
+		setCurrentName(s.playerName);
+		if (!s.newGame) {
+			Debug.Log("This is not a new game");
+			if (player != null) {
+				player.GetComponent<PlayerController>().updatePlayerName(currentName);
+				PlayerStatsUI ps = FindObjectOfType<PlayerStatsUI>();
+				if (ps != null)
+					ps.updateName(currentName);
+				player.transform.position = new Vector2(s.x, s.y);
+				inventory.items = s.inventory;
+				inventory.money = s.money;
+				player.GetComponent<PlayerController>().level = s.level;
+				setNewGame(false);
+			}
+		}
 	}
 
 	public SaveData WriteToData(bool isNew) {
@@ -163,7 +179,6 @@ public class SaveController : MonoBehaviour {
 			s.level = 0;
 			s.newGame = true;
 		}
-		//curData = SaveData.deepCopy(s);
 		return s;
 	}
 	
@@ -219,10 +234,11 @@ public class SaveController : MonoBehaviour {
 				player.GetComponent<Animator>().SetFloat("input_y", -1);
 			}
 		} else {
-			// Create new save file?
 			Debug.Log("doesn't exist, create new save");
 			SaveTo(path, true);
-			LoadFrom(path);
+			if (currentLevel != 1)
+				// Don't load from new saves when in game
+				LoadFrom(path);
 		}
 	}
 
@@ -242,8 +258,10 @@ public class SaveController : MonoBehaviour {
 				bm = FindObjectOfType<BattleManager>();
 			bm.setCanBattle(false);
 			music.SwitchTrack (2);
+			currentLevel = 0;
 			break;
 		case 1:
+			currentLevel = 1;
 			music.SwitchTrack (0);
 			ScreenFader sf = GameObject.FindGameObjectWithTag("Fader").GetComponent<ScreenFader>();
 			player = FindObjectOfType<PlayerController>().gameObject;
@@ -265,9 +283,11 @@ public class SaveController : MonoBehaviour {
 			}
 			break;
 		case 2:
+			currentLevel = 2;
 			music.SwitchTrack (4, 0.6f, 0.8f);
 			break;
 		default:
+			currentLevel = 0;
 			music.SwitchTrack (0);
 			break;
 		}

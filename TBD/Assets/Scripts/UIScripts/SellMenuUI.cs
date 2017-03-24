@@ -41,6 +41,7 @@ public class SellMenuUI : MonoBehaviour
     private BuyMenuUI buyObject;
     private PauseMenuUI pauseMenu;
     private InventoryUI inventoryMenu;
+	private PlayerStatsUI statsMenu;
 
     // Use this for initialization
     void Start()
@@ -54,6 +55,7 @@ public class SellMenuUI : MonoBehaviour
         buyObject = FindObjectOfType<BuyMenuUI>();
         pauseMenu = FindObjectOfType<PauseMenuUI>();
         inventoryMenu = FindObjectOfType<InventoryUI>();
+		statsMenu = FindObjectOfType<PlayerStatsUI>();
         inventory = InventoryManager.instance;
         playerInventory = inventory.items;
         arrowIndex = 0;
@@ -105,7 +107,8 @@ public class SellMenuUI : MonoBehaviour
         {
             buyObject.turnOff();
             inventoryMenu.turnOff();
-            pauseMenu.OptionsClose();
+			statsMenu.turnOff();
+			pauseMenu.OptionsClose();
             pauseMenu.exitMenu();
             toggle();
             updateDetails();

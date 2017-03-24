@@ -22,7 +22,7 @@ public class PlayerStatsUI : MonoBehaviour {
 		statPanel = statsMenu.GetComponentInChildren<VerticalLayoutGroup>().gameObject;
 		player = FindObjectOfType<PlayerController>();
 
-		statPanel.transform.GetChild(0).gameObject.GetComponent<Text>().text = player.getPlayerName();
+		updateName(player.getPlayerName());
 	}
 
 	// Update is called once per frame
@@ -30,6 +30,10 @@ public class PlayerStatsUI : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Escape) && isActive) {
 			statsClose();
 		}
+	}
+
+	public void updateName(string name) {
+		statPanel.transform.GetChild(0).gameObject.GetComponent<Text>().text = name;
 	}
 
 	public void statsOpened() {

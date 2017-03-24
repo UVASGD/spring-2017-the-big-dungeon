@@ -12,7 +12,6 @@ public class PauseMenuUI : MonoBehaviour {
 	private GameObject arrow;
 	private int index = 0;
 	private Vector2 yOffset = new Vector3(0f, 105f);
-	private SaveController save;
 	private ScreenFader sf;
 	private Vector2 startPosition;
 	public OptionsMenuUI optionsMenu;
@@ -26,11 +25,15 @@ public class PauseMenuUI : MonoBehaviour {
 	public bool canEscape = false;
 	public bool inStats = false;
 
-	public int totalOptions = 7;
+	public int totalOptions = 5;
 	public bool debugOn = false;
 
 	private bool escapeWait = true;
-
+	public GameObject exitConfirmMenu;
+	public bool inExit = false;
+	private int exitIndex = 0;
+	private GameObject exitArrow;
+	private Vector2 exitOffset = new Vector2(285f, 0f);
 
 
 	// Use this for initialization
@@ -44,7 +47,6 @@ public class PauseMenuUI : MonoBehaviour {
 		player = FindObjectOfType<PlayerController>();
 		arrow = pauseMenu.GetComponentInChildren<Animator>().gameObject;
 		startPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
-		save = FindObjectOfType<SaveController>();
 
 		if (optionsMenu == null) {
 			optionsMenu = FindObjectOfType<OptionsMenuUI>();
@@ -57,7 +59,7 @@ public class PauseMenuUI : MonoBehaviour {
 		} catch {
 			sf = null;
 		}
-
+		exitArrow = exitConfirmMenu.GetComponentInChildren<Animator>().gameObject;
 	}
 	
 	// Update is called once per frame
@@ -65,14 +67,48 @@ public class PauseMenuUI : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Escape) && canEscape && isActive && !escapeWait) {
             exitMenu();
 		}
-		if (Input.GetKeyDown(KeyCode.Return) && !player.talking && !inItems && !inOptions && !inStats) {
+		if (inExit) {
+			if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
+				if (exitIndex > 0) {
+					exitIndex--;
+					Vector2 arrowPosition = exitArrow.GetComponent<RectTransform>().anchoredPosition;
+					arrowPosition -= exitOffset;
+					exitArrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
+					exitArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+				}
+			}
+			else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
+				if (exitIndex < 1) {
+					exitIndex++;
+					Vector2 arrowPosition = exitArrow.GetComponent<RectTransform>().anchoredPosition;
+					arrowPosition += exitOffset;
+					exitArrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
+					exitArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+				}
+			}
+			else if (Input.GetKeyDown(KeyCode.Space)) {
+				Debug.Log(exitIndex);
+				switch (exitIndex) {
+					case 0:
+						exitConfirm();
+						break;
+					case 1:
+						exitCancel();
+						break;
+				}
+			}
+			else if (Input.GetKeyDown(KeyCode.Escape)) {
+				exitCancel();
+			}
+		}
+		if (Input.GetKeyDown(KeyCode.Return) && !player.talking && !inItems && !inOptions && !inStats && !inExit) {
             if (buyObject != null)
                 buyObject.turnOff();
             if (sellObject != null)
                 sellObject.turnOff();
 			toggleMenu();
 		}
-		if (isActive && !inOptions && !inItems && !inStats) {
+		if (isActive && !inOptions && !inItems && !inStats && !inExit && !escapeWait) {
 			if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) {
 				if (index > 0) {
 					index--;
@@ -100,46 +136,34 @@ public class PauseMenuUI : MonoBehaviour {
 					//Bag
 					case 1:
 						debug("Open BAG");
-						break;
-					//Item
-					case 2:
-						debug("Open ITEM");
 						inventoryMenu.itemsOpened();
 						inItems = true;
 						canEscape = false;
 						//toggleMenu();
 						break;
 					//Player
-					case 3:
+					case 2:
 						debug ("Open PLAYER");
 						statsMenu.statsOpened ();
 						inStats = true;
 						canEscape = false;
 						break;
 					//Option
-					case 4:
+					case 3:
 						debug("Open OPTION");
 						OptionsOpened();
 						break;
-					//Save
-					case 5:
-						// eventually player name
-						save.SaveTo("default", false);
-						break;
 					//Exit
-					case 6:
-						// Could break a lot of stuff switching between scenes
-						if (sf != null) {
-							sf.BlackOut();
-						}
-						SceneManager.LoadScene(0);
+					case 4:
+						debug("Open EXIT");
+						ExitOpened();
 						break;
 					default:
 						break;
 				}
 			}
 		}
-		if (inOptions || inItems || isActive || inStats) {
+		if (inOptions || inItems || isActive || inStats || inExit) {
 			player.frozen = true;
 		}
 		escapeWait = false;
@@ -161,7 +185,34 @@ public class PauseMenuUI : MonoBehaviour {
 		inItems = false;
 		inStats = false;
 		inOptions = false;
+		inExit = false;
 		toggleMenu();
+	}
+
+	public void ExitOpened() {
+		exitConfirmMenu.SetActive(true);
+		inExit = true;
+		canEscape = false;
+	}
+
+	public void exitConfirm() {
+		// Could break a lot of stuff switching between scenes
+		if (sf != null) {
+			sf.BlackOut();
+		}
+		SceneManager.LoadScene(0);
+	}
+
+	public void exitCancel () {
+		exitIndex = 0;
+		Vector2 arrowPosition = exitArrow.GetComponent<RectTransform>().anchoredPosition;
+		arrowPosition -= exitOffset;
+		exitArrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
+		exitConfirmMenu.SetActive(false);
+		inExit = false;
+		canEscape = true;
+		escapeWait = true;
+		
 	}
 
 	public void OptionsOpened() {
@@ -187,14 +238,12 @@ public class PauseMenuUI : MonoBehaviour {
         inItems = false;
 		canEscape = true;
 		escapeWait = true;
-		index = 2;
 	}
 
 	public void reopenFromStats() {
 		inStats = false;
 		canEscape = true;
 		escapeWait = true;
-		index = 3;
 	}
 
 	void debug(string line) {

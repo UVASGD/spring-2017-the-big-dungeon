@@ -264,7 +264,8 @@ public class InventoryUI : MonoBehaviour {
 			itemPanel = itemMenu.GetComponentInChildren<GridLayoutGroup>().gameObject;
 		}
 		if (inventory == null)
-			items = inventory.items;
+			inventory = FindObjectOfType<InventoryManager>();
+		items = inventory.items;
 		foreach (Transform child in itemPanel.transform) {
 			Text itemText = child.GetComponent<Text>();
 			// Potential problem with truncated characters

@@ -39,9 +39,10 @@ public class BuyMenuUI : MonoBehaviour
     private SellMenuUI sellObject;
     private PauseMenuUI pauseMenu;
     private InventoryUI inventoryMenu;
+	private PlayerStatsUI statsMenu;
 
-    // Use this for initialization
-    void Start()
+	// Use this for initialization
+	void Start()
     {
         //Initializes variables
         sfx = FindObjectOfType<SFXManager>();
@@ -53,8 +54,9 @@ public class BuyMenuUI : MonoBehaviour
         sellObject = FindObjectOfType<SellMenuUI>();
         pauseMenu = FindObjectOfType<PauseMenuUI>();
         inventoryMenu = FindObjectOfType<InventoryUI>();
-        //Fills the shop inventory with test items, in reality individual shop's inventory will be passed in
-        shopInventory = new List<Item>();
+		statsMenu = FindObjectOfType<PlayerStatsUI>();
+		//Fills the shop inventory with test items, in reality individual shop's inventory will be passed in
+		shopInventory = new List<Item>();
         shopInventory.Add(new Item("Helmet", "For all your helmet needs", "Equipment", "helm", 60, false));
         for (int i = 1; i < 7; i++)
         {
@@ -112,7 +114,8 @@ public class BuyMenuUI : MonoBehaviour
         {
             sellObject.turnOff();
             inventoryMenu.turnOff();
-            pauseMenu.OptionsClose();
+			statsMenu.turnOff();
+			pauseMenu.OptionsClose();
             pauseMenu.exitMenu();
 			updateMoney ();
             toggle();
