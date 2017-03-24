@@ -37,6 +37,6 @@ public class StartMenuUI : MonoBehaviour {
 		infoText = this.transform.GetChild(2).GetComponent<Text>();
 		sc.LoadFromSlot(thisSlot);
 		fileName.text = sc.getCurrentName();
-		infoText.text = "LEVEL: ?";
+		infoText.text = "" + sc.curData.level;
 	}
 }

@@ -27,6 +27,7 @@ public class SaveController : MonoBehaviour {
 	private BattleManager bm;
 	private int currentSlot = 0;
 	private string currentName = "";
+	private bool newGame;
 
 	public SaveData curData;
 
@@ -59,7 +60,7 @@ public class SaveController : MonoBehaviour {
 	void Update () {
 		if (player != null) {
 			if (Input.GetKeyDown(KeyCode.O)) {
-				SaveTo("default");
+				SaveTo("default", false);
 			}
 			else if (Input.GetKeyDown(KeyCode.P)) {
 				LoadFrom("default");
@@ -84,6 +85,14 @@ public class SaveController : MonoBehaviour {
 		return this.currentSlot;
 	}
 
+	public void setNewGame(bool b) {
+		this.newGame = b;
+	}
+
+	public bool getNewGame() {
+		return this.newGame;
+	}
+
 	public void setCurrentName(string name) {
 		this.currentName = name;
 		this.curData.playerName = name;
@@ -93,30 +102,80 @@ public class SaveController : MonoBehaviour {
 		return this.currentName;
 	}
 
+	public void deleteSlot(int slot) {
+		string slotString;
+		slotString = "slot" + slot;
+		if (slot == 0) {
+			slotString = "default";
+		}
+		deleteSave(slotString);
+		SaveTo(slotString, true);
+	}
+
+	public bool deleteSave(string saveName) {
+		try {
+			File.Delete(getSavePath(saveName));
+		}
+		catch (Exception) {
+			return false;
+		}
+		return true;
+	}
+
+	private string getSavePath(string name) {
+		return Path.Combine(Application.persistentDataPath, name + ".sav");
+	}
+
+	public bool doesSaveExist(string name) {
+		return File.Exists(getSavePath(name));
+	}
+
 	public void WriteFromData(SaveData s) {
 		player = GameObject.FindGameObjectWithTag("Player");
 		if (player != null) {
-			Debug.Log("loading from data to stuff");
 			player.GetComponent<PlayerController>().updatePlayerName(currentName);
 			player.transform.position = new Vector2(s.x, s.y);
 			inventory.items = s.inventory;
 			inventory.money = s.money;
 			player.GetComponent<PlayerController>().level = s.level;
+			setNewGame(false);
 		}
 		curData = SaveData.deepCopy(s);
 		setCurrentName(curData.playerName);
 	}
 
-	public SaveData WriteToData() {
+	public SaveData WriteToData(bool isNew) {
 		SaveData s = new SaveData();
-		s.playerName = currentName;
-		s.x = player.transform.position.x;
-		s.y = player.transform.position.y;
-        s.inventory = inventory.items;
-        s.money = inventory.money;
-		s.level = player.GetComponent<PlayerController>().level;
-		curData = SaveData.deepCopy(s);
+		if (!isNew) {
+			s.playerName = currentName;
+			s.x = player.transform.position.x;
+			s.y = player.transform.position.y;
+			s.inventory = inventory.items;
+			s.money = inventory.money;
+			s.level = player.GetComponent<PlayerController>().level;
+			s.newGame = getNewGame();
+		} else {
+			s.playerName = "NEW SAVE FILE";
+			s.x = 0;
+			s.y = 0;
+			s.inventory = null;
+			s.money = 0;
+			s.level = 0;
+			s.newGame = true;
+		}
+		//curData = SaveData.deepCopy(s);
 		return s;
+	}
+	
+	public bool isNewGame(int slot) {
+		string slotString;
+		slotString = "slot" + slot;
+		if (slot == 0) {
+			slotString = "default";
+		}
+		LoadFrom(slotString);
+		setNewGame(curData.newGame);
+		return getNewGame();
 	}
 
 	public void SaveToSlot(int slot) {
@@ -125,13 +184,13 @@ public class SaveController : MonoBehaviour {
 		if (slot == 0) {
 			slotString = "default";
 		}
-		SaveTo(slotString);
+		SaveTo(slotString, false);
 	}
 
-	public void SaveTo(String path) {
+	public void SaveTo(string path, bool isNew) {
 		BinaryFormatter bf = new BinaryFormatter ();
-		FileStream file = File.Create (Application.persistentDataPath + path + ".sav");
-		SaveData dat = WriteToData ();
+		FileStream file = File.Create (getSavePath(path));
+		SaveData dat = WriteToData (isNew);
 		bf.Serialize (file, dat);
 		file.Close ();
 	}
@@ -146,10 +205,10 @@ public class SaveController : MonoBehaviour {
 		setCurrentSlot(slot);
 	}
 
-	public void LoadFrom(String path) {
-		if (File.Exists (Application.persistentDataPath + path + ".sav")) {
+	public void LoadFrom(string path) {
+		if (doesSaveExist(path)) {
 			BinaryFormatter bf = new BinaryFormatter ();
-			FileStream file = File.Open (Application.persistentDataPath + path + ".sav", FileMode.Open);
+			FileStream file = File.Open (getSavePath(path), FileMode.Open);
 			SaveData load = bf.Deserialize (file) as SaveData;
 			file.Close ();
 			WriteFromData (load);
@@ -159,6 +218,11 @@ public class SaveController : MonoBehaviour {
 				player.GetComponent<Animator>().SetFloat("input_x", 0);
 				player.GetComponent<Animator>().SetFloat("input_y", -1);
 			}
+		} else {
+			// Create new save file?
+			Debug.Log("doesn't exist, create new save");
+			SaveTo(path, true);
+			LoadFrom(path);
 		}
 	}
 
@@ -244,6 +308,7 @@ public class SaveData {
 	public int level;
 	[SerializeField]
 	public string playerName;
+	public bool newGame;
 
 	public static SaveData deepCopy(SaveData s) {
 		SaveData temp = new SaveData();
@@ -253,6 +318,7 @@ public class SaveData {
 		temp.inventory = s.inventory;
 		temp.money = s.money;
 		temp.level = s.level;
+		temp.newGame = s.newGame;
 		return temp;
 	}
 

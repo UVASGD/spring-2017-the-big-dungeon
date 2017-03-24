@@ -84,7 +84,7 @@ public class BattleManager : MonoBehaviour
     {
         this.inBattle = true;
         this.stateQueue.Enqueue(new PlayerState());
-		this.tempSave = FindObjectOfType<SaveController> ().WriteToData ();
+		this.tempSave = FindObjectOfType<SaveController> ().WriteToData (false);
         SceneManager.LoadScene("2_Battle_Scene");
     }
 

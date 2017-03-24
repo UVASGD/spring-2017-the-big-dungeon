@@ -304,6 +304,11 @@ MonoBehaviour:
   startMenu: {fileID: 0}
   saveArrow: {fileID: 0}
   inputField: {fileID: 0}
+  saveFiles:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  deleteMenu: {fileID: 0}
 --- !u!114 &114284294970388256
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -73,7 +73,7 @@ public class SaveMenuUI : MonoBehaviour {
 	}
 
 	void Save() {
-		sc.SaveTo ("slot" + (selIndex + 1));
+		sc.SaveTo ("slot" + (selIndex + 1), false);
 	}
 
 	void ExitMenu() {

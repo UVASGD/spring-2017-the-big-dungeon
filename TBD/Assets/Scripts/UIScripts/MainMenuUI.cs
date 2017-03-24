@@ -30,7 +30,9 @@ public class MainMenuUI : MonoBehaviour {
 	private Vector2 startPosition3;
 
 	private bool saveWait = false;
-	private StartMenuUI[] saveFiles;
+	public StartMenuUI[] saveFiles;
+	public GameObject deleteMenu;
+	private int curDelete;
 
 
 	// Use this for initialization
@@ -54,14 +56,10 @@ public class MainMenuUI : MonoBehaviour {
 		startPosition3 = saveArrow.GetComponent<RectTransform>().anchoredPosition;
 		startPosition2 = startPosition3 + new Vector2(0f, saveArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
 		startPosition1 = startPosition2 + new Vector2(0f, saveArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
+		saveArrow.GetComponent<RectTransform>().anchoredPosition = startPosition1;
 
-		saveFiles = startMenu.GetComponentsInChildren<StartMenuUI>();
-		int i = 1;
-		foreach (StartMenuUI s in saveFiles) {
-			s.setThisSlot(i);
-			s.updateSaveFiles();
-			++i;
-		}
+		refreshSaveFilesUI();
+		deleteMenu.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -82,7 +80,23 @@ public class MainMenuUI : MonoBehaviour {
 			saveWait = false;
 	}
 
+	public void refreshSaveFilesUI() {
+		int i = 1;
+		foreach (StartMenuUI s in saveFiles) {
+			s.setThisSlot(i);
+			s.updateSaveFiles();
+			++i;
+		}
+	}
+
 	public void StartPressed() {
+		if (startPosition2 == startPosition3) {
+			startPosition2 = startPosition3 + new Vector2(0f, saveArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
+		}
+		if (startPosition1 == startPosition3) {
+			startPosition1 = startPosition2 + new Vector2(0f, saveArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
+			saveArrow.GetComponent<RectTransform>().anchoredPosition = startPosition1;
+		}
 		saveArrow.GetComponent<RectTransform>().anchoredPosition = startPosition1;
 		mainMenuOff();
 		startMenu.enabled = true;
@@ -97,16 +111,42 @@ public class MainMenuUI : MonoBehaviour {
 	public void deletePressed() {
 		string name = EventSystem.current.currentSelectedGameObject.name;
 		int num = int.Parse(name.Substring(name.Length - 1));
-		Debug.Log(num);
+		curDelete = num;
+		bool isNewGame = sc.isNewGame(num);
+		switchSaveButton(num);
+		if (!isNewGame) {
+			deleteMenu.SetActive(true);
+		}
+	}
+
+	public void confirmDelete() {
+		sc.deleteSlot(curDelete);
+		refreshSaveFilesUI();
+		deleteMenu.SetActive(false);
+		curDelete = 0;
+	}
+
+	public void cancelDelete() {
+		deleteMenu.SetActive(false);
+		curDelete = 0;
+	}
+
+	public void switchSaveButton(int num) {
 		switch (num) {
 			case 1:
-				Debug.Log("Are you sure you want to delete save file 1?");
+				saveArrow.GetComponent<RectTransform>().anchoredPosition = startPosition1;
+				saveArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+				saveIndex = 1;
 				break;
 			case 2:
-				Debug.Log("Are you sure you want to delete save file 2?");
+				saveArrow.GetComponent<RectTransform>().anchoredPosition = startPosition2;
+				saveArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+				saveIndex = 2;
 				break;
 			case 3:
-				Debug.Log("Are you sure you want to delete save file 3?");
+				saveArrow.GetComponent<RectTransform>().anchoredPosition = startPosition3;
+				saveArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+				saveIndex = 3;
 				break;
 		}
 	}

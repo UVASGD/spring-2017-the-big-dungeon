@@ -123,7 +123,7 @@ public class PauseMenuUI : MonoBehaviour {
 					//Save
 					case 5:
 						// eventually player name
-						save.SaveTo("default");
+						save.SaveTo("default", false);
 						break;
 					//Exit
 					case 6:
