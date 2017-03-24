@@ -42,7 +42,7 @@ public class PlayerStatsUI : MonoBehaviour {
 	}
 
 	public void statsClose() {
-		Debug.Log("called stats close");
+		debug("called stats close");
 		isActive = false;
 		statsMenu.SetActive(false);
 		pause.reopenFromStats();

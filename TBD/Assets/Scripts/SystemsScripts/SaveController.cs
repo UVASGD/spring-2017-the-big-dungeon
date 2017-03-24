@@ -145,7 +145,7 @@ public class SaveController : MonoBehaviour {
 		curData = SaveData.deepCopy(s);
 		setCurrentName(s.playerName);
 		if (!s.newGame) {
-			Debug.Log("This is not a new game");
+			debug("This is not a new game");
 			if (player != null) {
 				player.GetComponent<PlayerController>().updatePlayerName(currentName);
 				PlayerStatsUI ps = FindObjectOfType<PlayerStatsUI>();
@@ -234,7 +234,7 @@ public class SaveController : MonoBehaviour {
 				player.GetComponent<Animator>().SetFloat("input_y", -1);
 			}
 		} else {
-			Debug.Log("doesn't exist, create new save");
+			debug("doesn't exist, create new save");
 			SaveTo(path, true);
 			if (currentLevel != 1)
 				// Don't load from new saves when in game
@@ -246,12 +246,10 @@ public class SaveController : MonoBehaviour {
 		if (music == null) {
 			music = FindObjectOfType<MusicManager> ();
 		}
-		if (debugOn)
-			Debug.Log (scene.name);
+		debug(scene.name);
 		Scene currentScene = SceneManager.GetSceneByName(scene.name);
 		int buildIndex = currentScene.buildIndex;
-		if (debugOn)
-			Debug.Log ("Music from level load " + buildIndex);
+		debug ("Music from level load " + buildIndex);
 		switch (buildIndex) {
 		case 0:
 			if (bm == null)
@@ -309,10 +307,15 @@ public class SaveController : MonoBehaviour {
 
 	public void rememberMusic(int requestedTrack, float requestedFadeOutSpeed = 0.4f, float requestedFadeInSpeed = 0.2f){
 		if (music == null) {
-			if (debugOn)
-				Debug.Log ("Remembering music");
+			debug ("Remembering music");
 			music = FindObjectOfType<MusicManager> ();
 			music.SwitchTrack(requestedTrack, requestedFadeOutSpeed, requestedFadeInSpeed);
+		}
+	}
+
+	void debug(string line) {
+		if (debugOn) {
+			Debug.Log(line);
 		}
 	}
 }

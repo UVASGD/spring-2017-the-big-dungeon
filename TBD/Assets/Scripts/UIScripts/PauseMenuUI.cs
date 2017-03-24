@@ -87,7 +87,6 @@ public class PauseMenuUI : MonoBehaviour {
 				}
 			}
 			else if (Input.GetKeyDown(KeyCode.Space)) {
-				Debug.Log(exitIndex);
 				switch (exitIndex) {
 					case 0:
 						exitConfirm();

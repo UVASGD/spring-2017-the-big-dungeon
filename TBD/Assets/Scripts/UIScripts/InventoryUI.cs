@@ -42,6 +42,22 @@ public class InventoryUI : MonoBehaviour {
 	public Text itemDescription;
 	private bool inInspect = false;
 
+	public GameObject useMenu;
+	private int useIndex = 0;
+	private Vector2 useXOffset = new Vector2(285f, 0f);
+	private Vector2 startPositionUse;
+	public GameObject useArrow;
+	private bool inUse = false;
+
+	public GameObject dropMenu;
+	private int dropIndex = 0;
+	private Vector2 dropXOffset = new Vector2(285f, 0f);
+	private Vector2 startPositionDrop;
+	public GameObject dropArrow;
+	private bool inDrop = false;
+
+	private Item curItem;
+
 	// Use this for initialization
 	void Start () {
 		itemMenu = GetComponentInChildren<Image>().gameObject;
@@ -56,10 +72,14 @@ public class InventoryUI : MonoBehaviour {
 		inventory.addStartItems(false);
 
 		startPositionInfo = infoArrow.GetComponent<RectTransform>().anchoredPosition;
+		startPositionDrop = dropArrow.GetComponent<RectTransform>().anchoredPosition;
+		startPositionUse = useArrow.GetComponent<RectTransform>().anchoredPosition;
 		// fix this
 		float panelSize = infoArrow.transform.parent.transform.parent.GetComponent<RectTransform>().rect.width;
 		infoXOffset = new Vector2(panelSize/3.3f, 0f);
 		itemInfoObject.SetActive(false);
+		dropMenu.SetActive(false);
+		useMenu.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -112,7 +132,7 @@ public class InventoryUI : MonoBehaviour {
 				canClick = false;
 			}
 		}
-		if (inInspect) {
+		if (inInspect && !inDrop && !inUse) {
 			if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
 				if (infoIndex > 0) {
 					infoIndex--;
@@ -136,11 +156,13 @@ public class InventoryUI : MonoBehaviour {
 				switch (infoIndex) {
 					case (0):
 						//use, eventually have a pop-up for yes or no
-						Debug.Log("use item");
+						debug("use item");
+						useItem();
 						break;
 					case (1):
 						//drop then exit, eventually have pop-up for yes or no
-						Debug.Log("drop item");
+						debug("drop item");
+						dropItem();
 						break;
 					case (2):
 						//exit
@@ -154,6 +176,89 @@ public class InventoryUI : MonoBehaviour {
 				canClick = false;
 			}
 		}
+		if (inDrop) {
+			if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
+				if (dropIndex > 0) {
+					dropIndex--;
+					Vector2 arrowPosition = dropArrow.GetComponent<RectTransform>().anchoredPosition;
+					arrowPosition -= dropXOffset;
+					dropArrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
+					dropArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+				}
+			}
+			if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
+				if (dropIndex < 1) {
+					dropIndex++;
+					Vector2 arrowPosition = dropArrow.GetComponent<RectTransform>().anchoredPosition;
+					arrowPosition += dropXOffset;
+					dropArrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
+					dropArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+				}
+			}
+			if (Input.GetKeyDown(KeyCode.Space) && canClick) {
+				// switch on it
+				switch (dropIndex) {
+					case (0):
+						// confirm drop
+						debug("do drop");
+						inventory.destroyItem(curItem);
+						xIndex = 0;
+						yIndex = 0;
+						arrow.GetComponent<RectTransform>().anchoredPosition = startPosition;
+						exitDropMenu();
+						exitInfoMenu();
+						break;
+					case (1):
+						// cancel drop
+						debug("don't drop");
+						exitDropMenu();
+						break;
+				}
+				canClick = false;
+			}
+			if (Input.GetKeyDown(KeyCode.Escape)) {
+				exitDropMenu();
+				canClick = false;
+			}
+		}
+		if (inUse) {
+			if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) {
+				if (useIndex > 0) {
+					useIndex--;
+					Vector2 arrowPosition = useArrow.GetComponent<RectTransform>().anchoredPosition;
+					arrowPosition -= useXOffset;
+					useArrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
+					useArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+				}
+			}
+			if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) {
+				if (useIndex < 1) {
+					useIndex++;
+					Vector2 arrowPosition = useArrow.GetComponent<RectTransform>().anchoredPosition;
+					arrowPosition += useXOffset;
+					useArrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
+					useArrow.GetComponent<Animator>().SetTrigger("ArrowRestart");
+				}
+			}
+			if (Input.GetKeyDown(KeyCode.Space) && canClick) {
+				switch (useIndex) {
+					case (0):
+						debug("do use");
+						// NEED TO IMPLEMENT
+						exitUseMenu();
+						break;
+					case (1):
+						debug("don't use");
+						exitUseMenu();
+						break;
+				}
+				canClick = false;
+			}
+			if (Input.GetKeyDown(KeyCode.Escape)) {
+				exitUseMenu();
+				canClick = false;
+			}
+		}
 		if (Input.GetKeyDown(KeyCode.Escape) && isActive && !inInspect && canClick) {
 			turnOff();
 		}
@@ -163,6 +268,43 @@ public class InventoryUI : MonoBehaviour {
 		canClick = true;
 	}
 	
+	public void dropItem() {
+		openDropConfirm();
+	}
+
+	public void useItem() {
+		openUseConfirm();
+	}
+
+	public void exitDropMenu() {
+		inDrop = false;
+		canClick = false;
+		dropMenu.SetActive(inDrop);
+		dropArrow.GetComponent<RectTransform>().anchoredPosition = startPositionDrop;
+		dropIndex = 0;
+	}
+
+	public void exitUseMenu() {
+		inUse = false;
+		canClick = false;
+		useMenu.SetActive(inUse);
+		useArrow.GetComponent<RectTransform>().anchoredPosition = startPositionUse;
+		useIndex = 0;
+	}
+
+	public void openDropConfirm() {
+		inDrop = true;
+		dropMenu.SetActive(inDrop);
+		canClick = false;
+	}
+
+	public void openUseConfirm() {
+		inUse = true;
+		useMenu.SetActive(inUse);
+		canClick = false;
+	}
+
+
 	public void exitInfoMenu() {
 		inInspect = false;
 		canClick = false;
@@ -173,7 +315,7 @@ public class InventoryUI : MonoBehaviour {
 
 	public void inspectItem(int curItemIndex) {
 		inInspect = true;
-		Item curItem = items[curItemIndex];
+		curItem = items[curItemIndex];
 		itemName.text = curItem.name;
 		itemQuantity.text = "QTY: " + curItem.quantity;
 		itemPrice.text = "MUN: " + curItem.price;
@@ -189,7 +331,7 @@ public class InventoryUI : MonoBehaviour {
 
 	public void updateArrowUI() {
 		debug("in update arrow");
-		items = inventory.items;
+		//items = inventory.items;
 		if (items.Count % 2 == 1) {
 			isOdd = true;
 		} else {
@@ -281,6 +423,7 @@ public class InventoryUI : MonoBehaviour {
 				}
 			}
 		}
+		updateArrowUI();
 	}
 
 	public void addNewItemUI(Item i) {
@@ -300,9 +443,11 @@ public class InventoryUI : MonoBehaviour {
 		}
 		newItem.transform.SetParent(blankItem.transform.parent);
 		newItem.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+		updateArrowUI();
 	}
 
 	public void removeItemUI(Item i) {
+		debug("removing the item from the UI");
 		if (inventory == null)
 			inventory = FindObjectOfType<InventoryManager>();
 		items = inventory.items;
@@ -313,6 +458,8 @@ public class InventoryUI : MonoBehaviour {
 		}
 		Transform child = itemPanel.transform.GetChild((items.IndexOf(i) + 2));
 		Destroy(child.gameObject);
+		items.Remove(i);
+		updateArrowUI();
 	}
 
 	void debug(string line) {

@@ -12,6 +12,7 @@ public class InventoryManager : MonoBehaviour
     public int maxSize = 20;
 	//private int currentSize;
 	private InventoryUI inventoryMenu;
+	public bool debugOn = false;
 
 	private void Awake()
     {
@@ -75,7 +76,7 @@ public class InventoryManager : MonoBehaviour
 		}
 	}
 
-    //Can't implement this yet
+    //Maybe have drop make it so you can pick it up again???
     public void dropItem()
     {
 
@@ -106,6 +107,7 @@ public class InventoryManager : MonoBehaviour
     public bool destroyItem(Item item)
     {
 		if (items.Contains(item)) {
+			debug("going to destroy " + item.name);
 			Item currentItem = items[items.IndexOf(item)];
 			inventoryMenu.removeItemUI(item);
 			items.Remove(currentItem);
@@ -135,10 +137,15 @@ public class InventoryManager : MonoBehaviour
 		}
 	} */
 
-    // Update is called once per frame
-    void Update()
-    {
+	// Update is called once per frame
+	void Update() {
 
+	}
+
+	void debug(string line) {
+		if (debugOn) {
+			Debug.Log(line);
+		}
 	}
 }
 
