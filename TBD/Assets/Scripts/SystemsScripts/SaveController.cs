@@ -133,7 +133,6 @@ public class SaveController : MonoBehaviour {
 	public void WriteFromData(SaveData s) {
 		player = GameObject.FindGameObjectWithTag("Player");
 		if (player != null) {
-			Debug.Log("pls");
 			player.GetComponent<PlayerController>().updatePlayerName(currentName);
 			player.transform.position = new Vector2(s.x, s.y);
 			inventory.items = s.inventory;

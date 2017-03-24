@@ -29,6 +29,8 @@ public class PauseMenuUI : MonoBehaviour {
 	public int totalOptions = 7;
 	public bool debugOn = false;
 
+	private bool escapeWait = true;
+
 
 
 	// Use this for initialization
@@ -60,8 +62,7 @@ public class PauseMenuUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Escape) && canEscape && isActive) {
-			Debug.Log("called " + canEscape + " " + isActive);
+		if (Input.GetKeyDown(KeyCode.Escape) && canEscape && isActive && !escapeWait) {
             exitMenu();
 		}
 		if (Input.GetKeyDown(KeyCode.Return) && !player.talking && !inItems && !inOptions && !inStats) {
@@ -141,6 +142,7 @@ public class PauseMenuUI : MonoBehaviour {
 		if (inOptions || inItems || isActive || inStats) {
 			player.frozen = true;
 		}
+		escapeWait = false;
 	}
 
 	void toggleMenu() {
@@ -178,19 +180,20 @@ public class PauseMenuUI : MonoBehaviour {
 		optionsMenu.toggleMenu();
 		inOptions = false;
 		canEscape = true;
+		escapeWait = true;
 	}
 
 	public void reopenFromInventory() {
-        //toggleMenu();
         inItems = false;
 		canEscape = true;
+		escapeWait = true;
 		index = 2;
 	}
 
 	public void reopenFromStats() {
-		//toggleMenu();
 		inStats = false;
 		canEscape = true;
+		escapeWait = true;
 		index = 3;
 	}
 

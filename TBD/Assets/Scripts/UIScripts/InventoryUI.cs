@@ -155,7 +155,6 @@ public class InventoryUI : MonoBehaviour {
 			}
 		}
 		if (Input.GetKeyDown(KeyCode.Escape) && isActive && !inInspect && canClick) {
-			Debug.Log("in here");
 			turnOff();
 		}
 		if (!res.Equals(Screen.currentResolution)) {
