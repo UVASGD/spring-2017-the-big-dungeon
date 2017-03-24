@@ -57,13 +57,13 @@ public class BuyMenuUI : MonoBehaviour
 		statsMenu = FindObjectOfType<PlayerStatsUI>();
 		//Fills the shop inventory with test items, in reality individual shop's inventory will be passed in
 		shopInventory = new List<Item>();
-        shopInventory.Add(new Item("Helmet", "For all your helmet needs", "Equipment", "helm", 60, false));
+        shopInventory.Add(new Item("Helmet", "For all your helmet needs", "Equipment",/* "helm",*/ 60, false));
         for (int i = 1; i < 7; i++)
         {
-            Item test = new Item("Item " + i, "Item " + i, "Equipment", "item", i, i, false);
+            Item test = new Item("Item " + i, "Item " + i, "Equipment",/* "item",*/ i, i, false);
             shopInventory.Add(test);
         }
-        shopInventory.Add(new Item("Potion", "A potion", "Consumable", "potion", 30, false));
+        shopInventory.Add(new Item("Potion", "A potion", "Consumable",/* "potion",*/ 30, false));
         arrowIndex = 0;
         itemIndex = 0;
         itemsMenu = transform.GetChild(0).gameObject;
