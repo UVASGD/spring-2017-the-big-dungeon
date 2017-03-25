@@ -22,7 +22,6 @@ public class RandomEncounter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log (playerAnim.GetBool ("is_walking"));
 		if (playerWithin && playerAnim.GetBool("is_walking") && !cooldown) {
 			checkEncounter ();
 		}
@@ -42,9 +41,14 @@ public class RandomEncounter : MonoBehaviour {
 		if (ran < 1) {
 			Debug.Log ("Random executed!");
 			Debug.Log ("cooldown started");
-			// set cooldown once exited from battle
-			cooldown = true;
+			// need to eventually call this from battle manager
+			startCooldown ();
 		}
+	}
+
+	public void startCooldown() {
+		// set cooldown once exited from battle
+		cooldown = true;
 	}
 
 	public void OnTriggerEnter2D(Collider2D other) {
