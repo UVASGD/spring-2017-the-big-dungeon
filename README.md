@@ -21,3 +21,5 @@ B - Enter Battle Scene (ONLY available if start scene from 0_Start_Menu)
 Enter - Pause Menu
 
 Hold Left Shift - Run, Hold Right Shift - "Sneak"
+
+M - Kill Yourself (Press Twice)

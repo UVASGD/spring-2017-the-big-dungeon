@@ -36,8 +36,9 @@ public class PlayerController : MonoBehaviour {
     public int level = 1;
     public int currentExp = 0;
 	private PlayerStatsUI statsMenu;
+    public GameObject gameoverMenu;
 
-	private string playerName;
+    private string playerName;
 
 	private void Awake()
 	{
@@ -60,7 +61,7 @@ public class PlayerController : MonoBehaviour {
 		sfxMan = FindObjectOfType<SFXManager>();
 		cam = FindObjectOfType<CameraManager>();
 		statsMenu = FindObjectOfType<PlayerStatsUI> ();
-		debug(getCurrentStatValue("HP") + "");
+        debug(getCurrentStatValue("HP") + "");
 		startStats ();
     }
 
@@ -102,6 +103,7 @@ public class PlayerController : MonoBehaviour {
                     	currentStep.volume = 0.1f;
                     anim.speed = 0.5f;
                 }
+                
                 //Walking
                 else {
                     currentSpeed = normalSpeed;
@@ -134,7 +136,27 @@ public class PlayerController : MonoBehaviour {
 			anim.SetBool("is_walking", false);
 			timer = 0;
         }
-	}
+
+        //Kill Yourself Instantly. Game Over Testing
+        if (Input.GetKeyDown(KeyCode.M) && alive)
+        {
+            foreach (BaseStat s in stats)
+            {
+                if (String.Compare(s.statName, "HP") == 0)
+                {
+                    s.modifier -= 12;
+                }
+            }
+            Debug.Log(getCurrentStatValue("HP") + "");
+        }
+
+        if (getCurrentStatValue("HP") <= 0 && alive)
+        {
+            Debug.Log("Die Please!");
+            alive = false;
+            gameoverMenu.SetActive(true);
+        }
+    }
 
 	void PlayNextSound() {
 		AudioSource lastStep = currentStep;
@@ -160,7 +182,7 @@ public class PlayerController : MonoBehaviour {
 		if (other.tag == "map") {
 			cam.setCurrentRoom(other.gameObject);
 		}
-		if (stepsOn) {
+        if (stepsOn) {
 			debug("Steps are on from entering something");
 			if (other.transform.tag == "path") {
 				sfxMan.GroundChange("path");
