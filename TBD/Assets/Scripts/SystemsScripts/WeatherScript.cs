@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,12 +13,19 @@ public class WeatherScript : MonoBehaviour {
     public float myRate = 100f;
     private bool isRaining, isSnowing, isFogging;
     private List<AudioSource> sounds;
+    private List<SpriteRenderer> sprites;
+    private List<MeshRenderer> renderers;
+    public float brightness = 0.5f;
 	// Use this for initialization
 	void Start () {
         //Get Needed Objects
         sounds = new List<AudioSource>();
         player = FindObjectOfType<PlayerController>();
         sounds.AddRange(GetComponentsInChildren<AudioSource>());
+        sprites = new List<SpriteRenderer>();
+        sprites.AddRange(FindObjectsOfType<SpriteRenderer>());
+        renderers = new List<MeshRenderer>();
+        renderers.AddRange(FindObjectsOfType<MeshRenderer>());
         rainController = transform.GetChild(0).gameObject;
         fogController = transform.GetChild(1).gameObject;
         snowController = transform.GetChild(2).gameObject;
@@ -53,6 +61,8 @@ public class WeatherScript : MonoBehaviour {
         {
             sounds[i].Stop();
         }
+
+        updateBrightness(brightness);
 
     }
 	
@@ -142,4 +152,15 @@ public class WeatherScript : MonoBehaviour {
     {
         fogEmissionModule.rateOverTime = new ParticleSystem.MinMaxCurve(newRate);
     }
+    public void updateBrightness(float newNum)
+    {
+        for (int i = 0; i < sprites.Count; i++)
+        {
+            sprites[i].color = new Color(Math.Min(sprites[i].color.r * newNum, 1.0f), Math.Min(sprites[i].color.g * newNum, 1.0f), Math.Min(sprites[i].color.b * newNum, 1.0f));
+        }
+        for (int i = 0; i < renderers.Count; i++)
+        {
+            renderers[i].material.color = new Color(Math.Min(renderers[i].material.color.r * newNum, 1.0f), Math.Min(renderers[i].material.color.g * newNum, 1.0f), Math.Min(renderers[i].material.color.b * newNum, 1.0f));
+        }
+    } 
 }

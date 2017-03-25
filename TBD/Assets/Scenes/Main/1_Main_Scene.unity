@@ -10265,6 +10265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myRate: 500
+  brightness: 1
 --- !u!4 &1935294356
 Transform:
   m_ObjectHideFlags: 0
