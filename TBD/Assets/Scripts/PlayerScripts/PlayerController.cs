@@ -102,6 +102,7 @@ public class PlayerController : MonoBehaviour {
                     	currentStep.volume = 0.1f;
                     anim.speed = 0.5f;
                 }
+                
                 //Walking
                 else {
                     currentSpeed = normalSpeed;
@@ -135,8 +136,24 @@ public class PlayerController : MonoBehaviour {
 			timer = 0;
         }
 
-        if (getCurrentStatValue("HP") <= 0)
+        //Kill Yourself Instantly. Game Over Testing
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            foreach (BaseStat s in stats)
+            {
+                if (String.Compare(s.statName, "HP") == 0)
+                {
+                    s.modifier -= 100;
+                }
+            }
+            Debug.Log(getCurrentStatValue("HP") + "");
+        }
+
+        if (getCurrentStatValue("HP") <= 0 && !alive)
+        {
+            Debug.Log("Die Please!");
             alive = false;
+        }
     }
 
 	void PlayNextSound() {
@@ -163,7 +180,7 @@ public class PlayerController : MonoBehaviour {
 		if (other.tag == "map") {
 			cam.setCurrentRoom(other.gameObject);
 		}
-		if (stepsOn) {
+        if (stepsOn) {
 			debug("Steps are on from entering something");
 			if (other.transform.tag == "path") {
 				sfxMan.GroundChange("path");
