@@ -21,14 +21,6 @@ public class GameOverUI : MonoBehaviour {
         save = FindObjectOfType<SaveController>();
         gameObject.SetActive(isActive);
         arrow = gameObject.GetComponentInChildren<Animator>().gameObject;
-        try
-        {
-            sf = FindObjectOfType<ScreenFader>();
-        }
-        catch
-        {
-            sf = null;
-        }
     }
 	
 	// Update is called once per frame
