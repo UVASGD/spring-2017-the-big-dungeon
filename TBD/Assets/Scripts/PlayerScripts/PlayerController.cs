@@ -36,8 +36,9 @@ public class PlayerController : MonoBehaviour {
     public int level = 1;
     public int currentExp = 0;
 	private PlayerStatsUI statsMenu;
+    public GameObject gameoverMenu;
 
-	private string playerName;
+    private string playerName;
 
 	private void Awake()
 	{
@@ -60,7 +61,7 @@ public class PlayerController : MonoBehaviour {
 		sfxMan = FindObjectOfType<SFXManager>();
 		cam = FindObjectOfType<CameraManager>();
 		statsMenu = FindObjectOfType<PlayerStatsUI> ();
-		debug(getCurrentStatValue("HP") + "");
+        debug(getCurrentStatValue("HP") + "");
 		startStats ();
     }
 
@@ -149,22 +150,23 @@ public class PlayerController : MonoBehaviour {
         }
 
         //Kill Yourself Instantly. Game Over Testing
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.M) && alive)
         {
             foreach (BaseStat s in stats)
             {
                 if (String.Compare(s.statName, "HP") == 0)
                 {
-                    s.modifier -= 100;
+                    s.modifier -= 12;
                 }
             }
             Debug.Log(getCurrentStatValue("HP") + "");
         }
 
-        if (getCurrentStatValue("HP") <= 0 && !alive)
+        if (getCurrentStatValue("HP") <= 0 && alive)
         {
             Debug.Log("Die Please!");
             alive = false;
+            gameoverMenu.SetActive(true);
         }
     }
 
