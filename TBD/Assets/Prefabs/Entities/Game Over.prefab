@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 114606040157130414}
   m_Layer: 5
   m_Name: Game Over
-  m_TagString: Fader
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
