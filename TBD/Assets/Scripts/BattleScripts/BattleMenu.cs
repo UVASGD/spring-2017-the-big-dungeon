@@ -14,8 +14,6 @@ public class BattleMenu : MonoBehaviour
 	public Text hpMaxText;
 	public Text nameText;
 
-	public Image enemySprite;
-
     private Canvas mainMenu;
 	private PlayerController player;
 
@@ -31,8 +29,6 @@ public class BattleMenu : MonoBehaviour
         hpText = hpText.GetComponent<Text>();
 		hpMaxText = hpMaxText.GetComponent<Text>();
 		nameText = nameText.GetComponent<Text> ();
-
-		enemySprite = enemySprite.GetComponent<Image> ();
 
 		player = FindObjectOfType<PlayerController> ();
 		hpText.text = "" + player.getCurrentStatValue ("HP");
@@ -89,8 +85,10 @@ public class BattleMenu : MonoBehaviour
 
     public void AttackPressed()
     {
-		this.DisableMenu();
-		this.battleManager.playerAttack ();
+        this.battleManager.addState(new TextState("Player tried to attack, but was unable..."));
+        this.battleManager.addState(new EnemyState());
+        this.DisableMenu();
+        this.battleManager.ProcessState();
     }
 
     public void ItemPressed()
