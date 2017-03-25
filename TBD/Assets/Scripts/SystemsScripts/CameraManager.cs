@@ -18,6 +18,10 @@ public class CameraManager : MonoBehaviour {
 
 	public float scalefactor;
 
+
+	public GameObject outskirts;
+	public GameObject town;
+
 	// Use this for initialization
 	void Start () {
 		this.freeze = false;

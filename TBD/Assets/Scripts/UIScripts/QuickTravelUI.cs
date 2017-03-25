@@ -74,9 +74,11 @@ public class QuickTravelUI : MonoBehaviour {
 
 	public void warp() {
 		PlayerController pc = FindObjectOfType<PlayerController>();
+		CameraManager cam = FindObjectOfType<CameraManager>();
 		GameObject player = pc.gameObject;
 		if (target != null) {
 			player.transform.position = target.transform.position;
+			cam.setCurrentRoom(cam.outskirts);
 		}
 	}
 }

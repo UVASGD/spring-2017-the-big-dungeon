@@ -1,0 +1,5 @@
+﻿start:
+	{setnpc:Goat}{slow}Baaaaaaaaaaaaaaaaaaaa
+	{slow}Baaaaaaaaaaaaaaaaa
+	{fast}Baaaaaa
+	{drag}B A A A A A

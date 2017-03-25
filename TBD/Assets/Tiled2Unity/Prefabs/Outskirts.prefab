@@ -119,6 +119,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1244791207098106
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4052583313028010}
+  - component: {fileID: 61623955679159918}
+  - component: {fileID: 114526236046682172}
+  m_Layer: 0
+  m_Name: IntroCutscene
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1305155033675554
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,6 +296,21 @@ GameObject:
   - component: {fileID: 114476599199776106}
   m_Layer: 0
   m_Name: caves
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1626397721786876
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4427325916225484}
+  m_Layer: 0
+  m_Name: Outskirts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -484,7 +516,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4885344527782952}
   m_Layer: 0
-  m_Name: Outskirts
+  m_Name: Beginning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -502,6 +534,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4724665925732300}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4052583313028010
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1244791207098106}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.13, y: -2.14, z: 0}
+  m_LocalScale: {x: 3.3418126, y: 5.561575, z: 1.951425}
+  m_Children: []
+  m_Father: {fileID: 4629862606899122}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4072957145475504
 Transform:
@@ -639,7 +684,20 @@ Transform:
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_Children: []
   m_Father: {fileID: 4629862606899122}
-  m_RootOrder: 6
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4427325916225484
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1626397721786876}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 50.06, y: -30.73, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4498260568796668}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4498260568796668
 Transform:
@@ -651,6 +709,7 @@ Transform:
   m_LocalPosition: {x: -32.356533, y: 37.05708, z: 0}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_Children:
+  - {fileID: 4427325916225484}
   - {fileID: 4885344527782952}
   m_Father: {fileID: 4629862606899122}
   m_RootOrder: 4
@@ -692,7 +751,7 @@ Transform:
   m_LocalScale: {x: 0.22827758, y: 0.26882115, z: 1.25}
   m_Children: []
   m_Father: {fileID: 4629862606899122}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4629862606899122
 Transform:
@@ -710,6 +769,7 @@ Transform:
   - {fileID: 4293529788190728}
   - {fileID: 4498260568796668}
   - {fileID: 4177547040735328}
+  - {fileID: 4052583313028010}
   - {fileID: 4414666181635746}
   - {fileID: 4612368168468378}
   m_Father: {fileID: 0}
@@ -834,12 +894,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1912576058519298}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 50.06, y: -30.73, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 27.47, y: -31.35, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4498260568796668}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4893047249418586
 Transform:
@@ -1724,6 +1784,20 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.10951492}
   serializedVersion: 2
   m_Size: {x: 6.65, y: 6.0710015}
+--- !u!61 &61623955679159918
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1244791207098106}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: -0.0013122559, y: -0.015896797}
+  serializedVersion: 2
+  m_Size: {x: 0.7525474, y: 0.639174}
 --- !u!61 &61880446712124256
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -1994,6 +2068,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1874989c5e2da094ea00112c6a895694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114526236046682172
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1244791207098106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a928c572893f4549b697a1bd1fb967e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerOnEnter: 1
+  dialogueFile: Assets/Resources/Text/IntroCutscene.txt
 --- !u!114 &114533894518436302
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4361496860251088}
   - component: {fileID: 212142328850667550}
   - component: {fileID: 60211980993749314}
+  - component: {fileID: 114500932343519814}
+  - component: {fileID: 61374960070920268}
   m_Layer: 0
   m_Name: townsperson3
   m_TagString: Untagged
@@ -107,6 +109,8 @@ GameObject:
   - component: {fileID: 4830035706114704}
   - component: {fileID: 212604991409365874}
   - component: {fileID: 60776814227307348}
+  - component: {fileID: 114151794622837932}
+  - component: {fileID: 61726939920177874}
   m_Layer: 0
   m_Name: Mad_Scientist1
   m_TagString: Untagged
@@ -210,8 +214,10 @@ GameObject:
   - component: {fileID: 4443308590133592}
   - component: {fileID: 212535518861267544}
   - component: {fileID: 60783946510298268}
+  - component: {fileID: 114221391103545316}
+  - component: {fileID: 61298392875300170}
   m_Layer: 0
-  m_Name: Friend-LoveInterest-32x48
+  m_Name: Warpy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -515,6 +521,8 @@ GameObject:
   - component: {fileID: 4345774056674800}
   - component: {fileID: 212077288924279882}
   - component: {fileID: 60830161278307794}
+  - component: {fileID: 114313181042346168}
+  - component: {fileID: 61454009329158202}
   m_Layer: 0
   m_Name: townsperson1-static
   m_TagString: Untagged
@@ -717,6 +725,8 @@ GameObject:
   - component: {fileID: 4342324767602662}
   - component: {fileID: 212653911416939378}
   - component: {fileID: 60263521932945840}
+  - component: {fileID: 114922438659340524}
+  - component: {fileID: 61905205087980780}
   m_Layer: 0
   m_Name: townsperson2-static
   m_TagString: Untagged
@@ -3951,6 +3961,62 @@ PolygonCollider2D:
       - {x: 0.14, y: -0.24}
       - {x: 0.14999999, y: -0.08}
       - {x: 0.14999999, y: 0.14999999}
+--- !u!61 &61298392875300170
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1231841337844288}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.024500847, y: -0.013482094}
+  serializedVersion: 2
+  m_Size: {x: 0.62890625, y: 0.6638689}
+--- !u!61 &61374960070920268
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1013103196514274}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: -0.045315742, y: -0.03884983}
+  serializedVersion: 2
+  m_Size: {x: 0.72371566, y: 0.95247966}
+--- !u!61 &61454009329158202
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1653780862361900}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.009161949, y: -0.019861221}
+  serializedVersion: 2
+  m_Size: {x: 0.59834796, y: 0.8875318}
+--- !u!61 &61726939920177874
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1094582310714988}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: -0.0012283325, y: -0.075998306}
+  serializedVersion: 2
+  m_Size: {x: 0.5627035, y: 0.6319965}
 --- !u!61 &61836673046787640
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -3965,6 +4031,20 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.10951492}
   serializedVersion: 2
   m_Size: {x: 6.65, y: 6.0710015}
+--- !u!61 &61905205087980780
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1868685779394610}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: -0.015007019, y: 0.011667252}
+  serializedVersion: 2
+  m_Size: {x: 0.71684885, y: 1.1435983}
 --- !u!61 &61995770114482812
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -4115,6 +4195,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1874989c5e2da094ea00112c6a895694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114151794622837932
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1094582310714988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f4c63acdf300c41b15f74f8db10f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueFile: Assets/Resources/Text/Scientist.txt
+  characterName: Diedrich the Scientist
+  faceSprite: {fileID: 21300000, guid: 710775a3dde656a4d9e6a8ad0d8241e8, type: 3}
 --- !u!114 &114204797563266586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4139,6 +4233,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InitialOpacity: 1
+--- !u!114 &114221391103545316
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1231841337844288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8517d7dee0dfc004a9df14588a90b9fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetLocation: {fileID: 0}
+  targetName: Beginning of the Dungeon
+  quic: {fileID: 0}
 --- !u!114 &114230672317034138
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4184,6 +4292,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1874989c5e2da094ea00112c6a895694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114313181042346168
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1653780862361900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f4c63acdf300c41b15f74f8db10f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueFile: Assets/Resources/Text/Person1.txt
+  characterName: April
+  faceSprite: {fileID: 21300000, guid: 710775a3dde656a4d9e6a8ad0d8241e8, type: 3}
 --- !u!114 &114339148379938470
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4324,6 +4446,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1874989c5e2da094ea00112c6a895694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114500932343519814
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1013103196514274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f4c63acdf300c41b15f74f8db10f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueFile: Assets/Resources/Text/Person3.txt
+  characterName: Yancy
+  faceSprite: {fileID: 21300000, guid: 710775a3dde656a4d9e6a8ad0d8241e8, type: 3}
 --- !u!114 &114509611459749862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4676,6 +4812,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1874989c5e2da094ea00112c6a895694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114922438659340524
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1868685779394610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f4c63acdf300c41b15f74f8db10f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueFile: Assets/Resources/Text/Person2.txt
+  characterName: Thomas
+  faceSprite: {fileID: 21300000, guid: 710775a3dde656a4d9e6a8ad0d8241e8, type: 3}
 --- !u!114 &114953523320762110
 MonoBehaviour:
   m_ObjectHideFlags: 1

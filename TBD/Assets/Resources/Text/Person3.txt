@@ -1,0 +1,16 @@
+﻿start:
+	{setnpc:Yancy}{hyper}Hey how's it going!
+	{hyper}What are you doing way down here?
+	{hyper}I don't even know why I'm down here.
+	{hyper}One day I just kind of woke up and found myself here.
+	{hyper}There's not many townspeople around here today.
+	{hyper}Maybe they've gone off into the forest.
+	{hyper}That crazy old scientist keeps sending people on adventures.
+	{hyper}Why bother going on an adventure when there's {drag}so much{endspeed} to do around here?
+	{hyper}There's the tavern, the shops, the mayor's house, and even that big ole stump!
+	{hyper}What do you think about this town?
+	{hyper}Yeah, I think so too.
+	{hyper}It's a pretty cool town, right?
+	{hyper}I mean, it's not like I've been to any other towns actually.
+	{hyper}But that doesn't mean that I'm not allowed to like it here.
+	{hyper}Oh, sorry. I tend to talk too much. You can go on your way!

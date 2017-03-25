@@ -1,0 +1,4 @@
+﻿start:
+	{setnpc:Thomas}{fast}Greetings! Welcome to our town.
+	{fast}There's not much going on around here today, but there are a couple of things you can see.
+	{fast}Have a good day!

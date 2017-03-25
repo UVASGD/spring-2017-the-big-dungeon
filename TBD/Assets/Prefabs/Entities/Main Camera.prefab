@@ -109,6 +109,8 @@ MonoBehaviour:
   minPosition: -10
   maxPosition: 10
   scalefactor: 4.5
+  outskirts: {fileID: 0}
+  town: {fileID: 0}
 --- !u!124 &124338566329003622
 Behaviour:
   m_ObjectHideFlags: 1

@@ -1,0 +1,8 @@
+﻿start:
+	{setnpc:Narrator}{instant}Will be better intro cutscene at ESE!
+	{fast}The shimmering light that had stolen your bag is now gone as you find yourself in a large cave.
+	{fast}You can only seem to remember falling down a hole of some sort.
+	{fast}You look down and see a goat chewing on your pants.
+	{fast}You shoo the goat off and look down to see your bag lying next to you.
+	{fast}Looking down the tunnel ahead, there seems to be only one direction to go.
+	{fast}You pick up your bag off the ground and head off to find a way out.{end}

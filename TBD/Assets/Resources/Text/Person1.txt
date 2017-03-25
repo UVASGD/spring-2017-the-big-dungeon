@@ -1,0 +1,3 @@
+﻿start:
+	{setnpc:April}{slow}Are you new in town?
+	{slow}You don't often see many new faces down here{drag}...
