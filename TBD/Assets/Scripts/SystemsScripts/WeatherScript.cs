@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -61,14 +62,7 @@ public class WeatherScript : MonoBehaviour {
             sounds[i].Stop();
         }
 
-        for (int i = 0; i < sprites.Count; i++)
-        {
-            sprites[i].color = new Color(sprites[i].color.r * brightness, sprites[i].color.g * brightness, sprites[i].color.b * brightness);
-        }
-        for (int i = 0; i < renderers.Count; i++)
-        {
-            renderers[i].material.color = new Color(renderers[i].material.color.r * brightness, renderers[i].material.color.g * brightness, renderers[i].material.color.b * brightness);
-        }
+        updateBrightness(brightness);
 
     }
 	
@@ -162,11 +156,11 @@ public class WeatherScript : MonoBehaviour {
     {
         for (int i = 0; i < sprites.Count; i++)
         {
-            sprites[i].color = new Color(sprites[i].color.r * newNum, sprites[i].color.g * newNum, sprites[i].color.b * newNum);
+            sprites[i].color = new Color(Math.Min(sprites[i].color.r * newNum, 1.0f), Math.Min(sprites[i].color.g * newNum, 1.0f), Math.Min(sprites[i].color.b * newNum, 1.0f));
         }
         for (int i = 0; i < renderers.Count; i++)
         {
-            renderers[i].material.color = new Color(renderers[i].material.color.r * newNum, renderers[i].material.color.g * newNum, renderers[i].material.color.b * newNum);
+            renderers[i].material.color = new Color(Math.Min(renderers[i].material.color.r * newNum, 1.0f), Math.Min(renderers[i].material.color.g * newNum, 1.0f), Math.Min(renderers[i].material.color.b * newNum, 1.0f));
         }
     } 
 }
