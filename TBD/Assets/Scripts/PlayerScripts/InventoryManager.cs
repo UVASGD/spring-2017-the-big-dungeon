@@ -160,7 +160,6 @@ public class InventoryManager : MonoBehaviour
 				destroyItem (currentItem, 1);
 				inventoryMenu.updateItemQuantityUI (currentItem);
 				return true;
-				break;
 			case Item.ItemType.Body:
 				if (curBody != null) {
 					curBody.unapply ();
@@ -172,7 +171,6 @@ public class InventoryManager : MonoBehaviour
 				destroyItem (currentItem, 1);
 				inventoryMenu.updateItemQuantityUI (currentItem);
 				return true;
-				break;
 			case Item.ItemType.Weapon:
 				if (curWeapon != null) {
 					curWeapon.unapply ();
@@ -184,11 +182,9 @@ public class InventoryManager : MonoBehaviour
 				destroyItem (currentItem, 1);
 				inventoryMenu.updateItemQuantityUI (currentItem);
 				return true;
-				break;
 			//If new equipment cases, add here!
 			default:
 				return false;
-				break;
 			}
 		}
 		return false;
