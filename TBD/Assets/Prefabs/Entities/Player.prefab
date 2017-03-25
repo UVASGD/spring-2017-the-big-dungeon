@@ -123,6 +123,7 @@ MonoBehaviour:
   inMenu: 0
   talking: 0
   alive: 1
+  stats: []
   level: 1
   currentExp: 0
   gameoverMenu: {fileID: 0}
