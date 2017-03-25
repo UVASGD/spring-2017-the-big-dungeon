@@ -70,13 +70,14 @@ public class WeatherScript : MonoBehaviour {
 		if (player == null)
 			player = FindObjectOfType<PlayerController>();
 		this.transform.position = player.transform.position + new Vector3(xOffset, yOffset, 0.0f);
+		/*
 		if (Input.GetKeyDown(KeyCode.R)) {
 			toggleRain();
 		} else if (Input.GetKeyDown(KeyCode.F)) {
 			toggleFog();
 		} else if (Input.GetKeyDown(KeyCode.C)) {
 			toggleSnow();
-		}
+		}*/
 	}
 
 	public void allWeatherOff() {

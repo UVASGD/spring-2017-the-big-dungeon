@@ -62,6 +62,7 @@ public class SaveController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (player != null) {
+			/*
 			if (Input.GetKeyDown(KeyCode.O)) {
 				SaveTo("default", false);
 			}
@@ -85,7 +86,7 @@ public class SaveController : MonoBehaviour {
 			}
 			else if (Input.GetKeyDown(KeyCode.Alpha0)) {
 				LoadFrom("slot3");
-			}
+			}*/
 		}
 	}
 
