@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour {
 		cam = FindObjectOfType<CameraManager>();
 		statsMenu = FindObjectOfType<PlayerStatsUI> ();
 		debug(getCurrentStatValue("HP") + "");
+		startStats ();
     }
 
 	public void startStats() {
