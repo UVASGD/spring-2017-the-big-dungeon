@@ -157,7 +157,6 @@ public class SaveController : MonoBehaviour {
 				player.GetComponent<PlayerController> ().startStats ();
 				inventory.setHat (curData.hat);
 				inventory.setBody (curData.body);
-				Debug.Log (curData.body);
 				inventory.setWeapon (curData.weapon);
 				player.GetComponent<PlayerController>().level = s.level;
 				setNewGame(false);
@@ -168,14 +167,12 @@ public class SaveController : MonoBehaviour {
 	public SaveData WriteToData(bool isNew) {
 		SaveData s = new SaveData();
 		if (!isNew) {
-			Debug.Log ("Saved! for real!");
 			s.playerName = currentName;
 			s.x = player.transform.position.x;
 			s.y = player.transform.position.y;
 			s.inventory = inventory.items;
 			s.hat = inventory.getCurHat ();
 			s.body = inventory.getCurBody ();
-			Debug.Log (inventory.getCurBody ());
 			s.weapon = inventory.getCurWeapon ();
 			s.money = inventory.money;
 			s.level = player.GetComponent<PlayerController>().level;

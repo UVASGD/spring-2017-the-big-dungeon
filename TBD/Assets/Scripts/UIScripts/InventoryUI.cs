@@ -442,7 +442,6 @@ public class InventoryUI : MonoBehaviour {
 		if (inventory == null)
 			inventory = FindObjectOfType<InventoryManager>();
 		items = inventory.items;
-		Debug.Log ("your problem is here");
 		GameObject newItem = Instantiate(blankItem, blankItem.transform.position, blankItem.transform.rotation);
 		newItem.SetActive(true);
 		Text newText = newItem.GetComponent<Text>();

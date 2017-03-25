@@ -74,7 +74,6 @@ public class InventoryManager : MonoBehaviour
 		//If item already in inventory, increment quantity of item
 		if (items.Contains(item)) {
 			Item currentItem = items[items.IndexOf(item)];
-			Debug.Log (items.IndexOf (item));
 			currentItem.quantity += item.quantity;
 			inventoryMenu.updateItemQuantityUI(currentItem);
 			return;
@@ -115,7 +114,6 @@ public class InventoryManager : MonoBehaviour
 
 	public bool useItem(Item item, int quantity) {
 		if (items.Contains (item)) {
-			Debug.Log ("Using");
 			Item currentItem = items[items.IndexOf(item)];
 			if (inventoryMenu == null)
 				inventoryMenu = FindObjectOfType<InventoryUI>();
@@ -268,11 +266,9 @@ public class InventoryManager : MonoBehaviour
 	}
 	public void setBody(Item i) {
 		if (curBody != null) {
-			Debug.Log (curBody.name);
 			curBody.unapply ();
 		}
 		if (i != null && i.type == Item.ItemType.Body) {
-			Debug.Log (i.name);
 			i.apply ();
 			curBody = i;
 		}
