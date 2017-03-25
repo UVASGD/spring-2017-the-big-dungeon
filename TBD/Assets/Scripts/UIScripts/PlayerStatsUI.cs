@@ -41,6 +41,9 @@ public class PlayerStatsUI : MonoBehaviour {
 	}
 
 	public void statsOpened() {
+		foreach (BaseStat s in player.stats) {
+			updateStats (s);
+		}
 		isActive = true;
 		statsMenu.SetActive(true);
 	}
@@ -62,7 +65,8 @@ public class PlayerStatsUI : MonoBehaviour {
 		debug("Updating for stat " + s.statName);
 		foreach (Transform child in statPanel.transform) {
 			Text statText = child.GetComponent<Text>();
-			if (statText.text == s.statName) {
+			string[] textBits = statText.text.Split (new char[]{ ':' });
+			if (textBits[0].Trim().Equals(s.statName)) {
 				statText.text = " " + s.statName + ": " + s.baseVal;
 				if (s.modifier > 0)
 					statText.text += " (+" + s.modifier + ")";
