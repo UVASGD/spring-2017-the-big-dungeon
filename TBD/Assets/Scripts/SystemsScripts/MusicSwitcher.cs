@@ -20,6 +20,7 @@ public class MusicSwitcher : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.name == "Player") {
 			mc.SwitchTrack(newTrack);
+			this.gameObject.SetActive(false);
 		}
 	}
 }

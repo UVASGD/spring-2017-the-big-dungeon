@@ -84,7 +84,7 @@ public class CutsceneHolder : MonoBehaviour
         if (other.gameObject.name == "Player")
         {
             withinTalkingRange = true;
-            player.talking = true;
+			player.talking = true;
             if (triggerOnEnter && !this.hasCutsceneRun && !player.inMenu)
             {
                 if (!this.cutsceneManager.IsCutsceneActive())
