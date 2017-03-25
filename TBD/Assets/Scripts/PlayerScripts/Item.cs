@@ -57,8 +57,8 @@ using System;
 			this.type = i.type;
 		}
 
-		public static bool isEquipment(Item i) { //utility method
-			return (i.type == ItemType.Hat || i.type == ItemType.Body || i.type == ItemType.Weapon);
+		public bool isEquipment() { //utility method
+			return (this.type == ItemType.Hat || this.type == ItemType.Body || this.type == ItemType.Weapon);
 		}
 
 		public bool useItem() { //Use a usable item
@@ -71,12 +71,27 @@ using System;
 		}
 
 		public void apply() { //separated so that equipment/non-usable buffs can be applied as well
-		foreach (BaseStat s in GameObject.FindObjectOfType<PlayerController> ().stats) {  //for each stat, check each effect against it
+			foreach (BaseStat s in GameObject.FindObjectOfType<PlayerController> ().stats) {  //for each stat, check each effect against it
 				foreach (String eff in effects) {
 					string[] bits = eff.Split (new char[]{ ':',',' }); //split effect string into stat name && effect (if properly formatted ....)
 					if (bits [0].ToLower ().Equals (s.statName.ToLower ())) { //if stat names match, apply
 						try {
 							s.modifier += Int32.Parse (bits [1]); //catch bad formatting errors, such as failing to split string up accordingly and using poorly formatted numbers
+						} catch {
+							//Do nothing
+						}
+					}
+				}
+			}
+		}
+
+		public void unapply() {
+			foreach (BaseStat s in GameObject.FindObjectOfType<PlayerController> ().stats) {  //for each stat, check each effect against it
+				foreach (String eff in effects) {
+					string[] bits = eff.Split (new char[]{ ':',',' }); //split effect string into stat name && effect (if properly formatted ....)
+					if (bits [0].ToLower ().Equals (s.statName.ToLower ())) { //if stat names match, apply
+						try {
+							s.modifier -= Int32.Parse (bits [1]); //catch bad formatting errors, such as failing to split string up accordingly and using poorly formatted numbers
 						} catch {
 							//Do nothing
 						}
