@@ -148,6 +148,19 @@ public class PlayerController : MonoBehaviour {
             Debug.Log(getCurrentStatValue("HP") + "");
         }
 
+        //Kill Yourself Instantly. Game Over Testing
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            foreach (BaseStat s in stats)
+            {
+                if (String.Compare(s.statName, "HP") == 0)
+                {
+                    s.modifier -= 100;
+                }
+            }
+            Debug.Log(getCurrentStatValue("HP") + "");
+        }
+
         if (getCurrentStatValue("HP") <= 0 && !alive)
         {
             Debug.Log("Die Please!");
