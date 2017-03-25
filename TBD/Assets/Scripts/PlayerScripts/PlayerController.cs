@@ -135,7 +135,6 @@ public class PlayerController : MonoBehaviour {
 			anim.SetBool("is_walking", false);
 			timer = 0;
         }
-
         //Kill Yourself Instantly. Game Over Testing
         if (Input.GetKeyDown(KeyCode.M))
         {
