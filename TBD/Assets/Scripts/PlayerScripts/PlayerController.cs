@@ -16,9 +16,13 @@ public class PlayerController : MonoBehaviour {
 	public bool debugOn = false;
 
 	public AudioSource[] playerStepSounds;
-	
-	// How often the step sound occurs
-	private float stepInterval = 0.4f;
+
+    private float currentSpeed = 2.5f;
+    private float normalSpeed = 2.5f;
+    private float runSpeed = 4.0f;
+    private float slowSpeed = 0.5f;
+    // How often the step sound occurs
+    private float stepInterval = 0.4f;
 	private float timer = 0.0f;
 	private AudioSource currentStep;
 
@@ -56,8 +60,8 @@ public class PlayerController : MonoBehaviour {
 		sfxMan = FindObjectOfType<SFXManager>();
 		cam = FindObjectOfType<CameraManager>();
 		statsMenu = FindObjectOfType<PlayerStatsUI> ();
-		BaseStat strength = new BaseStat ("strength", 10, "Damage Dealt", -2);
-		BaseStat defense = new BaseStat ("defense", 11, "Damage Taken", 0);
+		BaseStat strength = new BaseStat ("str", 10, "Damage Dealt", -2);
+		BaseStat defense = new BaseStat ("def", 11, "Damage Taken", 0);
 		BaseStat HP = new BaseStat ("HP", 12, "Health", 5);
 
 		stats.Add(HP);
@@ -74,10 +78,32 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (!frozen) {
-			Vector2 movement_vector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * 2.5f;
+			Vector2 movement_vector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * currentSpeed;
 
-			if (movement_vector != Vector2.zero) {
-				anim.SetBool("is_walking", true);
+        if (movement_vector != Vector2.zero) {
+                //Running
+                if (Input.GetKey(KeyCode.LeftShift)) {
+                    currentSpeed = runSpeed;
+                    stepInterval = 0.3f;
+                    currentStep.volume = 0.6f;
+                    anim.speed = 2.0f;
+                }
+                //Walk Slower
+                else if (Input.GetKey(KeyCode.RightShift)) {
+                    currentSpeed = slowSpeed;
+                    stepInterval = 0.48f;
+                    currentStep.volume = 0.1f;
+                    anim.speed = 0.5f;
+                }
+                //Walking
+                else {
+                    currentSpeed = normalSpeed;
+                    stepInterval = 0.4f;
+                    currentStep.volume = 0.2f;
+                    anim.speed = 1f;
+                }
+
+                anim.SetBool("is_walking", true);
                 anim.SetFloat("input_x", movement_vector.x);
 				anim.SetFloat("input_y", movement_vector.y);
 				if (stepsOn)
@@ -88,6 +114,7 @@ public class PlayerController : MonoBehaviour {
 					PlayNextSound();
 				}
 			}
+
 			else {
 				anim.SetBool("is_walking", false);
 				timer = 0;

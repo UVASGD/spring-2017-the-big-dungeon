@@ -22,7 +22,7 @@ public class PlayerStatsUI : MonoBehaviour {
 		statPanel = statsMenu.GetComponentInChildren<VerticalLayoutGroup>().gameObject;
 		player = FindObjectOfType<PlayerController>();
 
-		statPanel.transform.GetChild(0).gameObject.GetComponent<Text>().text = player.getPlayerName();
+		updateName(player.getPlayerName());
 	}
 
 	// Update is called once per frame
@@ -32,13 +32,24 @@ public class PlayerStatsUI : MonoBehaviour {
 		}
 	}
 
+	public void updateName(string name) {
+		if (statPanel == null) {
+			statsMenu = GetComponentInChildren<Image>().gameObject;
+			statPanel = statsMenu.GetComponentInChildren<VerticalLayoutGroup>().gameObject;
+		}
+		statPanel.transform.GetChild(0).gameObject.GetComponent<Text>().text = name;
+	}
+
 	public void statsOpened() {
+		foreach (BaseStat s in player.stats) {
+			updateStats (s);
+		}
 		isActive = true;
 		statsMenu.SetActive(true);
 	}
 
 	public void statsClose() {
-		Debug.Log("called stats close");
+		debug("called stats close");
 		isActive = false;
 		statsMenu.SetActive(false);
 		pause.reopenFromStats();
@@ -54,7 +65,8 @@ public class PlayerStatsUI : MonoBehaviour {
 		debug("Updating for stat " + s.statName);
 		foreach (Transform child in statPanel.transform) {
 			Text statText = child.GetComponent<Text>();
-			if (statText.text == s.statName) {
+			string[] textBits = statText.text.Split (new char[]{ ':' });
+			if (textBits[0].Trim().Equals(s.statName)) {
 				statText.text = " " + s.statName + ": " + s.baseVal;
 				if (s.modifier > 0)
 					statText.text += " (+" + s.modifier + ")";

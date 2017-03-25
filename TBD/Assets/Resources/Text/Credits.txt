@@ -1,21 +1,21 @@
-﻿Director
+Director
 Reid Bixler
 
 Programming
-Name1
-Name2
+Alyssa Lambert
+Jack Herd
+Jared Tufts
 
 Music/Sound Design
-Name3
-Name4
+Raymond Zhao
 
 Writing/Design
-Name5
-Name6
+Mark Villadelgado
+Claire Zhu
 
 Art
-Name7
-Name8
+Jennifer Wu
+Johnny Wong
 
 
 
