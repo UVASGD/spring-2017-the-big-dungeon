@@ -11,8 +11,10 @@ public class BattleMenu : MonoBehaviour
     public Button defendText;
     public Button runText;
     public Text hpText;
+	public Text nameText;
 
     private Canvas mainMenu;
+	private PlayerController player;
 
     // Use this for initialization
     void Awake()
@@ -24,6 +26,11 @@ public class BattleMenu : MonoBehaviour
         defendText = defendText.GetComponent<Button>();
         runText = runText.GetComponent<Button>();
         hpText = hpText.GetComponent<Text>();
+		nameText = nameText.GetComponent<Text> ();
+
+		player = FindObjectOfType<PlayerController> ();
+		hpText.text = "" + player.getCurrentStatValue ("HP");
+		nameText.text = player.getPlayerName ();
 
         mainMenu.enabled = true;
         quitMenu.enabled = false;
