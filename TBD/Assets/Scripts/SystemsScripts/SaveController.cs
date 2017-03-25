@@ -154,6 +154,11 @@ public class SaveController : MonoBehaviour {
 				player.transform.position = new Vector2(s.x, s.y);
 				inventory.items = s.inventory;
 				inventory.money = s.money;
+				player.GetComponent<PlayerController> ().startStats ();
+				inventory.setHat (curData.hat);
+				inventory.setBody (curData.body);
+				Debug.Log (curData.body);
+				inventory.setWeapon (curData.weapon);
 				player.GetComponent<PlayerController>().level = s.level;
 				setNewGame(false);
 			}
@@ -163,10 +168,15 @@ public class SaveController : MonoBehaviour {
 	public SaveData WriteToData(bool isNew) {
 		SaveData s = new SaveData();
 		if (!isNew) {
+			Debug.Log ("Saved! for real!");
 			s.playerName = currentName;
 			s.x = player.transform.position.x;
 			s.y = player.transform.position.y;
 			s.inventory = inventory.items;
+			s.hat = inventory.getCurHat ();
+			s.body = inventory.getCurBody ();
+			Debug.Log (inventory.getCurBody ());
+			s.weapon = inventory.getCurWeapon ();
 			s.money = inventory.money;
 			s.level = player.GetComponent<PlayerController>().level;
 			s.newGame = getNewGame();
@@ -327,6 +337,7 @@ public class SaveData {
 	public float x;
 	public float y;
     public List<Item> inventory;
+	public Item hat, body, weapon;
     public int money;
 	public int level;
 	[SerializeField]
@@ -339,6 +350,9 @@ public class SaveData {
 		temp.x = s.x;
 		temp.y = s.y;
 		temp.inventory = s.inventory;
+		temp.hat = s.hat;
+		temp.body = s.body;
+		temp.weapon = s.weapon;
 		temp.money = s.money;
 		temp.level = s.level;
 		temp.newGame = s.newGame;
