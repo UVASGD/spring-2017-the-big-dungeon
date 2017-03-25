@@ -229,7 +229,7 @@ public class SellMenuUI : MonoBehaviour
                 if (isYes)
                 {
                     //If item is special
-                    if (playerInventory[itemIndex].special)
+					if (playerInventory[itemIndex].type == Item.ItemType.Special)
                     {
                         denialBackground.SetActive(true);
                         isDenied = true;

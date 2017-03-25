@@ -40,6 +40,7 @@ public class InventoryUI : MonoBehaviour {
 	public Text itemPrice;
 	public Text itemSpecial;
 	public Text itemDescription;
+	public Text itemEffect;
 	private bool inInspect = false;
 
 	public GameObject useMenu;
@@ -57,6 +58,7 @@ public class InventoryUI : MonoBehaviour {
 	private bool inDrop = false;
 
 	private Item curItem;
+	private int curItemIndex;
 
 	// Use this for initialization
 	void Start () {
@@ -69,7 +71,7 @@ public class InventoryUI : MonoBehaviour {
 		arrow = itemMenu.GetComponentInChildren<Animator>().gameObject;
 		startPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
 		updatePanel();
-		inventory.addStartItems(false);
+		//inventory.addStartItems(false);
 
 		startPositionInfo = infoArrow.GetComponent<RectTransform>().anchoredPosition;
 		startPositionDrop = dropArrow.GetComponent<RectTransform>().anchoredPosition;
@@ -127,7 +129,7 @@ public class InventoryUI : MonoBehaviour {
 				}
 			}
 			if (Input.GetKeyDown(KeyCode.Space) && canClick) {
-				int curItemIndex = (yIndex + 1) * 2 + xIndex - 2;
+				curItemIndex = (yIndex + 1) * 2 + xIndex - 2;
 				inspectItem(curItemIndex);
 				canClick = false;
 			}
@@ -242,9 +244,10 @@ public class InventoryUI : MonoBehaviour {
 			}
 			if (Input.GetKeyDown(KeyCode.Space) && canClick) {
 				switch (useIndex) {
-					case (0):
-						debug("do use");
-						// NEED TO IMPLEMENT
+				case (0):
+						debug ("do use");
+						inventory.useItem (curItem);
+						inspectItem (curItemIndex);
 						exitUseMenu();
 						break;
 					case (1):
@@ -319,12 +322,16 @@ public class InventoryUI : MonoBehaviour {
 		itemName.text = curItem.name;
 		itemQuantity.text = "QTY: " + curItem.quantity;
 		itemPrice.text = "MUN: " + curItem.price;
-		if (curItem.special) {
+		if (curItem.type == Item.ItemType.Special) {
 			itemSpecial.text = "SPC: Y";
 		} else {
 			itemSpecial.text = "SPC: N";
 		}
 		itemDescription.text = "Info:\n" + curItem.description;
+		itemDescription.text += "\n\nEffect:\n";
+		foreach (string effect in curItem.effects) {
+			itemDescription.text += effect + "  ";
+		}
 		itemInfoObject.SetActive(inInspect);
 		canClick = false;
 	}
