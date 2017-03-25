@@ -126,7 +126,10 @@ public class PlayerController : MonoBehaviour {
 			anim.SetBool("is_walking", false);
 			timer = 0;
         }
-	}
+
+        if (getCurrentStatValue("HP") <= 0)
+            alive = false;
+    }
 
 	void PlayNextSound() {
 		AudioSource lastStep = currentStep;
