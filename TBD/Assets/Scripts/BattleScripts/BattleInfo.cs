@@ -12,6 +12,7 @@ public class BattleInfo : MonoBehaviour
     private Coroutine ulHolder;
     private const double dialogueBaseSpeed = 0.05;
 
+
     private bool dialogueActive = false;
     private List<string> dialogueLines;
     public Dictionary<string, int> dialogueLabels;

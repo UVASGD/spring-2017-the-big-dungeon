@@ -4,20 +4,26 @@ using UnityEngine;
 
 public class RandomEncounter : MonoBehaviour {
 
-	// Collision2D, check for player, random num check (function for changing prob), get list of enemies (pass in), execute battleManager
+	// execute battleManager
 	// Use this for initialization
 
-	private BoxCollider2D box;
+	//private BoxCollider2D box;
 	private bool playerWithin = false;
 	public GameObject player;
 	private Animator playerAnim;
 	private float cooldownTimer;
-	private float timerMax = 10f;
+	private float timerMax = 5f;
 	private bool cooldown = false;
+	private List<Enemy> enemyList = new List<Enemy>();
+	public string encounterArea;
+	private int encounterSec = 10;
+	private BattleManager battleMan;
 
 	void Start () {
-		this.box = GetComponent<BoxCollider2D> ();
+		//this.box = GetComponent<BoxCollider2D> ();
 		playerAnim = player.GetComponent<Animator> ();
+		updateEncounterList ();
+		battleMan = FindObjectOfType<BattleManager> ();
 	}
 	
 	// Update is called once per frame
@@ -25,7 +31,7 @@ public class RandomEncounter : MonoBehaviour {
 		if (playerWithin && playerAnim.GetBool("is_walking") && !cooldown) {
 			checkEncounter ();
 		}
-		if (cooldown) {
+		if (cooldown && playerAnim.GetBool("is_walking")) {
 			cooldownTimer += Time.deltaTime;
 			if (cooldownTimer > timerMax) {
 				Debug.Log ("cooldown finished");
@@ -35,16 +41,40 @@ public class RandomEncounter : MonoBehaviour {
 		}
 	}
 
+	public void updateEncounterList() {
+		if (encounterArea == "outskirts") {
+			enemyList.Add (new Enemy ("Swift Sweepster", "Sweepster no swifting!", 4, 5, 4, 3));
+			enemyList.Add (new Enemy ("Tin Can", "This is one can that you shouldn't kick.", 5, 4, 7, 2));
+			enemyList.Add (new Enemy ("Grock", "Can you smell what the Grock is cooking?", 8, 2, 8, 1));
+			setEncounterSec (10);
+		}
+		// add more encounters
+	}
+
 	public void checkEncounter() {
-		int ran = Random.Range(0, 333);
-		// 1 encounter / 10 seconds == 1/333
+		int ran = Random.Range(0, 33 * encounterSec);
+		// 1 encounter per second == 1/33
 		if (ran < 1) {
 			Debug.Log ("Random executed!");
 			Debug.Log ("cooldown started");
+			int ran2 = Random.Range(0, enemyList.Count);
+			Debug.Log ("You've encountered " + enemyList [ran2].name);
 			// need to eventually call this from battle manager
+			battleMan.loadEnemy(enemyList[ran2]);
+			battleMan.StartBattle();
 			startCooldown ();
 		}
 	}
+
+	public void setEncounterSec(int num) {
+		this.encounterSec = num;
+	}
+
+	public int getEncounterSec() {
+		return this.encounterSec;
+	}
+
+	//should normally add way to encounter multiple enemies
 
 	public void startCooldown() {
 		// set cooldown once exited from battle

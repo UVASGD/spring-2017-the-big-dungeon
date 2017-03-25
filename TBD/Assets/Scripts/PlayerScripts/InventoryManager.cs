@@ -8,6 +8,9 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager instance = null;
     public List<Item> items = new List<Item>();
+	private Item curHat = null;
+	private Item curBody = null;
+	private Item curWeapon = null;
     public int money;
     public int maxSize = 20;
 	//private int currentSize;
@@ -32,6 +35,9 @@ public class InventoryManager : MonoBehaviour
         money = 80;
 		DontDestroyOnLoad(gameObject);
 		inventoryMenu = FindObjectOfType<InventoryUI>();
+		/*curHat = null;
+		curBody = null;
+		curWeapon = null;*/
 	}
 
 	public void refreshItems() {
@@ -46,11 +52,12 @@ public class InventoryManager : MonoBehaviour
 			Item it2 = new Item("Multiple Item", "How bout them items",  new List<string>(), 3, 30, true, Item.ItemType.Consumable);
 			Item armor = new Item ("Basic Armor", "Adds defense and hp", new List<string>{ "str:+0", "def:+1", "hp:10" }, 1, 30, false, Item.ItemType.Body);
 			Item stronk = new Item ("Stronkifier", "Makes Stronk-er", new List<string>{ "str:+10" }, 4, 100, true, Item.ItemType.Consumable);
-			//Equipment weapon = new Equipment("Basic Weapon", "Adds strength", 1, 0, 0);
+			Item secondArmor = new Item ("Advanced Armor", "Adds more defense and hp", new List<string> {"str:+0","def:+2","hp:20"}, 1, 60, false, Item.ItemType.Body);
 			addItem(it1);
 			addItem(it2);
 			addItem(armor);
 			addItem (stronk);
+			addItem (secondArmor);
 			//addItem(weapon);
 		}
 	}
@@ -67,6 +74,7 @@ public class InventoryManager : MonoBehaviour
 		//If item already in inventory, increment quantity of item
 		if (items.Contains(item)) {
 			Item currentItem = items[items.IndexOf(item)];
+			Debug.Log (items.IndexOf (item));
 			currentItem.quantity += item.quantity;
 			inventoryMenu.updateItemQuantityUI(currentItem);
 			return;
@@ -132,7 +140,60 @@ public class InventoryManager : MonoBehaviour
 	}
 
 	public bool useItem(Item item) {
-		return useItem (item, 1);
+		if (item.isEquipment ()) {
+			return equip (item);
+		} else {
+			return useItem (item, 1);
+		}
+	}
+
+	public bool equip(Item item) {
+		if (items.Contains (item)) {
+			Item currentItem = items[items.IndexOf(item)];
+			switch (currentItem.type) {
+			case Item.ItemType.Hat:
+				if (curHat != null) {
+					curHat.unapply ();
+					addItem (curHat);
+				}
+				curHat = new Item (currentItem, 1);
+				curHat.apply ();
+				//inventoryMenu.exitInfoMenu ();
+				destroyItem (currentItem, 1);
+				inventoryMenu.updateItemQuantityUI (currentItem);
+				return true;
+				break;
+			case Item.ItemType.Body:
+				if (curBody != null) {
+					curBody.unapply ();
+					addItem (curBody);
+				}
+				curBody = new Item (currentItem, 1);
+				curBody.apply ();
+				inventoryMenu.exitInfoMenu ();
+				destroyItem (currentItem, 1);
+				inventoryMenu.updateItemQuantityUI (currentItem);
+				return true;
+				break;
+			case Item.ItemType.Weapon:
+				if (curWeapon != null) {
+					curWeapon.unapply ();
+					addItem (curWeapon);
+				}
+				curWeapon = new Item (currentItem, 1);
+				curWeapon.apply ();
+				//inventoryMenu.exitInfoMenu ();
+				destroyItem (currentItem, 1);
+				inventoryMenu.updateItemQuantityUI (currentItem);
+				return true;
+				break;
+			//If new equipment cases, add here!
+			default:
+				return false;
+				break;
+			}
+		}
+		return false;
 	}
 
     //Destroy All Items Passed In
@@ -177,6 +238,52 @@ public class InventoryManager : MonoBehaviour
 	void debug(string line) {
 		if (debugOn) {
 			Debug.Log(line);
+		}
+	}
+
+	public Item getCurHat() {
+		return curHat;
+	}
+
+	public Item getCurBody() {
+		return curBody;
+	}
+
+	public Item getCurWeapon() {
+		return curWeapon;
+	}
+
+	/*
+	 * Only use when equiping an item that is not in the inventory.
+	 * Will fully replace any existing item in that slot
+	 */
+	public void setHat(Item i) {
+		if (curHat != null) {
+			curHat.unapply ();
+		}
+		if (i != null && i.type == Item.ItemType.Hat) {
+			i.apply ();
+			curHat = i;
+		}
+	}
+	public void setBody(Item i) {
+		if (curBody != null) {
+			Debug.Log (curBody.name);
+			curBody.unapply ();
+		}
+		if (i != null && i.type == Item.ItemType.Body) {
+			Debug.Log (i.name);
+			i.apply ();
+			curBody = i;
+		}
+	}
+	public void setWeapon(Item i) {
+		if (curWeapon != null) {
+			curWeapon.unapply ();
+		}
+		if (i != null && i.type == Item.ItemType.Weapon) {
+			i.apply ();
+			curWeapon = i;
 		}
 	}
 }

@@ -244,11 +244,15 @@ public class InventoryUI : MonoBehaviour {
 			}
 			if (Input.GetKeyDown(KeyCode.Space) && canClick) {
 				switch (useIndex) {
-				case (0):
+					case (0):
 						debug ("do use");
-						inventory.useItem (curItem);
-						inspectItem (curItemIndex);
 						exitUseMenu();
+						inventory.useItem (curItem);
+						if (curItem.quantity <= 1) {
+							exitInfoMenu ();	
+						} else {
+							inspectItem (curItemIndex);
+						}
 						break;
 					case (1):
 						debug("don't use");
@@ -419,6 +423,7 @@ public class InventoryUI : MonoBehaviour {
 			Text itemText = child.GetComponent<Text>();
 			// Potential problem with truncated characters
 			if (itemText.text == i.name) {
+				Debug.Log (i.name);
 				Text informationText = itemText.gameObject.transform.GetChild(0).GetComponent<Text>();
 				if (i.quantity == 1) {
 					itemText.text = i.name;
@@ -437,6 +442,7 @@ public class InventoryUI : MonoBehaviour {
 		if (inventory == null)
 			inventory = FindObjectOfType<InventoryManager>();
 		items = inventory.items;
+		Debug.Log ("your problem is here");
 		GameObject newItem = Instantiate(blankItem, blankItem.transform.position, blankItem.transform.rotation);
 		newItem.SetActive(true);
 		Text newText = newItem.GetComponent<Text>();
