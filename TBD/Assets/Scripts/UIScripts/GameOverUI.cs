@@ -62,7 +62,8 @@ public class GameOverUI : MonoBehaviour {
             {
                 switch (index)
                 {
-                    case 0:
+				case 0:
+						save = FindObjectOfType<SaveController> ();
                         save.LoadFromSlot(save.getCurrentSlot());
                         gameObject.SetActive(false);
                         player.alive = true;
