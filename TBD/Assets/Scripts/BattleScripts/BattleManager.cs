@@ -20,6 +20,7 @@ public class BattleManager : MonoBehaviour
 	private bool inBattle = false;
     private Queue<BattleState> stateQueue = new Queue<BattleState>();
 	private bool canBattle = false;
+	private PlayerController player;
 
     private void Awake()
     {
@@ -38,6 +39,7 @@ public class BattleManager : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
 		music = FindObjectOfType<MusicManager>();
+		player = FindObjectOfType<PlayerController> ();
 	}
 
     void Update()
@@ -47,8 +49,8 @@ public class BattleManager : MonoBehaviour
         {
 			music.SwitchTrack(4);
 			// Make some dummy enemies and add them
-			enemies.Add(new Enemy("Troll", "Really big and tough", 100, 75, 200, 4));
-            enemies.Add(new Enemy("Troll #2", "Really big and tough", 100, 75, 200, 4));
+			// enemies.Add(new Enemy("Troll", "Really big and tough", 100, 75, 200, 4));
+            // enemies.Add(new Enemy("Troll #2", "Really big and tough", 100, 75, 200, 4));
             StartBattle();
         }
     }
@@ -84,6 +86,8 @@ public class BattleManager : MonoBehaviour
     {
         this.inBattle = true;
         this.stateQueue.Enqueue(new PlayerState());
+		player.frozen = true;
+		player.updatePlayerName ("Reidboi");
 		this.tempSave = FindObjectOfType<SaveController> ().WriteToData (false);
         SceneManager.LoadScene("2_Battle_Scene");
     }

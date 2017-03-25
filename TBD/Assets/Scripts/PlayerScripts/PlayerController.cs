@@ -60,8 +60,13 @@ public class PlayerController : MonoBehaviour {
 		sfxMan = FindObjectOfType<SFXManager>();
 		cam = FindObjectOfType<CameraManager>();
 		statsMenu = FindObjectOfType<PlayerStatsUI> ();
-		BaseStat strength = new BaseStat ("strength", 10, "Damage Dealt", -2);
-		BaseStat defense = new BaseStat ("defense", 11, "Damage Taken", 0);
+		debug(getCurrentStatValue("HP") + "");
+    }
+
+	public void startStats() {
+		statsMenu = FindObjectOfType<PlayerStatsUI> ();
+		BaseStat strength = new BaseStat ("str", 10, "Damage Dealt", -2);
+		BaseStat defense = new BaseStat ("def", 11, "Damage Taken", 0);
 		BaseStat HP = new BaseStat ("HP", 12, "Health", 5);
 
 		stats.Add(HP);
@@ -72,8 +77,7 @@ public class PlayerController : MonoBehaviour {
 			statsMenu.addStat(strength);
 			statsMenu.addStat(defense);
 		}
-		debug(getCurrentStatValue("HP") + "");
-    }
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -85,21 +89,24 @@ public class PlayerController : MonoBehaviour {
                 if (Input.GetKey(KeyCode.LeftShift)) {
                     currentSpeed = runSpeed;
                     stepInterval = 0.3f;
-                    currentStep.volume = 0.6f;
+					if (currentStep != null)
+                    	currentStep.volume = 0.6f;
                     anim.speed = 2.0f;
                 }
                 //Walk Slower
                 else if (Input.GetKey(KeyCode.RightShift)) {
                     currentSpeed = slowSpeed;
                     stepInterval = 0.48f;
-                    currentStep.volume = 0.1f;
+					if (currentStep != null)
+                    	currentStep.volume = 0.1f;
                     anim.speed = 0.5f;
                 }
                 //Walking
                 else {
                     currentSpeed = normalSpeed;
                     stepInterval = 0.4f;
-                    currentStep.volume = 0.2f;
+					if (currentStep != null)
+                    	currentStep.volume = 0.2f;
                     anim.speed = 1f;
                 }
 

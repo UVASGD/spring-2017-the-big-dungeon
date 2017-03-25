@@ -11,19 +11,19 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1644562637376610}
   m_IsPrefabParent: 1
---- !u!1 &1644562637376610
+--- !u!1 &1998696725566730
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4760812781573098}
-  - component: {fileID: 212895613492945966}
-  - component: {fileID: 95472094918579734}
-  - component: {fileID: 50259572178441108}
-  - component: {fileID: 114986333336191408}
-  - component: {fileID: 60211701846360898}
+  - component: {fileID: 4050587615773260}
+  - component: {fileID: 212778199726146342}
+  - component: {fileID: 95711283927829130}
+  - component: {fileID: 50961309043356314}
+  - component: {fileID: 114499815052688708}
+  - component: {fileID: 60748468444241338}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -44,7 +44,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50259572178441108
+--- !u!50 &50961309043356314
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
@@ -106,7 +106,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114986333336191408
+--- !u!114 &114499815052688708
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -125,7 +125,7 @@ MonoBehaviour:
   alive: 1
   level: 1
   currentExp: 0
---- !u!212 &212895613492945966
+--- !u!212 &212778199726146342
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
