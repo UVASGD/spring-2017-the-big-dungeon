@@ -52,7 +52,7 @@ namespace ItemOverhaul {
 			return (i.type == ItemType.Hat || i.type == ItemType.Body || i.type == ItemType.Weapon);
 		}
 
-		public bool use() { //Use a usable item
+		public bool useItem() { //Use a usable item
 			if (!isUsable || quantity < 1) { //if not usable, or if out of item, dont use.
 				return false;
 			}
@@ -68,7 +68,7 @@ namespace ItemOverhaul {
 					if (bits [0].ToLower ().Equals (s.statName.ToLower ())) { //if stat names match, apply
 						try {
 							s.modifier += Int32.Parse (bits [1]); //catch bad formatting errors, such as failing to split string up accordingly and using poorly formatted numbers
-						} catch (Exception e) {
+						} catch {
 							//Do nothing
 						}
 					}
