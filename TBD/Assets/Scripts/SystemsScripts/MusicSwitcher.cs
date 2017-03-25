@@ -22,7 +22,7 @@ public class MusicSwitcher : MonoBehaviour {
 		if (other.gameObject.name == "Player") {
 			mc = FindObjectOfType<MusicManager>();
 			mc.SwitchTrack(newTrack);
-			this.gameObject.SetActive(false);
+			this.enabled = false;
 		}
 	}
 }

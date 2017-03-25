@@ -1,6 +1,6 @@
 ﻿start:
 	{setnpc:Diedrich the Scientist}{fast}Ho!
-	How is it going yound lad!
+	How is it going young lad!
 	Have you ever considered going on an {drag}ADVENTURE{endspeed}?
 	There are many who come down here to go on adventures.
 	{fast}Maybe you should go on one too?

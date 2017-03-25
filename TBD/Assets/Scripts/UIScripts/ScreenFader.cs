@@ -7,7 +7,6 @@ public class ScreenFader : MonoBehaviour {
     private Animator anim;
     public bool isFading = false;
 	private bool initialized = false;
-	private bool retry = false;
 
 	// Use this for initialization
 	void Start () {
@@ -22,25 +21,20 @@ public class ScreenFader : MonoBehaviour {
 		CutBlackOut();
 	}
 
-    public IEnumerator FadeToClear() {
+    public void FadeToClear() {
 		if (!initialized) {
 			Start();
 		}
 		isFading = true;
         anim.SetTrigger("FadeIn");
-		while (isFading)
-            yield return null;
     }
 
-    public IEnumerator FadeToBlack() {
+    public void FadeToBlack() {
 		if (!initialized) {
 			Start();
 		}
 		isFading = true;
 		anim.SetTrigger("FadeOut");
-		while (isFading) {
-			yield return null;
-		}
 	}
 
 	public void BlackOut() {

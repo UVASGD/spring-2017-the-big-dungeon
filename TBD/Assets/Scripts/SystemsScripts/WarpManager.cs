@@ -9,9 +9,19 @@ public class WarpManager : MonoBehaviour {
 	public GameObject targetRoom;
     ScreenFader sf;
 	//TitleFader tf;
+	
 	private float timer = 0f;
 	private float timerMax = 3f;
-	private bool timerOn;
+	private bool _timerOn = false;
+	public bool timerOn {
+		get {
+			return _timerOn;
+		}
+		private set {
+			_timerOn = value;
+			Debug.Log(value);
+		}
+	}
 
 	// Use this for initialization
 	void Start()
@@ -23,41 +33,33 @@ public class WarpManager : MonoBehaviour {
 		catch {
 			sf = null;
 		}
-		setTimerOn(true);
-    }
+		timerOn = false;
+	}
 
 	void Update() {
-		Debug.Log(getTimerOn());
-		if (getTimerOn()) {
+		Debug.Log(timerOn);
+		if (timerOn) {
 			timer += Time.deltaTime;
 			if (timer > timerMax) {
 				player.gameObject.transform.position = warpTarget.position;
 				Camera.main.transform.position = warpTarget.position;
 				Camera.main.GetComponent<CameraManager>().setCurrentRoom(targetRoom);
-				StartCoroutine(sf.FadeToClear());
+				sf.FadeToClear();
 				player.frozen = false;
 				timer = 0f;
-				setTimerOn(false);
+				Debug.Log("in here");
+				timerOn = false;
 			}
 		}
 	}
 
-	public void setTimerOn(bool t) {
-		this.timerOn = t;
-	}
-
-	public bool getTimerOn() {
-		return this.timerOn;
-	}
-
 	void OnTriggerEnter2D(Collider2D other) {
 		if (sf != null) {
-			Debug.Log(getTimerOn());
-			setTimerOn(true);
-			Debug.Log(getTimerOn());
+			sf = GameObject.FindGameObjectWithTag("Fader").GetComponent<ScreenFader>();
+			timerOn = true;
 			player = FindObjectOfType<PlayerController>();
 			player.frozen = true;
-			StartCoroutine(sf.FadeToBlack());
+			sf.FadeToBlack();
 		}
     }
 }

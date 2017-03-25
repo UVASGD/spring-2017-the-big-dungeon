@@ -1,0 +1,2 @@
+﻿start:
+	{setnpc:Interaction Help}{fast}Wow, look at you!{endspeed}{slow} You learned how to interact with SPACE

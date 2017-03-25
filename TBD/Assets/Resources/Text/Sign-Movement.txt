@@ -1,0 +1,2 @@
+﻿start:
+	{setnpc:Movement Help}{fast}Catch me if you can!{endspeed}{slow} You can run with L-SHIFT or walk with R-SHIFT!
