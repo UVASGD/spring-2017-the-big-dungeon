@@ -33,6 +33,10 @@ public class PlayerStatsUI : MonoBehaviour {
 	}
 
 	public void updateName(string name) {
+		if (statPanel == null) {
+			statsMenu = GetComponentInChildren<Image>().gameObject;
+			statPanel = statsMenu.GetComponentInChildren<VerticalLayoutGroup>().gameObject;
+		}
 		statPanel.transform.GetChild(0).gameObject.GetComponent<Text>().text = name;
 	}
 

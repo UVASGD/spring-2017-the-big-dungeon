@@ -47,5 +47,33 @@ namespace ItemOverhaul {
 			this.isUsable = i.isUsable;
 			this.type = i.type;
 		}
+
+		public static bool isEquipment(Item i) { //utility method
+			return (i.type == ItemType.Hat || i.type == ItemType.Body || i.type == ItemType.Weapon);
+		}
+
+		public bool use() { //Use a usable item
+			if (!isUsable || quantity < 1) { //if not usable, or if out of item, dont use.
+				return false;
+			}
+			applyTo (GameObject.FindObjectOfType<PlayerController> ().stats); //otherwise apply effect
+			quantity--; //consume one item
+			return true; //return true
+		}
+
+		public void applyTo(List<BaseStat> stats) { //separated so that equipment/non-usable buffs can be applied as well
+			foreach (BaseStat s in stats) {  //for each stat, check each effect against it
+				foreach (String eff in effects) {
+					string[] bits = eff.Split (new char[]{ ':',',' }); //split effect string into stat name && effect (if properly formatted ....)
+					if (bits [0].ToLower ().Equals (s.statName.ToLower ())) { //if stat names match, apply
+						try {
+							s.modifier += Int32.Parse (bits [1]); //catch bad formatting errors, such as failing to split string up accordingly and using poorly formatted numbers
+						} catch (Exception e) {
+							//Do nothing
+						}
+					}
+				}
+			}
+		}
 	}
 }
