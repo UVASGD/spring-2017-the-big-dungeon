@@ -60,6 +60,11 @@ public class PlayerController : MonoBehaviour {
 		sfxMan = FindObjectOfType<SFXManager>();
 		cam = FindObjectOfType<CameraManager>();
 		statsMenu = FindObjectOfType<PlayerStatsUI> ();
+		debug(getCurrentStatValue("HP") + "");
+    }
+
+	public void startStats() {
+		statsMenu = FindObjectOfType<PlayerStatsUI> ();
 		BaseStat strength = new BaseStat ("str", 10, "Damage Dealt", -2);
 		BaseStat defense = new BaseStat ("def", 11, "Damage Taken", 0);
 		BaseStat HP = new BaseStat ("HP", 12, "Health", 5);
@@ -72,8 +77,7 @@ public class PlayerController : MonoBehaviour {
 			statsMenu.addStat(strength);
 			statsMenu.addStat(defense);
 		}
-		debug(getCurrentStatValue("HP") + "");
-    }
+	}
 	
 	// Update is called once per frame
 	void Update () {

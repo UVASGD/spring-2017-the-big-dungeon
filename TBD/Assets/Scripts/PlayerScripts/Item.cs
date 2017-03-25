@@ -71,7 +71,8 @@ using System;
 		}
 
 		public void apply() { //separated so that equipment/non-usable buffs can be applied as well
-			foreach (BaseStat s in GameObject.FindObjectOfType<PlayerController> ().stats) {  //for each stat, check each effect against it
+			foreach (BaseStat s in GameObject.FindObjectOfType<PlayerController> ().stats) {//for each stat, check each effect against it
+				Debug.Log("Stat : " + s.statName);
 				foreach (String eff in effects) {
 					string[] bits = eff.Split (new char[]{ ':',',' }); //split effect string into stat name && effect (if properly formatted ....)
 					if (bits [0].ToLower ().Equals (s.statName.ToLower ())) { //if stat names match, apply
@@ -79,6 +80,7 @@ using System;
 							s.modifier += Int32.Parse (bits [1]); //catch bad formatting errors, such as failing to split string up accordingly and using poorly formatted numbers
 						} catch {
 							//Do nothing
+							Debug.Log("Failed in updating stats");
 						}
 					}
 				}

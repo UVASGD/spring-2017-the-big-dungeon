@@ -165,19 +165,13 @@ public class InventoryManager : MonoBehaviour
 				break;
 			case Item.ItemType.Body:
 				if (curBody != null) {
-					Debug.Log (curHat);
 					curBody.unapply ();
-					Debug.Log ("a");
 					addItem (curBody);
-					Debug.Log ("b");
 				}
 				curBody = new Item (currentItem, 1);
-				Debug.Log ("c");
 				curBody.apply ();
-				Debug.Log ("d");
 				inventoryMenu.exitInfoMenu ();
 				destroyItem (currentItem, 1);
-				Debug.Log ("e");
 				inventoryMenu.updateItemQuantityUI (currentItem);
 				return true;
 				break;
@@ -257,6 +251,40 @@ public class InventoryManager : MonoBehaviour
 
 	public Item getCurWeapon() {
 		return curWeapon;
+	}
+
+	/*
+	 * Only use when equiping an item that is not in the inventory.
+	 * Will fully replace any existing item in that slot
+	 */
+	public void setHat(Item i) {
+		if (curHat != null) {
+			curHat.unapply ();
+		}
+		if (i != null && i.type == Item.ItemType.Hat) {
+			i.apply ();
+			curHat = i;
+		}
+	}
+	public void setBody(Item i) {
+		if (curBody != null) {
+			Debug.Log (curBody.name);
+			curBody.unapply ();
+		}
+		if (i != null && i.type == Item.ItemType.Body) {
+			Debug.Log (i.name);
+			i.apply ();
+			curBody = i;
+		}
+	}
+	public void setWeapon(Item i) {
+		if (curWeapon != null) {
+			curWeapon.unapply ();
+		}
+		if (i != null && i.type == Item.ItemType.Weapon) {
+			i.apply ();
+			curWeapon = i;
+		}
 	}
 }
 
