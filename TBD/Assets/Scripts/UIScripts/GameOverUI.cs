@@ -73,6 +73,8 @@ public class GameOverUI : MonoBehaviour {
                     case 0:
                         save.LoadFromSlot(save.getCurrentSlot());
                         gameObject.SetActive(false);
+                        player.alive = true;
+                        player.frozen = false;
                         break;
                     case 1:
                         exitConfirm();
