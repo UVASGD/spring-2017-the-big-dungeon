@@ -42,10 +42,10 @@ public class InventoryManager : MonoBehaviour
 
 	public void addStartItems(bool isContinuing) {
 		if (!isContinuing) {
-			Item it1 = new Item("First Item", "This is a very long description", new List<string>(){"strength:+1"}, 2, 30, true, Item.ItemType.Consumable);
+			Item it1 = new Item("First Item", "This is a very long description", new List<string>(){"str:+1","hp:+1"}, 2, 30, true, Item.ItemType.Consumable);
 			Item it2 = new Item("Multiple Item", "How bout them items",  new List<string>(), 3, 30, true, Item.ItemType.Consumable);
-			Item armor = new Item ("Basic Armor", "Adds defense and hp", new List<string>{ "strength:+0", "defense:+1", "health:10" }, 1, 30, false, Item.ItemType.Body);
-			Item stronk = new Item ("Stronkifier", "Makes Stronk-er", new List<string>{ "strength:+10" }, 4, 100, true, Item.ItemType.Consumable);
+			Item armor = new Item ("Basic Armor", "Adds defense and hp", new List<string>{ "str:+0", "def:+1", "hp:10" }, 1, 30, false, Item.ItemType.Body);
+			Item stronk = new Item ("Stronkifier", "Makes Stronk-er", new List<string>{ "str:+10" }, 4, 100, true, Item.ItemType.Consumable);
 			//Equipment weapon = new Equipment("Basic Weapon", "Adds strength", 1, 0, 0);
 			addItem(it1);
 			addItem(it2);

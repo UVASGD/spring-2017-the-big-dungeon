@@ -60,8 +60,8 @@ public class PlayerController : MonoBehaviour {
 		sfxMan = FindObjectOfType<SFXManager>();
 		cam = FindObjectOfType<CameraManager>();
 		statsMenu = FindObjectOfType<PlayerStatsUI> ();
-		BaseStat strength = new BaseStat ("strength", 10, "Damage Dealt", -2);
-		BaseStat defense = new BaseStat ("defense", 11, "Damage Taken", 0);
+		BaseStat strength = new BaseStat ("str", 10, "Damage Dealt", -2);
+		BaseStat defense = new BaseStat ("def", 11, "Damage Taken", 0);
 		BaseStat HP = new BaseStat ("HP", 12, "Health", 5);
 
 		stats.Add(HP);

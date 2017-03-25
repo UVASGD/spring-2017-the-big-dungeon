@@ -40,6 +40,7 @@ public class InventoryUI : MonoBehaviour {
 	public Text itemPrice;
 	public Text itemSpecial;
 	public Text itemDescription;
+	public Text itemEffect;
 	private bool inInspect = false;
 
 	public GameObject useMenu;
@@ -327,6 +328,10 @@ public class InventoryUI : MonoBehaviour {
 			itemSpecial.text = "SPC: N";
 		}
 		itemDescription.text = "Info:\n" + curItem.description;
+		itemDescription.text += "\n\nEffect:\n";
+		foreach (string effect in curItem.effects) {
+			itemDescription.text += effect + "  ";
+		}
 		itemInfoObject.SetActive(inInspect);
 		canClick = false;
 	}
