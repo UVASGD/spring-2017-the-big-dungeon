@@ -43,9 +43,9 @@ public class RandomEncounter : MonoBehaviour {
 
 	public void updateEncounterList() {
 		if (encounterArea == "outskirts") {
-			enemyList.Add (new Enemy ("Swift Sweepster", "Sweepster no swifting!", 4, 5, 4, 3));
-			enemyList.Add (new Enemy ("Tin Can", "This is one can that you shouldn't kick.", 5, 4, 7, 2));
-			enemyList.Add (new Enemy ("Grock", "Can you smell what the Grock is cooking?", 8, 2, 8, 1));
+			enemyList.Add (new Enemy ("Swift Sweepster", "Sweepster no swifting!", 4, 5, 4, 3, "Sprites/Enemies/swift sweepster-idle"));
+			enemyList.Add (new Enemy ("Tin Can", "This is one can that you shouldn't kick.", 5, 4, 7, 2, "Sprites/Enemies/Tin_can"));
+			enemyList.Add (new Enemy ("Grock", "Can you smell what the Grock is cooking?", 8, 2, 8, 1, "Sprites/Enemies/grock-idle"));
 			setEncounterSec (10);
 		}
 		// add more encounters
@@ -55,8 +55,6 @@ public class RandomEncounter : MonoBehaviour {
 		int ran = Random.Range(0, 33 * encounterSec);
 		// 1 encounter per second == 1/33
 		if (ran < 1) {
-			Debug.Log ("Random executed!");
-			Debug.Log ("cooldown started");
 			int ran2 = Random.Range(0, enemyList.Count);
 			Debug.Log ("You've encountered " + enemyList [ran2].name);
 			// need to eventually call this from battle manager

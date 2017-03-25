@@ -42,19 +42,6 @@ public class BattleManager : MonoBehaviour
 		player = FindObjectOfType<PlayerController> ();
 	}
 
-    void Update()
-    {
-        // This is just for testing
-        if (Input.GetKeyUp(KeyCode.B) && !this.inBattle && this.canBattle)
-        {
-			music.SwitchTrack(4);
-			// Make some dummy enemies and add them
-			// enemies.Add(new Enemy("Troll", "Really big and tough", 100, 75, 200, 4));
-            // enemies.Add(new Enemy("Troll #2", "Really big and tough", 100, 75, 200, 4));
-            StartBattle();
-        }
-    }
-
 	public void setCanBattle(bool set) {
 		this.canBattle = set;
 	}
@@ -90,12 +77,16 @@ public class BattleManager : MonoBehaviour
 			player = FindObjectOfType<PlayerController> ();
 		player.frozen = true;
 		this.tempSave = FindObjectOfType<SaveController> ().WriteToData (false);
-        SceneManager.LoadScene("2_Battle_Scene");
+
+        SceneManager.LoadScene(2);
     }
 
     public void LoadBattleMenu(BattleMenu battleMenu)
     {
         this.battleMenu = battleMenu;
+
+		// Try to display the enemy sprite
+		this.battleMenu.enemySprite.sprite = Resources.Load<Sprite>(enemies[0].sprite);
     }
 
     public void LoadBattleInfo(BattleInfo battleInfo)
@@ -110,7 +101,7 @@ public class BattleManager : MonoBehaviour
         this.battleMenu = null;
         Destroy(this.battleInfo);
         this.battleInfo = null;
-        SceneManager.LoadScene("1_Main_Scene");
+		SceneManager.LoadScene (1);
 		music.SwitchTrack(0);
 		this.inBattle = false;
 		FindObjectOfType<SaveController> ().WriteFromData (this.tempSave);
@@ -120,6 +111,24 @@ public class BattleManager : MonoBehaviour
     {
         stateQueue.Enqueue(battleState);
     }
+
+	public void playerAttack() {
+		this.addState (new TextState ("You swing a wild punch at the " + enemies[0].name));
+
+		enemies [0].hp = Math.Max(enemies[0].hp - 3, 0);
+
+		this.addState (new TextState ("The " + enemies[0].name + " has " + enemies[0].hp + " HP left."));
+
+		if (enemies[0].hp <= 0) {
+			// You won!
+			this.addState (new TextState ("The " + enemies[0].name + " has fallen!"));
+			this.addState(new TextState("{end}"));
+			this.ProcessState ();
+		}
+
+		this.addState (new EnemyState ());
+		this.ProcessState ();
+	}
 
     public void ProcessState()
     {
@@ -158,7 +167,21 @@ public class BattleManager : MonoBehaviour
 
     private void handleEnemyState(EnemyState state)
     {
-        this.stateQueue.Enqueue(new TextState("The enemies sit around passively."));
+		// For now, we just use the first enemy
+		Enemy e = enemies[0];
+		this.stateQueue.Enqueue(new TextState("The " + e.name + " strikes out viciously!"));
+
+		player.setStatValue ("HP", player.getBaseStatValue ("HP") - 1);
+
+		this.stateQueue.Enqueue(new TextState("You take 1 damage."));
+
+		this.battleMenu.hpText.text = "" + player.getCurrentStatValue ("HP");
+
+		// Check if player is dead
+		if (player.getCurrentStatValue ("HP") == 0) {
+			Debug.Log ("you have died!");	
+		}
+
         this.stateQueue.Enqueue(new PlayerState());
         ProcessState();
     }

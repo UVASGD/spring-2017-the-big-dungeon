@@ -219,6 +219,15 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	public void setStatValue(string statName, int newValue) {
+		foreach (BaseStat s in stats) {
+			if (String.Compare(s.statName, statName) == 0) {
+				s.baseVal = newValue;
+				break;
+			}
+		}
+	}
+
 	//base stat + modifier
 	public int getCurrentStatValue(string statName) {
 		foreach (BaseStat s in stats) {
