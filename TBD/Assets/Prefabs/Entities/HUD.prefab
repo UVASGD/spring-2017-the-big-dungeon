@@ -6358,6 +6358,7 @@ MonoBehaviour:
   itemPrice: {fileID: 114245799098263572}
   itemSpecial: {fileID: 114827452914553056}
   itemDescription: {fileID: 114098871674127708}
+  itemEffect: {fileID: 0}
   useMenu: {fileID: 1136734408517348}
   useArrow: {fileID: 1243790519164624}
   dropMenu: {fileID: 1269174326679916}
@@ -6536,6 +6537,7 @@ MonoBehaviour:
   SelectArrowOffset: 78
   confirmation: 0
   selection: 0
+  sc: {fileID: 0}
   debugOn: 0
 --- !u!114 &114799815574784456
 MonoBehaviour:

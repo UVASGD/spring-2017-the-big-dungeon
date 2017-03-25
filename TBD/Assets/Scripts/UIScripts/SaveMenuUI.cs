@@ -18,8 +18,8 @@ public class SaveMenuUI : MonoBehaviour {
 	public bool confirmation, selection;
 	int confIndex, selIndex;
 
-	SaveController sc;
-	PlayerController player;
+	public SaveController sc;
+	private PlayerController player;
 
 	float cooldown;
 
@@ -33,7 +33,7 @@ public class SaveMenuUI : MonoBehaviour {
 		selIndex = 0;
 		confArrowInit = ConfArrow.rectTransform.anchoredPosition;
 		selectArrowInit = SelectArrow.rectTransform.anchoredPosition;
-		sc = FindObjectOfType<SaveController> ();
+		//sc = FindObjectOfType<SaveController> ();
 		player = FindObjectOfType<PlayerController> ();
 		cooldown = -1;
 	}
@@ -73,6 +73,7 @@ public class SaveMenuUI : MonoBehaviour {
 	}
 
 	void Save() {
+		sc = FindObjectOfType<SaveController> ();
 		sc.SaveTo ("slot" + (selIndex + 1), false);
 	}
 

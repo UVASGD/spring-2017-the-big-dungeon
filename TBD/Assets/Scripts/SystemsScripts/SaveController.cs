@@ -26,11 +26,13 @@ public class SaveController : MonoBehaviour {
 	public bool debugOn = false;
 	private BattleManager bm;
 	private int currentSlot = 0;
-	private string currentName = "";
+	private string currentName;
 	private bool newGame;
 
 	public SaveData curData;
 	private int currentLevel;
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -268,23 +270,23 @@ public class SaveController : MonoBehaviour {
 		case 1:
 			currentLevel = 1;
 			music.SwitchTrack (0);
-			ScreenFader sf = GameObject.FindGameObjectWithTag("Fader").GetComponent<ScreenFader>();
-			player = FindObjectOfType<PlayerController>().gameObject;
-			inventory = FindObjectOfType<InventoryManager>();
-			GameObject[] maps = GameObject.FindGameObjectsWithTag("map");
+			ScreenFader sf = GameObject.FindGameObjectWithTag ("Fader").GetComponent<ScreenFader> ();
+			player = FindObjectOfType<PlayerController> ().gameObject;
+			inventory = FindObjectOfType<InventoryManager> ();
+			GameObject[] maps = GameObject.FindGameObjectsWithTag ("map");
 			for (int i = 0; i < maps.Length; ++i) {
-				maps[i].AddComponent<MapSaver>();
+				maps [i].AddComponent<MapSaver> ();
 			}
-			inventory.addStartItems(isContinuing);
+			inventory.addStartItems (isContinuing);
 			if (isContinuing) {
-				sf.BlackOut();
-				StartCoroutine(sf.Wait(1.0f));
-				LoadFromSlot(currentSlot);
-				inventory.refreshItems();
+				sf.BlackOut ();
+				StartCoroutine (sf.Wait (1.0f));
+				LoadFromSlot (currentSlot);
+				inventory.refreshItems ();
 			} else {
 				//just starting
-				SaveToSlot(currentSlot);
-				player.GetComponent<PlayerController>().updatePlayerName(currentName);
+				SaveToSlot (currentSlot);
+				player.GetComponent<PlayerController> ().updatePlayerName (currentName);
 			}
 			break;
 		case 2:
