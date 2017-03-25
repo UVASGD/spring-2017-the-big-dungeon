@@ -267,12 +267,12 @@ public class SaveController : MonoBehaviour {
 			if (bm == null)
 				bm = FindObjectOfType<BattleManager>();
 			bm.setCanBattle(false);
-			music.SwitchTrack (2);
+			music.SwitchTrack (0);
 			currentLevel = 0;
 			break;
 		case 1:
 			currentLevel = 1;
-			music.SwitchTrack (0);
+			music.SwitchTrack (6);
 			ScreenFader sf = GameObject.FindGameObjectWithTag ("Fader").GetComponent<ScreenFader> ();
 			player = FindObjectOfType<PlayerController> ().gameObject;
 			inventory = FindObjectOfType<InventoryManager> ();
@@ -298,7 +298,7 @@ public class SaveController : MonoBehaviour {
 			break;
 		default:
 			currentLevel = 0;
-			music.SwitchTrack (0);
+			music.SwitchTrack (6);
 			break;
 		}
 		SceneManager.sceneLoaded -= OnLevelFinishedLoading;

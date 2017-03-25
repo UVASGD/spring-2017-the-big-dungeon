@@ -39,16 +39,16 @@ public class MusicManager : MonoBehaviour {
 			debug("IN HERE");
 			switch (buildIndex) {
 				case 0:
-					currentTrack = 2;
+					currentTrack = 0;
 					break;
 				case 1:
-					currentTrack = 0;
+					currentTrack = 6;
 					break;
 				case 2:
 					currentTrack = 4;
 					break;
 				default:
-					currentTrack = 0;
+					currentTrack = 6;
 					break;
 			}
 		}

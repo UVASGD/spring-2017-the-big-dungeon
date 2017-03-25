@@ -12,6 +12,7 @@ public class MusicSwitcher : MonoBehaviour {
 	void Start () {
 		mc = FindObjectOfType<MusicManager> ();
 		if (switchOnStart) {
+			mc = FindObjectOfType<MusicManager>();
 			mc.SwitchTrack (newTrack);
 			gameObject.SetActive (false);
 		}
@@ -19,6 +20,7 @@ public class MusicSwitcher : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.name == "Player") {
+			mc = FindObjectOfType<MusicManager>();
 			mc.SwitchTrack(newTrack);
 			this.gameObject.SetActive(false);
 		}

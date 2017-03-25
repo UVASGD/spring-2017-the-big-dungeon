@@ -853,7 +853,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1661494400287210}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 55.97, y: -29.29, z: 0}
+  m_LocalPosition: {x: 55.717, y: -29.251, z: 0}
   m_LocalScale: {x: 0.51250017, y: 0.32500127, z: 1}
   m_Children: []
   m_Father: {fileID: 4225893782833170}
@@ -921,7 +921,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1684350866186894}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 57.63, y: -29.28, z: 0}
+  m_LocalPosition: {x: 57.68, y: -29.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4937925370206628}
@@ -3885,7 +3885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dbc7a951beca4825b8bfce0ff22dfa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newTrack: 1
+  newTrack: 2
   switchOnStart: 0
 --- !u!114 &114197678189610670
 MonoBehaviour:
@@ -3934,7 +3934,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d78708c4e0c28b4293641b6e9e9acbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   warpTarget: {fileID: 0}
   targetRoom: {fileID: 0}
 --- !u!114 &114259593371953664
