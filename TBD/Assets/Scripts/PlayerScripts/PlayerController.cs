@@ -137,6 +137,7 @@ public class PlayerController : MonoBehaviour {
 			timer = 0;
         }
         //Kill Yourself Instantly. Game Over Testing
+		/*
         if (Input.GetKeyDown(KeyCode.M) && alive)
         {
             foreach (BaseStat s in stats)
@@ -147,7 +148,7 @@ public class PlayerController : MonoBehaviour {
                 }
             }
             Debug.Log(getCurrentStatValue("HP") + "");
-        }
+        }*/
 
         if (getCurrentStatValue("HP") <= 0 && alive)
         {

@@ -39,16 +39,16 @@ public class MusicManager : MonoBehaviour {
 			debug("IN HERE");
 			switch (buildIndex) {
 				case 0:
-					currentTrack = 2;
+					currentTrack = 0;
 					break;
 				case 1:
-					currentTrack = 0;
+					currentTrack = 6;
 					break;
 				case 2:
 					currentTrack = 4;
 					break;
 				default:
-					currentTrack = 0;
+					currentTrack = 6;
 					break;
 			}
 		}
@@ -78,6 +78,7 @@ public class MusicManager : MonoBehaviour {
 	}
 
 	public void SwitchTrack(int requestedTrack, float requestedFadeOutSpeed = 0.4f, float requestedFadeInSpeed = 0.2f) {
+		Debug.Log("called now");
 		//Debug.Log("Calling SwitchTrack from: " + new System.Diagnostics.StackTrace().GetFrame(1).GetMethod().Name);
 		debug("Is a new track playing? " + newTrackPlaying);
 		debug("Is it fading? " + isFading);

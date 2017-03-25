@@ -1,0 +1,2 @@
+﻿start:
+	{setnpc:Save Point Help}{fast}That must've been one big tree!{endspeed}{slow} You can save your current point by interacting with the stump.

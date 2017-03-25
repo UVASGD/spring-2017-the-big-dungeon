@@ -1,0 +1,2 @@
+﻿start:
+	{setnpc:End of Demo}{fast}Sorry but the Forest is closed for further construction!{endspeed}{slow} Thanks for checking out the demo!

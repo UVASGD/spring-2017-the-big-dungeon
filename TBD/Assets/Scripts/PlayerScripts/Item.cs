@@ -114,4 +114,8 @@ using System;
 				return false;
 			return this.name.Equals(i.name);
 		}
-	}
+
+		public override int GetHashCode() {
+			return this.name.GetHashCode();
+		}
+}

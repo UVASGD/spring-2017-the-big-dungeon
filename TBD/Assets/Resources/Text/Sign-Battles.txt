@@ -1,0 +1,2 @@
+﻿start:
+	{setnpc:Battles Help}{fast}LOOK OUT! Battles ahead!{endspeed}{slow} You better be ready for some action!

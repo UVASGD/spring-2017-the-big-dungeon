@@ -30,7 +30,7 @@ public class CutsceneManager : MonoBehaviour
 	{
 		cameraManager = FindObjectOfType<CameraManager>();
 		player = FindObjectOfType<PlayerController> ();
-        dMan = FindObjectOfType<DialogueManager>();
+		dMan = FindObjectOfType<DialogueManager>();
 
         this.boxTop = this.cutsceneTop.GetComponent<RectTransform>();
         this.boxBottom = this.cutsceneBottom.GetComponent<RectTransform>();
@@ -62,8 +62,10 @@ public class CutsceneManager : MonoBehaviour
 
         cameraManager.freeze = true;
 		player.frozen = true;
-         
-        this.cutsceneBarSpeed = 1f;
+		player.gameObject.GetComponent<Animator>().SetFloat("input_x", 0);
+		player.gameObject.GetComponent<Animator>().SetFloat("input_y", -1);
+
+		this.cutsceneBarSpeed = 1f;
         this.startTime = Time.time;
         this.topPosition = this.boxTop.position;
         this.bottomPosition = this.boxBottom.position;

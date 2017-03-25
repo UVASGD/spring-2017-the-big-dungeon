@@ -40,6 +40,7 @@ public class BuyMenuUI : MonoBehaviour
     private PauseMenuUI pauseMenu;
     private InventoryUI inventoryMenu;
 	private PlayerStatsUI statsMenu;
+	private bool waitFrame = false;
 
 	// Use this for initialization
 	void Start()
@@ -107,26 +108,31 @@ public class BuyMenuUI : MonoBehaviour
         updateMoney();
     }
 
+	public void toggleBuyMenu() {
+		waitFrame = true;
+		sellObject.turnOff();
+		inventoryMenu.turnOff();
+		statsMenu.turnOff();
+		pauseMenu.OptionsClose();
+		pauseMenu.exitMenu();
+		updateMoney();
+		toggle();
+		updateDetails();
+	}
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        /*if (Input.GetKeyDown(KeyCode.G))
         {
-            sellObject.turnOff();
-            inventoryMenu.turnOff();
-			statsMenu.turnOff();
-			pauseMenu.OptionsClose();
-            pauseMenu.exitMenu();
-			updateMoney ();
-            toggle();
-            updateDetails();
-        }
+			toggleBuyMenu;
+        }*/
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             turnOff();
         }
         //If Shop is pulled up and not asking for confirmation
-        if (isActive && !isConfirmationActive && !quantityAsked)
+        if (isActive && !isConfirmationActive && !quantityAsked && !waitFrame)
         {
             //Continue up list of items
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
@@ -166,7 +172,7 @@ public class BuyMenuUI : MonoBehaviour
                 }
             }
             //select an item
-            else if (Input.GetKeyDown(KeyCode.Space))
+            else if (Input.GetKeyDown(KeyCode.Space) && !waitFrame)
             {
                 if (shopInventory[itemIndex].quantity == 1)
                 {
@@ -199,7 +205,7 @@ public class BuyMenuUI : MonoBehaviour
                 }
                 updateQuantity();
             }
-            else if (Input.GetKeyDown(KeyCode.Space))
+            else if (Input.GetKeyDown(KeyCode.Space) && !waitFrame)
             {
                 quantityAsked = false;
                 quantityBackground.SetActive(false);
@@ -230,7 +236,7 @@ public class BuyMenuUI : MonoBehaviour
                 }
 
             }
-            else if (Input.GetKeyDown(KeyCode.Space))
+            else if (Input.GetKeyDown(KeyCode.Space) && !waitFrame)
             {
                 //if hovering over "yes". Edit player's inventory, shop's inventory and indices and gui information
                 if (isYes)
@@ -317,12 +323,13 @@ public class BuyMenuUI : MonoBehaviour
         //if player didn't have enough money
         else if (isActive)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && !waitFrame)
             {
                 denialBackground.SetActive(false);
                 isDenied = false;
             }
         }
+		waitFrame = false;
     }
 
     //Updates the details window

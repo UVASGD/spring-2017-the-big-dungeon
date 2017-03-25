@@ -53,6 +53,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4770523641005870}
   - component: {fileID: 82613590865580092}
+  - component: {fileID: 114037359978107222}
   m_Layer: 0
   m_Name: 7_town_theme (looped)
   m_TagString: Untagged
@@ -237,6 +238,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4248940723437334}
   - component: {fileID: 82905902437931620}
+  - component: {fileID: 114400570257191486}
   m_Layer: 0
   m_Name: 6_once_upon_a_time
   m_TagString: Untagged
@@ -1571,6 +1573,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &114037359978107222
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1256765297409172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85b305306ac504b1e9921d8c86601498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultAudio: 1
 --- !u!114 &114062500639542536
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1625,6 +1639,18 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1271761923827588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85b305306ac504b1e9921d8c86601498, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultAudio: 1
+--- !u!114 &114400570257191486
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1650166011053606}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85b305306ac504b1e9921d8c86601498, type: 3}

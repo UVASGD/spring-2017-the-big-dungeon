@@ -4,56 +4,56 @@ using UnityEngine;
 
 public class ScreenFader : MonoBehaviour {
 
-    Animator anim;
-    bool isFading = false;
-	bool initialized = false;
+    private Animator anim;
+    public bool isFading = false;
+	private bool initialized = false;
 
 	// Use this for initialization
 	void Start () {
+		Debug.Log("Started fader");
         anim = GetComponent<Animator>();
 		initialized = true;
+		isFading = true;
 	}
-	
+
 	public IEnumerator Wait(float duration) {
 		yield return new WaitForSeconds(duration);
 		CutBlackOut();
 	}
 
-    public IEnumerator FadeToClear() {
+    public void FadeToClear() {
 		if (!initialized) {
 			Start();
 		}
 		isFading = true;
         anim.SetTrigger("FadeIn");
-        while (isFading)
-            yield return null;
     }
 
-    public IEnumerator FadeToBlack() {
+    public void FadeToBlack() {
 		if (!initialized) {
 			Start();
 		}
 		isFading = true;
-        anim.SetTrigger("FadeOut");
-        while (isFading)
-            yield return null;
-    }
+		anim.SetTrigger("FadeOut");
+	}
 
 	public void BlackOut() {
 		if (!initialized) {
 			Start();
 		}
-		anim.SetBool("BlackOut", true);
+		this.anim.SetBool("BlackOut", true);
 	}
 
 	public void CutBlackOut() {
 		if (!initialized) {
 			Start();
 		}
-		anim.SetBool("BlackOut", false);
+		this.anim.SetBool("BlackOut", false);
 	}
 
 	void AnimationComplete() {
+		Debug.Log("animation complete");
         isFading = false;
     }
+
 }

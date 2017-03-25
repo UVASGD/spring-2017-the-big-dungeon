@@ -1,0 +1,2 @@
+﻿start:
+	{setnpc:Pause Menu Help}{fast}Look at that UI though...{endspeed}{slow} You can open up your pause menu with ENTER
