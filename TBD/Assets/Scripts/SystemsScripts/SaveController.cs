@@ -153,6 +153,7 @@ public class SaveController : MonoBehaviour {
 				PlayerStatsUI ps = FindObjectOfType<PlayerStatsUI>();
 				if (ps != null)
 					ps.updateName(currentName);
+				player.GetComponent<PlayerController> ().stats = s.playerStats;
 				player.transform.position = new Vector2(s.x, s.y);
 				inventory.items = s.inventory;
 				inventory.money = s.money;
@@ -170,6 +171,7 @@ public class SaveController : MonoBehaviour {
 		SaveData s = new SaveData();
 		if (!isNew) {
 			s.playerName = currentName;
+			s.playerStats = player.GetComponent<PlayerController>().stats;
 			s.x = player.transform.position.x;
 			s.y = player.transform.position.y;
 			s.inventory = inventory.items;
@@ -187,6 +189,7 @@ public class SaveController : MonoBehaviour {
 			s.money = 0;
 			s.level = 0;
 			s.newGame = true;
+			s.playerStats = null;
 		}
 		return s;
 	}
@@ -342,6 +345,7 @@ public class SaveData {
 	[SerializeField]
 	public string playerName;
 	public bool newGame;
+	public List<BaseStat> playerStats;
 
 	public static SaveData deepCopy(SaveData s) {
 		SaveData temp = new SaveData();
@@ -355,6 +359,7 @@ public class SaveData {
 		temp.money = s.money;
 		temp.level = s.level;
 		temp.newGame = s.newGame;
+		temp.playerStats = s.playerStats;
 		return temp;
 	}
 
