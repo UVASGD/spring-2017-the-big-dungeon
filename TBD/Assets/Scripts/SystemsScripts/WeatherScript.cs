@@ -12,12 +12,19 @@ public class WeatherScript : MonoBehaviour {
     public float myRate = 100f;
     private bool isRaining, isSnowing, isFogging;
     private List<AudioSource> sounds;
+    private List<SpriteRenderer> sprites;
+    private List<MeshRenderer> renderers;
+    public float brightness = 0.5f;
 	// Use this for initialization
 	void Start () {
         //Get Needed Objects
         sounds = new List<AudioSource>();
         player = FindObjectOfType<PlayerController>();
         sounds.AddRange(GetComponentsInChildren<AudioSource>());
+        sprites = new List<SpriteRenderer>();
+        sprites.AddRange(FindObjectsOfType<SpriteRenderer>());
+        renderers = new List<MeshRenderer>();
+        renderers.AddRange(FindObjectsOfType<MeshRenderer>());
         rainController = transform.GetChild(0).gameObject;
         fogController = transform.GetChild(1).gameObject;
         snowController = transform.GetChild(2).gameObject;
@@ -52,6 +59,15 @@ public class WeatherScript : MonoBehaviour {
         for (int i = 0; i < sounds.Count; i++)
         {
             sounds[i].Stop();
+        }
+
+        for (int i = 0; i < sprites.Count; i++)
+        {
+            sprites[i].color = new Color(sprites[i].color.r * brightness, sprites[i].color.g * brightness, sprites[i].color.b * brightness);
+        }
+        for (int i = 0; i < renderers.Count; i++)
+        {
+            renderers[i].material.color = new Color(renderers[i].material.color.r * brightness, renderers[i].material.color.g * brightness, renderers[i].material.color.b * brightness);
         }
 
     }
@@ -142,4 +158,15 @@ public class WeatherScript : MonoBehaviour {
     {
         fogEmissionModule.rateOverTime = new ParticleSystem.MinMaxCurve(newRate);
     }
+    public void updateBrightness(float newNum)
+    {
+        for (int i = 0; i < sprites.Count; i++)
+        {
+            sprites[i].color = new Color(sprites[i].color.r * newNum, sprites[i].color.g * newNum, sprites[i].color.b * newNum);
+        }
+        for (int i = 0; i < renderers.Count; i++)
+        {
+            renderers[i].material.color = new Color(renderers[i].material.color.r * newNum, renderers[i].material.color.g * newNum, renderers[i].material.color.b * newNum);
+        }
+    } 
 }
