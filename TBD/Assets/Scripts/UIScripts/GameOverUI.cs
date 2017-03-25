@@ -11,12 +11,12 @@ public class GameOverUI : MonoBehaviour {
     private SaveController save;
     ScreenFader sf;
     private GameObject arrow;
-    private GameObject gameOver;
-    public Vector2 offset = new Vector2(-500f, 177f);
+    public Vector2 offset = new Vector2(-400f, 130f);
     private int index = 0;
 
     // Use this for initialization
     void Start () {
+        Debug.Log("Start");
         player = FindObjectOfType<PlayerController>();
         save = FindObjectOfType<SaveController>();
         gameObject.SetActive(isActive);
@@ -33,10 +33,7 @@ public class GameOverUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(!player.alive)
-        {
-            Debug.Log("I AM DEAD!!!");
-        }
+        
         if (!player.alive && !isActive)
         {
             isActive = true;
@@ -74,7 +71,8 @@ public class GameOverUI : MonoBehaviour {
                 switch (index)
                 {
                     case 0:
-                        save.LoadFrom("default");
+                        save.LoadFromSlot(save.getCurrentSlot());
+                        gameObject.SetActive(false);
                         break;
                     case 1:
                         exitConfirm();
@@ -89,5 +87,20 @@ public class GameOverUI : MonoBehaviour {
         // Could break a lot of stuff switching between scenes
         SceneManager.LoadScene(0);
         gameObject.SetActive(false);
+    }
+
+    public void setActive()
+    {
+        if (!player.alive && !isActive)
+        {
+            isActive = true;
+            gameObject.SetActive(isActive);
+            player.frozen = true;
+            Debug.Log("Death Screen");
+            if (sf != null)
+            {
+                sf.BlackOut();
+            }
+        }
     }
 }
