@@ -11,6 +11,7 @@ public class BattleMenu : MonoBehaviour
     public Button defendText;
     public Button runText;
     public Text hpText;
+	public Text hpMaxText;
 	public Text nameText;
 
     private Canvas mainMenu;
@@ -26,10 +27,12 @@ public class BattleMenu : MonoBehaviour
         defendText = defendText.GetComponent<Button>();
         runText = runText.GetComponent<Button>();
         hpText = hpText.GetComponent<Text>();
+		hpMaxText = hpMaxText.GetComponent<Text>();
 		nameText = nameText.GetComponent<Text> ();
 
 		player = FindObjectOfType<PlayerController> ();
 		hpText.text = "" + player.getCurrentStatValue ("HP");
+		hpMaxText.text = "" + player.getCurrentStatValue ("HP");
 		nameText.text = player.getPlayerName ();
 
         mainMenu.enabled = true;

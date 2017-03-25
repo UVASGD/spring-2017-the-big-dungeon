@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   frozen: 0
-  debugOn: 0
+  debugOn: 1
   playerStepSounds: []
   inMenu: 0
   talking: 0
