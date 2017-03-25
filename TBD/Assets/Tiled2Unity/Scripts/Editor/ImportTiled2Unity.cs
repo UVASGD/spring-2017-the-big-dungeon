@@ -99,11 +99,14 @@ namespace Tiled2Unity
             string filter = String.Format("t:material {0}", name);
             string folder = this.assetPathToTiled2UnityRoot + "/Materials";
             string[] files = AssetDatabase.FindAssets(filter, new string[] { folder });
-            if (files.Length > 0)
+            foreach (var f in files)
             {
-                return AssetDatabase.GUIDToAssetPath(files[0]);
+                string assetPath = AssetDatabase.GUIDToAssetPath(f);
+                if (String.Compare(Path.GetFileNameWithoutExtension(assetPath), name, true) == 0)
+                {
+                    return assetPath;
+                }
             }
-
             return "";
         }
 

@@ -360,4 +360,12 @@ public class MainMenuUI : MonoBehaviour {
 		creditsText.enabled = false;
 		exitText.enabled = false;
 	}
+
+	public void deleteSaves() {
+		sc.deleteSave("slot1");
+		sc.deleteSave("slot2");
+		sc.deleteSave("slot3");
+		refreshSaveFilesUI();
+		refreshContFilesUI();
+	}
 }

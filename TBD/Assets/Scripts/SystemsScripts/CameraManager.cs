@@ -16,6 +16,8 @@ public class CameraManager : MonoBehaviour {
 
 	public bool freeze { get; set; }
 
+	public float scalefactor;
+
 	// Use this for initialization
 	void Start () {
 		this.freeze = false;
@@ -25,7 +27,6 @@ public class CameraManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        float scalefactor = 4.5f;
 		mycam.orthographicSize = (Screen.height / 100f) / scalefactor;
 		if(target == null) {
 			target = FindObjectOfType<PlayerController> ().transform;
