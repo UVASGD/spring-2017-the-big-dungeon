@@ -1,0 +1,22 @@
+
+Programming
+Issues on Github
+Bug Fixes
+Comments!!
+
+Art
+Dinosaur
+Catfish
+Random Enemies
+Random Townspeople (more wacky/less human)
+
+Music
+Enemy Encounter/Damage/Attack Sounds
+Shop Theme
+Main Menu Theme
+
+Writing/Design
+Finalize Combat Mechanic
+Design Forest Level
+Cement Final Story
+Ending Discussion
