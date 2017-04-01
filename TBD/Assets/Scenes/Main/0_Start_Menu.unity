@@ -1346,7 +1346,7 @@ Prefab:
     - target: {fileID: 224930325373196052, guid: fcdae1246f1f832459c984acd0b37b35,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 928
+      value: 2689.0378
       objectReference: {fileID: 0}
     - target: {fileID: 224930325373196052, guid: fcdae1246f1f832459c984acd0b37b35,
         type: 2}
@@ -1366,7 +1366,7 @@ Prefab:
     - target: {fileID: 224412349645324718, guid: fcdae1246f1f832459c984acd0b37b35,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 1048
+      value: 2809.0378
       objectReference: {fileID: 0}
     - target: {fileID: 224412349645324718, guid: fcdae1246f1f832459c984acd0b37b35,
         type: 2}
@@ -1396,7 +1396,7 @@ Prefab:
     - target: {fileID: 224155874540446562, guid: fcdae1246f1f832459c984acd0b37b35,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 446
+      value: 909.75946
       objectReference: {fileID: 0}
     - target: {fileID: 224155874540446562, guid: fcdae1246f1f832459c984acd0b37b35,
         type: 2}
@@ -1406,7 +1406,7 @@ Prefab:
     - target: {fileID: 224155874540446562, guid: fcdae1246f1f832459c984acd0b37b35,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 892
+      value: 1819.5189
       objectReference: {fileID: 0}
     - target: {fileID: 224155874540446562, guid: fcdae1246f1f832459c984acd0b37b35,
         type: 2}
@@ -1426,7 +1426,7 @@ Prefab:
     - target: {fileID: 224923756453427458, guid: fcdae1246f1f832459c984acd0b37b35,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 970
+      value: 2314.2783
       objectReference: {fileID: 0}
     - target: {fileID: 224923756453427458, guid: fcdae1246f1f832459c984acd0b37b35,
         type: 2}
@@ -1436,7 +1436,7 @@ Prefab:
     - target: {fileID: 224923756453427458, guid: fcdae1246f1f832459c984acd0b37b35,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 156
+      value: 989.5189
       objectReference: {fileID: 0}
     - target: {fileID: 224923756453427458, guid: fcdae1246f1f832459c984acd0b37b35,
         type: 2}
