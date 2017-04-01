@@ -28,6 +28,8 @@ public class RandomEncounter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		player = FindObjectOfType<PlayerController> ().gameObject;
+		playerAnim = player.GetComponent<Animator> ();
 		if (playerWithin && playerAnim.GetBool("is_walking") && !cooldown) {
 			checkEncounter ();
 		}

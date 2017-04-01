@@ -104,6 +104,7 @@ public class BattleManager : MonoBehaviour
 		SceneManager.LoadScene (1);
 		music.SwitchTrack(0);
 		this.inBattle = false;
+		player.frozen = false;
 		FindObjectOfType<SaveController> ().WriteFromData (this.tempSave);
     }
 
