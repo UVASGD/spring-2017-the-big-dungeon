@@ -53,11 +53,19 @@ public class InventoryManager : MonoBehaviour
 			Item armor = new Item ("Basic Armor", "Adds defense and hp", new List<string>{ "str:+0", "def:+1", "hp:10" }, 1, 30, false, Item.ItemType.Body);
 			Item stronk = new Item ("Stronkifier", "Makes Stronk-er", new List<string>{ "str:+10" }, 4, 100, true, Item.ItemType.Consumable);
 			Item secondArmor = new Item ("Advanced Armor", "Adds more defense and hp", new List<string> {"str:+0","def:+2","hp:20"}, 1, 60, false, Item.ItemType.Body);
+			Item hat = new Item ("Top Hat", "Fancy", new List<string> (), 2, 10, false, Item.ItemType.Hat);
+			Item hat2 = new Item ("Bottom Hat", "Just The Worst", new List<string> (), 1, 10, false, Item.ItemType.Hat);
+			Item weapon = new Item ("Longsword", "83 feet long", new List<string> (){ "str:+300" }, 1, 1000, false, Item.ItemType.Weapon);
+			Item weapon2 = new Item ("Shield", "Made of wood", new List<string> (){ "def:+10" }, 1, 1000, false, Item.ItemType.Weapon);
 			addItem(it1);
 			addItem(it2);
 			addItem(armor);
 			addItem (stronk);
 			addItem (secondArmor);
+			addItem (hat);
+			addItem (hat2);
+			addItem (weapon);
+			addItem (weapon2);
 			//addItem(weapon);
 		}
 	}
@@ -146,6 +154,7 @@ public class InventoryManager : MonoBehaviour
 	}
 
 	public bool equip(Item item) {
+		PlayerStatsUI ps = FindObjectOfType<PlayerStatsUI> ();
 		if (items.Contains (item)) {
 			Item currentItem = items[items.IndexOf(item)];
 			switch (currentItem.type) {
@@ -159,6 +168,7 @@ public class InventoryManager : MonoBehaviour
 				//inventoryMenu.exitInfoMenu ();
 				destroyItem (currentItem, 1);
 				inventoryMenu.updateItemQuantityUI (currentItem);
+				ps.addEquipment (item);
 				return true;
 			case Item.ItemType.Body:
 				if (curBody != null) {
@@ -170,6 +180,7 @@ public class InventoryManager : MonoBehaviour
 				inventoryMenu.exitInfoMenu ();
 				destroyItem (currentItem, 1);
 				inventoryMenu.updateItemQuantityUI (currentItem);
+				ps.addEquipment (item);
 				return true;
 			case Item.ItemType.Weapon:
 				if (curWeapon != null) {
@@ -181,6 +192,7 @@ public class InventoryManager : MonoBehaviour
 				//inventoryMenu.exitInfoMenu ();
 				destroyItem (currentItem, 1);
 				inventoryMenu.updateItemQuantityUI (currentItem);
+				ps.addEquipment (item);
 				return true;
 			//If new equipment cases, add here!
 			default:
@@ -274,6 +286,7 @@ public class InventoryManager : MonoBehaviour
 		if (i != null && i.type == Item.ItemType.Hat) {
 			i.apply ();
 			curHat = i;
+			FindObjectOfType<PlayerStatsUI> ().addEquipment (i);
 		}
 	}
 	public void setBody(Item i) {
@@ -283,6 +296,7 @@ public class InventoryManager : MonoBehaviour
 		if (i != null && i.type == Item.ItemType.Body) {
 			i.apply ();
 			curBody = i;
+			FindObjectOfType<PlayerStatsUI> ().addEquipment (i);
 		}
 	}
 	public void setWeapon(Item i) {
@@ -292,6 +306,7 @@ public class InventoryManager : MonoBehaviour
 		if (i != null && i.type == Item.ItemType.Weapon) {
 			i.apply ();
 			curWeapon = i;
+			FindObjectOfType<PlayerStatsUI> ().addEquipment (i);
 		}
 	}
 }

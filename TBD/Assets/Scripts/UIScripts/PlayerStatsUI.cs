@@ -90,6 +90,40 @@ public class PlayerStatsUI : MonoBehaviour {
 		newStat.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
 	}
 
+	public void addEquipment(Item i) {
+		bool didAdd = false;
+		string itemType = "Wrong";
+		switch (i.type) {
+		case Item.ItemType.Hat:
+			itemType = "Hat";
+			break;
+		case Item.ItemType.Body:
+			itemType = "Body";
+			break;
+		case Item.ItemType.Weapon:
+			itemType = "Weapon";
+			break;
+		}
+		foreach (Transform child in statPanel.transform) {
+			Text statText = child.GetComponent<Text>();
+			string[] textBits = statText.text.Split (new char[]{ ':' });
+			if (textBits [0].Trim () == itemType) {
+				statText.text = " " + itemType + ": " + i.name;
+				didAdd = true;
+			}
+		}
+
+		//If it is an equipment, but was not updated, then we need to add a new element to the UI
+		if ((i.type == Item.ItemType.Hat || i.type == Item.ItemType.Body || i.type == Item.ItemType.Weapon) && !didAdd) {
+			GameObject newStat = Instantiate(blankStat, blankStat.transform.position, blankStat.transform.rotation);
+			newStat.SetActive(true);
+			Text newText = newStat.GetComponent<Text>();
+			newText.text = " " + itemType + ": " + i.name;
+			newStat.transform.SetParent(blankStat.transform.parent);
+			newStat.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+		}
+	}
+
 	void debug(string line) {
 		if (debugOn) {
 			Debug.Log(line);
