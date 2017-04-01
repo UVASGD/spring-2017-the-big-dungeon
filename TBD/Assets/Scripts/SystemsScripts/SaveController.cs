@@ -158,7 +158,6 @@ public class SaveController : MonoBehaviour {
 				player.transform.position = new Vector2(s.x, s.y);
 				inventory.items = s.inventory;
 				inventory.money = s.money;
-				player.GetComponent<PlayerController> ().startStats ();
 				inventory.setHat (curData.hat);
 				inventory.setBody (curData.body);
 				inventory.setWeapon (curData.weapon);
