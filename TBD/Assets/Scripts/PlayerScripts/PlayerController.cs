@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour {
 				timer = 0;
 			}
 
-			rbody.MovePosition(rbody.position + (movement_vector * Time.deltaTime));
+			rbody.velocity = movement_vector;
 		}
 		if (frozen) {
 			anim.SetBool("is_walking", false);
