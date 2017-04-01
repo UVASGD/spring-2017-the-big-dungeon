@@ -7,18 +7,32 @@ using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour {
 
+	// Links to our objects
     public GameObject dBox;
     public Image dFace;
     public Text dName;
 
-    public Text dText;
-    private string currentLine;
-    enum Speed { Regular, Drag, Slow, Fast, Hyper, Instant };
-    private Dictionary<int, Speed> dialogueSpeed = new Dictionary<int, Speed>();
-    private Coroutine ulHolder;
-    private const double dialogueBaseSpeed = 0.05;
+	public PlayerController player;
+	private NPCManager npcManager;
+	private InventoryManager inventoryManager;
 
-    public PlayerController player;
+	// Dialogue text
+    public Text dText;
+
+	private Coroutine ulHolder;
+
+	// Buffer for the current printed text
+    private string currentLine;
+
+	// Possible dialogue speeds (these are modifiers on the base speed
+    enum Speed { Regular, Drag, Slow, Fast, Hyper, Instant };
+	private const double dialogueBaseSpeed = 0.05;
+
+	// This lets us know when we should switch the speed
+    private Dictionary<int, Speed> dialogueSpeed = new Dictionary<int, Speed>();
+   
+
+	// These variables come from the DialogueHolder
     public bool dialogueActive = false;
 	public List<string> dialogueLines;
 	public Dictionary<string, int> dialogueLabels;
@@ -27,14 +41,19 @@ public class DialogueManager : MonoBehaviour {
 	public bool hasDialogueStateBeenSet = false;
 	private bool dialogueEnd;
     private bool dialogueDuringOutput;
+
     private DialogueHolder caller;
-    private NPCManager npcManager;
-	private InventoryManager inventoryManager;
+    
     private int x;
 
+	// Used for NPC face sprite and name
     public string characterName;
     public Sprite faceSprite;
 
+	/*
+	 * If we're in a cutscene, we should have access to some special
+	 * commands, like moving NPCS, moving the player, and moving the camera
+	*/
     public bool isCutscene = false;
 
     // Use this for initialization
@@ -53,7 +72,6 @@ public class DialogueManager : MonoBehaviour {
 
                 // Check if we're in the process of writing out a dialogue line
                 // If so, just finish the current line
-
                 if (this.dialogueDuringOutput)
                 {
                     if (this.ulHolder != null)
@@ -67,6 +85,7 @@ public class DialogueManager : MonoBehaviour {
 
                 } else if (dialogueState >= dialogueLines.Count || dialogueEnd)
                 {
+					// End the dialogue
                     this.dialogueActive = false;
                     this.dialogueEnd = false;
                     dBox.SetActive(false);
@@ -86,6 +105,7 @@ public class DialogueManager : MonoBehaviour {
                         this.caller = null;
                     }
 
+					// Null out all our objects
                     this.dFace.sprite = null;
                     this.dName.text = "";
                     this.faceSprite = null;
@@ -105,6 +125,7 @@ public class DialogueManager : MonoBehaviour {
 
                 } else
                 {
+					// Parse the current line of dialogue
                     ParseDialogueLine(this.dialogueState);
                 }
             }
@@ -122,6 +143,8 @@ public class DialogueManager : MonoBehaviour {
         this.dialogueDuringOutput = true;
 
         int pos = 0;
+
+		// Iterate through our input line to parse script commands
 		while (pos < line.Length) {
 			int start = line.IndexOf ("{", pos);
 			if (start == -1) {
@@ -138,6 +161,7 @@ public class DialogueManager : MonoBehaviour {
                 // Process the token string
                 string tokencmd = tokenstr.Split(new Char[] { ':' })[0].ToLower();
 
+				// These are the various dialogue commands
                 switch (tokencmd)
 				{
 				    case "end":
@@ -168,7 +192,7 @@ public class DialogueManager : MonoBehaviour {
 					case "hasitem":
 						/*
 						 * This has a two part argument -- first part is the item name,
-						 * and the second part is the label we jump to
+						 * and the second part is the label we jump to if the player has it
 						*/
 
 						if (this.inventoryManager.hasItem (tokenstr.Split (new Char[] { ':' }) [1])) {
@@ -177,7 +201,11 @@ public class DialogueManager : MonoBehaviour {
 						}
 						
 						break;
+
                     case "setnpc":
+						/* Changes the NPC we are talking to -- could be useful if you want
+						 * to talk to multiple people at once in a cutscene
+						*/
                         NPC npc = npcManager.getNPC(tokenstr.Split(new Char[] { ':' })[1]);
                         dFace.sprite = npc.npcSprite;
                         dName.text = npc.npcName;
@@ -188,16 +216,17 @@ public class DialogueManager : MonoBehaviour {
 			}
 		}
 
-        // Increment the line unless we called goto
+        // Increment the line, unless we are jumping to another line
         if (shouldIncrementDialogState)
         {
             this.dialogueState++;
         }
 
-        // Update the actual dialogue line
+        // Update the actual dialogue line onscreen
         UpdateDialogueLine(ret);
 	}
 
+	// This is called by the coroutine
     IEnumerator DisplayDialogueLine()
     {
         double currentSpeed = dialogueBaseSpeed;
@@ -208,6 +237,7 @@ public class DialogueManager : MonoBehaviour {
 
             if (this.dialogueSpeed.ContainsKey(x))
             {
+				// Dialogue speed modifiers
                 switch(this.dialogueSpeed[x])
                 {
                     case Speed.Drag:
@@ -266,6 +296,7 @@ public class DialogueManager : MonoBehaviour {
 
     }
 
+	// Just call the coroutine to update the line
     public void UpdateDialogueLine(string line)
     {
         if (this.ulHolder != null)
@@ -278,6 +309,10 @@ public class DialogueManager : MonoBehaviour {
         this.ulHolder = StartCoroutine(DisplayDialogueLine());
     }
 
+	/*
+	 * Trigger the start of dialogue -- if this is called, we already
+	 * have a lot of local fields set by the DialogueHolder object
+	*/
     public void ShowDialogue(DialogueHolder caller)
     {
         this.dialogueActive = true;
