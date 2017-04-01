@@ -5,24 +5,32 @@ using System;
 
 public class PlayerController : MonoBehaviour {
 
+	//To keep track of our instance between scenes
 	public static PlayerController instance = null;
 
+	//References for various things we need to interact with
 	private SFXManager sfxMan;
 	private Animator anim;
 	private Rigidbody2D rbody;
 	private CameraManager cam;
 
+	//true if player is locked into place; false if not.
 	public bool frozen = false;
+	//Enable debug.logs
 	public bool debugOn = false;
 
+	//Sounds for walking
 	public AudioSource[] playerStepSounds;
 
+	//Arbitrary speeds
     private float currentSpeed = 2.5f;
     private float normalSpeed = 2.5f;
     private float runSpeed = 4.0f;
     private float slowSpeed = 0.5f;
+
     // How often the step sound occurs
     private float stepInterval = 0.4f;
+	//Timer for steps
 	private float timer = 0.0f;
 	private AudioSource currentStep;
 
@@ -32,14 +40,18 @@ public class PlayerController : MonoBehaviour {
 	public bool talking = false;
     public bool alive = true;
 
+	//Current info
 	public List<BaseStat> stats = new List<BaseStat>();
     public int level = 1;
     public int currentExp = 0;
+
+	//References for menus
 	private PlayerStatsUI statsMenu;
     public GameObject gameoverMenu;
 
     private string playerName;
 
+	//Used to keep only 1 instance of PlayerController around; is called when a scene loads
 	private void Awake()
 	{
 		if (instance == null)
@@ -51,31 +63,40 @@ public class PlayerController : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
-	// Use this for initialization
-	void Start () {
 
+	// Called when object is created
+	void Start () {
+		//Changes quality setting so as to smooth movement
 		QualitySettings.vSyncCount = 0;
 
+		//Allows us to persist accross scenes
 		DontDestroyOnLoad (gameObject);
 
+		//Grabs some references
         anim = GetComponent<Animator>();
 		rbody = GetComponent<Rigidbody2D>();
 		sfxMan = FindObjectOfType<SFXManager>();
 		cam = FindObjectOfType<CameraManager>();
 		statsMenu = FindObjectOfType<PlayerStatsUI> ();
         debug(getCurrentStatValue("HP") + "");
+
+		//Initializes stats and stats UI
 		startStats ();
     }
 
+	//Initializes player's stats, and also adds these stats to the proper UI
 	public void startStats() {
 		statsMenu = FindObjectOfType<PlayerStatsUI> ();
-		BaseStat strength = new BaseStat ("str", 10, "Damage Dealt", -2);
+		BaseStat strength = new BaseStat ("str", 10, "Damage Dealt", -2); //Current 3 stats-- should be not hardcoded?? consider changing.
 		BaseStat defense = new BaseStat ("def", 11, "Damage Taken", 0);
 		BaseStat HP = new BaseStat ("HP", 12, "Health", 5);
 
+		//Adds to our stats
 		stats.Add(HP);
 		stats.Add(strength);
 		stats.Add(defense);
+
+		//Adds to UI
 		if (statsMenu != null) {
 			statsMenu.addStat(HP);
 			statsMenu.addStat(strength);
@@ -85,7 +106,9 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		//Only move if not frozen
 		if (!frozen) {
+			//Get direction
 			Vector2 movement_vector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized * currentSpeed;
 
         if (movement_vector != Vector2.zero) {
@@ -115,9 +138,12 @@ public class PlayerController : MonoBehaviour {
                     anim.speed = 1f;
                 }
 
+				//Since we're moving, set appropriate variables in animator
                 anim.SetBool("is_walking", true);
                 anim.SetFloat("input_x", movement_vector.x);
 				anim.SetFloat("input_y", movement_vector.y);
+
+				//Timer for steps
 				if (stepsOn)
 					timer += Time.deltaTime;
 
@@ -132,6 +158,7 @@ public class PlayerController : MonoBehaviour {
 				timer = 0;
 			}
 
+			//Set our velocity, so we move.
 			rbody.velocity = movement_vector;
 		}
 		if (frozen) {
@@ -151,7 +178,8 @@ public class PlayerController : MonoBehaviour {
             }
             Debug.Log(getCurrentStatValue("HP") + "");
         }*/
-
+		
+		//If necessary, Die
         if (getCurrentStatValue("HP") <= 0 && alive)
         {
             Debug.Log("Die Please!");
@@ -160,18 +188,25 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+	//Plays current step sound
 	void PlayNextSound() {
 		AudioSource lastStep = currentStep;
+
+		//Gets another random sound
 		while (currentStep == lastStep && playerStepSounds.Length > 1) {
 			currentStep = playerStepSounds[UnityEngine.Random.Range(0, playerStepSounds.Length)];
 		}
+
+		//stops last sound
 		if (lastStep != null)
             sfxMan.StopSFX(lastStep);
+		//plays new sound
         if (currentStep != null)
             sfxMan.PlaySFX(currentStep);
 
     }
 
+	//Getter / Setter for player name
 	public void updatePlayerName(string name) {
 		this.playerName = name;
 	}
@@ -180,6 +215,7 @@ public class PlayerController : MonoBehaviour {
 		return this.playerName;
 	}
 
+	//Checks for entering certain areas
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "map") {
 			cam.setCurrentRoom(other.gameObject);
@@ -197,6 +233,7 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	//Checks for exiting certain areas
 	void OnTriggerExit2D(Collider2D other) {
 		if (stepsOn) {
 			debug("Steps are on from exiting something");
@@ -204,6 +241,7 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	//Update walking noises to fit the area we are walking on
 	public void UpdateGround(AudioSource[] stepSounds) {
 		debug("Updating the current ground!");
 		if (playerStepSounds != null) {
@@ -216,12 +254,14 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
+	//For debuging purposes
 	void debug(string line) {
 		if (debugOn) {
 			Debug.Log(line);
 		}
 	}
 
+	//Getter / Setter for stats
 	public void setStatValue(string statName, int newValue) {
 		foreach (BaseStat s in stats) {
 			if (String.Compare(s.statName, statName) == 0) {
