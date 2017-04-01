@@ -163,6 +163,7 @@ public class PlayerController : MonoBehaviour {
 		}
 		if (frozen) {
 			anim.SetBool("is_walking", false);
+			rbody.velocity = new Vector2 (0f, 0f);
 			timer = 0;
         }
         //Kill Yourself Instantly. Game Over Testing

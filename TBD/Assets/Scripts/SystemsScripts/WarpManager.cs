@@ -40,7 +40,7 @@ public class WarpManager : MonoBehaviour {
 		if (timerOn) {
 			timer += Time.deltaTime;
 			if (timer > timerMax) {
-				player.gameObject.transform.position = warpTarget.position;
+				player.transform.position = warpTarget.transform.position;
 				Camera.main.transform.position = warpTarget.position;
 				Camera.main.GetComponent<CameraManager>().setCurrentRoom(targetRoom);
 				sf.FadeToClear();
@@ -53,8 +53,8 @@ public class WarpManager : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
+		sf = GameObject.FindGameObjectWithTag("Fader").GetComponent<ScreenFader>();
 		if (sf != null) {
-			sf = GameObject.FindGameObjectWithTag("Fader").GetComponent<ScreenFader>();
 			timerOn = true;
 			player = FindObjectOfType<PlayerController>();
 			player.frozen = true;
