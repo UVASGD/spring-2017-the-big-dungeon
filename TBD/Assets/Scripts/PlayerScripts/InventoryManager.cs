@@ -203,6 +203,22 @@ public class InventoryManager : MonoBehaviour
 		return false;
     }
 
+	public bool hasItem(String name) {
+		foreach (Item item in items) {
+			if (item.name == name) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public bool hasItem(Item item) {
+		if (items.Contains(item)) {
+			return true;
+		}
+		return false;
+	}
+
 	public int quantityItem(Item item) {
 		if (items.Contains(item)) {
 			Item currentItem = items[items.IndexOf(item)];

@@ -37,7 +37,6 @@ public class WarpManager : MonoBehaviour {
 	}
 
 	void Update() {
-		Debug.Log(timerOn);
 		if (timerOn) {
 			timer += Time.deltaTime;
 			if (timer > timerMax) {

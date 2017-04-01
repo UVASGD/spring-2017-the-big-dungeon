@@ -29,6 +29,7 @@ public class DialogueManager : MonoBehaviour {
     private bool dialogueDuringOutput;
     private DialogueHolder caller;
     private NPCManager npcManager;
+	private InventoryManager inventoryManager;
     private int x;
 
     public string characterName;
@@ -40,6 +41,7 @@ public class DialogueManager : MonoBehaviour {
     void Start()
     {
         player = FindObjectOfType<PlayerController>();
+		inventoryManager = FindObjectOfType<InventoryManager> ();
         dBox.SetActive(this.dialogueActive);
         npcManager = FindObjectOfType<NPCManager>();
     }
@@ -163,6 +165,18 @@ public class DialogueManager : MonoBehaviour {
                     case "endspeed":
                         this.dialogueSpeed[ret.Length] = Speed.Regular;
                         break;
+					case "hasitem":
+						/*
+						 * This has a two part argument -- first part is the item name,
+						 * and the second part is the label we jump to
+						*/
+
+						if (this.inventoryManager.hasItem (tokenstr.Split (new Char[] { ':' }) [1])) {
+							this.dialogueState = dialogueLabels[tokenstr.Split(new Char[] { ':' })[2]];
+							shouldIncrementDialogState = false;
+						}
+						
+						break;
                     case "setnpc":
                         NPC npc = npcManager.getNPC(tokenstr.Split(new Char[] { ':' })[1]);
                         dFace.sprite = npc.npcSprite;
