@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		QualitySettings.vSyncCount = 0;
+
 		DontDestroyOnLoad (gameObject);
 
         anim = GetComponent<Animator>();
