@@ -199,6 +199,8 @@ public class PauseMenuUI : MonoBehaviour {
 		if (sf != null) {
 			sf.BlackOut();
 		}
+		inExit = false;
+		toggleMenu ();
 		SceneManager.LoadScene(0);
 	}
 
