@@ -169,6 +169,7 @@ public class PauseMenuUI : MonoBehaviour {
 	}
 
 	void toggleMenu() {
+		player = FindObjectOfType<PlayerController> ();
 		isActive = !isActive;
 		debug(isActive + "");
 		pauseMenu.SetActive(isActive);
