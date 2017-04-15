@@ -1,9 +1,21 @@
 fileFormatVersion: 2
 guid: 0e2c2be7b3d892440bcb30bee406a444
-timeCreated: 1490455704
+timeCreated: 1492279546
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: swift sweepster-idle_0
+    21300002: swift sweepster-idle_1
+    21300004: swift sweepster-idle_2
+    21300006: swift sweepster-idle_3
+    21300008: swift sweepster-idle_4
+    21300010: swift sweepster-idle_5
+    21300012: swift sweepster-idle_6
+    21300014: swift sweepster-idle_7
+    21300016: swift sweepster-idle_8
+    21300018: swift sweepster-idle_9
+    21300020: swift sweepster-idle_10
+    21300022: swift sweepster-idle_11
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -34,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -58,9 +70,173 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: swift sweepster-idle_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 3
+        width: 47
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: swift sweepster-idle_1
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 3
+        width: 47
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: swift sweepster-idle_2
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 3
+        width: 47
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: swift sweepster-idle_3
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 3
+        width: 47
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: swift sweepster-idle_4
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 3
+        width: 47
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: swift sweepster-idle_5
+      rect:
+        serializedVersion: 2
+        x: 328
+        y: 3
+        width: 47
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: swift sweepster-idle_6
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 3
+        width: 46
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: swift sweepster-idle_7
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 3
+        width: 44
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: swift sweepster-idle_8
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 3
+        width: 44
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: swift sweepster-idle_9
+      rect:
+        serializedVersion: 2
+        x: 584
+        y: 3
+        width: 44
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: swift sweepster-idle_10
+      rect:
+        serializedVersion: 2
+        x: 648
+        y: 3
+        width: 44
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: swift sweepster-idle_11
+      rect:
+        serializedVersion: 2
+        x: 712
+        y: 3
+        width: 46
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
     outline: []
   spritePackingTag: 
   userData: 

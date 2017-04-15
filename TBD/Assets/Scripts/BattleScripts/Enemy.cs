@@ -14,9 +14,9 @@ public class Enemy
     public UInt64 defense { get; set; }
     public UInt64 initiative { get; set; }
 
-	public String sprite { get; set; }
+	public int sprite { get; set; } //The integer representing which animation state has this sprite. A bit hackish, sorry
 
-	public Enemy(string name, string description, Int64 hp, UInt64 strength, UInt64 defense, UInt64 initiative, String sprite)
+	public Enemy(string name, string description, Int64 hp, UInt64 strength, UInt64 defense, UInt64 initiative, int sprite)
     {
         this.name = name;
         this.description = description;
