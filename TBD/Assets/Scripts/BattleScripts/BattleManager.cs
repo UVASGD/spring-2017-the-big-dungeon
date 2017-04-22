@@ -85,8 +85,14 @@ public class BattleManager : MonoBehaviour
     {
         this.battleMenu = battleMenu;
 
+		this.battleMenu.enemySprite.GetComponent<Animator> ().SetInteger ("Enemy", enemies [0].sprite);
+		Debug.Log (enemies [0].sprite);
+
 		// Try to display the enemy sprite
-		this.battleMenu.enemySprite.sprite = Resources.Load<Sprite>(enemies[0].sprite);
+		//this.battleMenu.enemySprite.sprite = Resources.Load<Sprite>(enemies[0].sprite);
+		//Debug.Log ("Changed Sprite");
+		//RuntimeAnimatorController rac = (RuntimeAnimatorController)Resources.Load("animations/enemies/grock-idle_0");
+		//this.battleMenu.enemySprite.GetComponent<Animator> ().runtimeAnimatorController = Instantiate<RuntimeAnimatorController> (rac);
     }
 
     public void LoadBattleInfo(BattleInfo battleInfo)

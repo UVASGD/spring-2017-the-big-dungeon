@@ -18,7 +18,8 @@ public class SavePoint : MonoBehaviour {
 	void Update () {
 		if (withinRange) {
 			suic = FindObjectOfType<SaveMenuUI>();
-			if (Input.GetKeyDown (KeyCode.Space) && !suic.selection) {
+			PauseMenuUI pauseMenu = FindObjectOfType<PauseMenuUI> ();
+			if (Input.GetKeyDown (KeyCode.Space) && !suic.selection && !pauseMenu.isActive) {
 				suic.SetSelectionMenu (true);
 			}
 		}

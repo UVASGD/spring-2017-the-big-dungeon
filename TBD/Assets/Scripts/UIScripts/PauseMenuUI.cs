@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class PauseMenuUI : MonoBehaviour {
 
 	private GameObject pauseMenu;
-	private bool isActive = false;
+	public bool isActive = false;
 	private PlayerController player;
 	private GameObject arrow;
 	private int index = 0;
@@ -169,6 +169,7 @@ public class PauseMenuUI : MonoBehaviour {
 	}
 
 	void toggleMenu() {
+		player = FindObjectOfType<PlayerController> ();
 		isActive = !isActive;
 		debug(isActive + "");
 		pauseMenu.SetActive(isActive);
@@ -199,6 +200,8 @@ public class PauseMenuUI : MonoBehaviour {
 		if (sf != null) {
 			sf.BlackOut();
 		}
+		inExit = false;
+		toggleMenu ();
 		SceneManager.LoadScene(0);
 	}
 

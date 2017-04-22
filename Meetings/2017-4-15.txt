@@ -1,0 +1,22 @@
+
+Programming
+Issues on Github
+Bug Fixes
+Comments!!
+
+Art
+Dinosaur
+Catfish
+Random Enemies
+Random Townspeople (more wacky/less human)
+Background Art
+
+Music
+Interaction Sounds (Buttons, Panels, Objects, etc.)
+Shop Theme
+Main Menu Theme
+
+Writing/Design
+Design Forest Level
+Design Lake Level
+Design Final Level

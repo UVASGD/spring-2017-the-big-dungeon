@@ -219,6 +219,7 @@ public class PlayerController : MonoBehaviour {
 	//Checks for entering certain areas
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.tag == "map") {
+			cam = FindObjectOfType<CameraManager> ();
 			cam.setCurrentRoom(other.gameObject);
 		}
         if (stepsOn) {
