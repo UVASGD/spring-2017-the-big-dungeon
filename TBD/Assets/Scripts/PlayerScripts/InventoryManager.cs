@@ -202,6 +202,33 @@ public class InventoryManager : MonoBehaviour
 		return false;
 	}
 
+	public bool unEquipHat() {
+		if (curHat != null) {
+			curHat.unapply ();
+			addItem (curHat);
+			return true;
+		}
+		return false;
+	}
+
+	public bool unEquipBody() {
+		if (curBody != null) {
+			curBody.unapply ();
+			addItem (curBody);
+			return true;
+		}
+		return false;
+	}
+
+	public bool unEquipWeapon() {
+		if (curWeapon != null) {
+			curWeapon.unapply ();
+			addItem (curWeapon);
+			return true;
+		}
+		return false;
+	}
+
     //Destroy All Items Passed In
     public bool destroyItem(Item item)
     {

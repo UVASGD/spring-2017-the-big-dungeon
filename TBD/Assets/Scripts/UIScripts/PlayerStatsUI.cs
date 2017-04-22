@@ -14,6 +14,21 @@ public class PlayerStatsUI : MonoBehaviour {
 	public bool debugOn = false;
 	private PlayerController player;
 
+	public Text nameText, hp, str, def, hat, bod, wep;
+	public GameObject confirmationWindow;
+
+	public Text cursor;
+	int cursorIndex;
+	public float cursorOffset;
+	Vector2 cursorInitPosition;
+
+	bool confirming;
+	public Text confirmationArrow;
+	public float confirmationOffset;
+	int confirmationIndex;
+	Vector2 confirmationInitPosition;
+	private float cooldown;
+
 	// Use this for initialization
 	void Start () {
 		statsMenu = GetComponentInChildren<Image>().gameObject;
@@ -23,21 +38,75 @@ public class PlayerStatsUI : MonoBehaviour {
 		player = FindObjectOfType<PlayerController>();
 
 		updateName(player.getPlayerName());
+		cursorIndex = 0;
+		confirmationIndex = 0;
+		confirming = false;
+		cursorInitPosition = cursor.rectTransform.localPosition;
+		confirmationInitPosition = confirmationArrow.rectTransform.localPosition;
+		cooldown = 0;
 	}
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Escape) && isActive) {
-			statsClose();
+		if (cooldown > 0) {
+			cooldown -= Time.deltaTime;
+			return;
+		}
+		if (isActive) {
+			if (Input.GetKeyDown (KeyCode.Escape) && isActive) {
+				if (confirming) {
+					confirming = false;
+					confirmationWindow.SetActive (false);
+				} else {
+					statsClose ();
+				}
+			}
+			if (!confirming) {
+				if (Input.GetKeyDown (KeyCode.W) || Input.GetKeyDown (KeyCode.UpArrow)) {
+					cursorIndex = (cursorIndex == 0) ? 2 : cursorIndex - 1; //moves up, loops if at top
+				} else if (Input.GetKeyDown (KeyCode.S) || Input.GetKeyDown (KeyCode.DownArrow)) {
+					cursorIndex = (cursorIndex + 1) % 3; //moves down, loops if at bottom
+				} else if (Input.GetKeyDown (KeyCode.Space)) {
+					confirming = true;
+					confirmationWindow.SetActive (true);
+				}
+				cursor.rectTransform.localPosition = cursorInitPosition - (cursorIndex * new Vector2 (0, cursorOffset));
+			} else {
+				if (Input.GetKeyDown (KeyCode.A) || Input.GetKeyDown (KeyCode.LeftArrow)) {
+					confirmationIndex = 0;
+					confirmationArrow.rectTransform.localPosition = confirmationInitPosition;
+				} else if (Input.GetKeyDown (KeyCode.S) || Input.GetKeyDown (KeyCode.RightArrow)) {
+					confirmationIndex = 1;
+					confirmationArrow.rectTransform.localPosition = confirmationInitPosition + new Vector2 (confirmationOffset, 0);
+				} else if (Input.GetKeyDown (KeyCode.Space)) {
+					if (confirmationIndex == 0) {
+						switch (cursorIndex) {
+						case 0:
+							FindObjectOfType<InventoryManager> ().unEquipHat ();
+							hat.text = "  HAT:";
+							break;
+						case 1:
+							FindObjectOfType<InventoryManager> ().unEquipBody ();
+							bod.text = "  BODY:";
+							break;
+						case 2:
+							FindObjectOfType<InventoryManager> ().unEquipWeapon ();
+							wep.text = "  WEAPON:";
+							break;
+						}
+						foreach (BaseStat b in player.stats) {
+							updateStats (b);
+						}
+					}
+					confirming = false;
+					confirmationWindow.SetActive (false);
+				}
+			}
 		}
 	}
 
-	public void updateName(string name) {
-		if (statPanel == null) {
-			statsMenu = GetComponentInChildren<Image>().gameObject;
-			statPanel = statsMenu.GetComponentInChildren<VerticalLayoutGroup>().gameObject;
-		}
-		statPanel.transform.GetChild(0).gameObject.GetComponent<Text>().text = name;
+	public void updateName(string newName) {
+		nameText.text = newName;
 	}
 
 	public void statsOpened() {
@@ -46,6 +115,7 @@ public class PlayerStatsUI : MonoBehaviour {
 		}
 		isActive = true;
 		statsMenu.SetActive(true);
+		cooldown = 0.1f;
 	}
 
 	public void statsClose() {
@@ -62,65 +132,35 @@ public class PlayerStatsUI : MonoBehaviour {
 	}
 
 	public void updateStats(BaseStat s) {
-		debug("Updating for stat " + s.statName);
-		foreach (Transform child in statPanel.transform) {
-			Text statText = child.GetComponent<Text>();
-			string[] textBits = statText.text.Split (new char[]{ ':' });
-			if (textBits[0].Trim().Equals(s.statName)) {
-				statText.text = " " + s.statName + ": " + s.baseVal;
-				if (s.modifier > 0)
-					statText.text += " (+" + s.modifier + ")";
-				if (s.modifier < 0)
-					statText.text += " (" + s.modifier + ")";
-			}
+		
+		switch (s.statName) {
+		case "HP":
+			hp.text = "HP: " + s.baseVal + " (" + s.modifier + ")";
+			break;
+		case "str":
+			str.text = "STRENGTH: " + s.baseVal + " (" + s.modifier + ")";
+			break;
+		case "def":
+			def.text = "DEFENSE: " + s.baseVal + " (" + s.modifier + ")";
+			break;
 		}
 	}
 
 	public void addStat(BaseStat s) {
-		debug("Adding stat " + s.statName);
-		GameObject newStat = Instantiate(blankStat, blankStat.transform.position, blankStat.transform.rotation);
-		newStat.SetActive(true);
-		Text newText = newStat.GetComponent<Text>();
-		newText.text = " " + s.statName + ": " + s.baseVal;
-		if (s.modifier > 0)
-			newText.text += " (+" + s.modifier + ")";
-		if (s.modifier < 0)
-			newText.text += " (" + s.modifier + ")";
-		newStat.transform.SetParent(blankStat.transform.parent);
-		newStat.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+		
 	}
 
 	public void addEquipment(Item i) {
-		bool didAdd = false;
-		string itemType = "Wrong";
 		switch (i.type) {
 		case Item.ItemType.Hat:
-			itemType = "Hat";
+			hat.text = "  HAT: " + i.name;
 			break;
 		case Item.ItemType.Body:
-			itemType = "Body";
+			bod.text = "  BODY: " + i.name;
 			break;
 		case Item.ItemType.Weapon:
-			itemType = "Weapon";
+			wep.text = "  WEAPON: " + i.name;
 			break;
-		}
-		foreach (Transform child in statPanel.transform) {
-			Text statText = child.GetComponent<Text>();
-			string[] textBits = statText.text.Split (new char[]{ ':' });
-			if (textBits [0].Trim () == itemType) {
-				statText.text = " " + itemType + ": " + i.name;
-				didAdd = true;
-			}
-		}
-
-		//If it is an equipment, but was not updated, then we need to add a new element to the UI
-		if ((i.type == Item.ItemType.Hat || i.type == Item.ItemType.Body || i.type == Item.ItemType.Weapon) && !didAdd) {
-			GameObject newStat = Instantiate(blankStat, blankStat.transform.position, blankStat.transform.rotation);
-			newStat.SetActive(true);
-			Text newText = newStat.GetComponent<Text>();
-			newText.text = " " + itemType + ": " + i.name;
-			newStat.transform.SetParent(blankStat.transform.parent);
-			newStat.GetComponent<RectTransform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
 		}
 	}
 
