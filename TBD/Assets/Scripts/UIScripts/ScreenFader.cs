@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class ScreenFader : MonoBehaviour {
 
-    private Animator anim;
     public bool isFading = false;
 	private bool initialized = false;
 
@@ -33,7 +32,6 @@ public class ScreenFader : MonoBehaviour {
 	void Start () {
 		if (!initialized) {
 			Debug.Log("Started fader");
-			anim = GetComponent<Animator>();
 			initialized = true;
 			isFading = true;
 		}
