@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraManager : MonoBehaviour {
 
@@ -73,5 +74,11 @@ public class CameraManager : MonoBehaviour {
 		} else {
 			currentRoom = null;
 		}
+	}
+
+	public void instantMove() {
+		mycam = GetComponent<Camera>();
+		target = FindObjectOfType<PlayerController> ().transform;
+		transform.position = target.position;
 	}
 }

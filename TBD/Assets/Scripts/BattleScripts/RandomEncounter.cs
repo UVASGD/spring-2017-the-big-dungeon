@@ -60,6 +60,7 @@ public class RandomEncounter : MonoBehaviour {
 			int ran2 = Random.Range(0, enemyList.Count);
 			Debug.Log ("You've encountered " + enemyList [ran2].name);
 			// need to eventually call this from battle manager
+			//FindObjectOfType<ScreenFader>().FadeToBlack();
 			battleMan.loadEnemy(enemyList[ran2]);
 			battleMan.StartBattle();
 			startCooldown ();

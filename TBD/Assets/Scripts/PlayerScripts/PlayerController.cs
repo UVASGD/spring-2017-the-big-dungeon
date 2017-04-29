@@ -221,6 +221,7 @@ public class PlayerController : MonoBehaviour {
 		if (other.tag == "map") {
 			cam = FindObjectOfType<CameraManager> ();
 			cam.setCurrentRoom(other.gameObject);
+			cam.instantMove ();
 		}
         if (stepsOn) {
 			debug("Steps are on from entering something");

@@ -111,6 +111,7 @@ public class BattleManager : MonoBehaviour
 		music.SwitchTrack(0);
 		this.inBattle = false;
 		player.frozen = false;
+		FindObjectOfType<ScreenFader> ().startLevel ();
 		FindObjectOfType<SaveController> ().WriteFromData (this.tempSave);
     }
 

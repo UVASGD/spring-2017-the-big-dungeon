@@ -333,6 +333,8 @@ public class DialogueManager : MonoBehaviour {
             this.dialogueState = 0;
         }
 
+		dBox.SetActive(true);
+
         // Set the face sprite
         dFace.sprite = this.faceSprite;
 
@@ -342,7 +344,6 @@ public class DialogueManager : MonoBehaviour {
         // Process the first line
         ParseDialogueLine(this.dialogueState);
 
-        dBox.SetActive(true);
 
     }
 }
