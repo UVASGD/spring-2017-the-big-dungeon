@@ -14,7 +14,7 @@ public class SellTrigger : MonoBehaviour {
 	}
 
 	void Update() {
-		if (isWithin && Input.GetKeyDown(KeyCode.Space))
+		if (isWithin && Input.GetKeyDown(KeyCode.Space) && !sell.isActive)
 			sell.toggleSellMenu();
 	}
 

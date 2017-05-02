@@ -14,7 +14,7 @@ public class BuyTrigger : MonoBehaviour {
 	}
 
 	void Update() {
-		if (isWithin && Input.GetKeyDown(KeyCode.Space))
+		if (isWithin && Input.GetKeyDown(KeyCode.Space) && !buy.isActive)
 			buy.toggleBuyMenu();
 	}
 
