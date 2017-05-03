@@ -29,6 +29,9 @@ public class MusicManager : MonoBehaviour {
 	private static bool started = false;
 
 	// Use this for initialization
+
+	//0 Journey's Call ??
+	//9 Battle ??
 	void Start() {
 		musicTracks.AddRange(GetComponentsInChildren<AudioSource>());
 		vm = FindObjectOfType<VolumeManager>();
@@ -39,7 +42,7 @@ public class MusicManager : MonoBehaviour {
 			debug("IN HERE");
 			switch (buildIndex) {
 				case 0:
-					currentTrack = 0;
+					currentTrack = 8;
 					break;
 				case 1:
 					currentTrack = 6;
@@ -48,7 +51,7 @@ public class MusicManager : MonoBehaviour {
 					currentTrack = 4;
 					break;
 				default:
-					currentTrack = 6;
+					currentTrack = 8;
 					break;
 			}
 		}

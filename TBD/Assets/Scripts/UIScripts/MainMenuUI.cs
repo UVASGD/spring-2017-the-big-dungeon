@@ -20,7 +20,6 @@ public class MainMenuUI : MonoBehaviour {
 	private float maxTimer = 6.3f;
 	private bool timerOn = false;
 	private SaveController sc;
-	private BattleManager bm;
 
 	public Canvas startMenu;
 	public GameObject saveArrow;
@@ -61,8 +60,6 @@ public class MainMenuUI : MonoBehaviour {
 		startMenu.enabled = false;
 		optionsMenu.enabled = false;
 		creditsBackground.SetActive(false);
-		bm = FindObjectOfType<BattleManager>();
-		bm.setCanBattle(false);
 
 		startPosition3 = saveArrow.GetComponent<RectTransform>().anchoredPosition;
 		startPosition2 = startPosition3 + new Vector2(0f, saveArrow.transform.parent.GetComponent<RectTransform>().rect.height * 1.09f);
@@ -288,7 +285,6 @@ public class MainMenuUI : MonoBehaviour {
 		if (!isNew) {
 			sc.setContinuing(true);
 			sc.setCurrentSlot(contIndex);
-			bm.setCanBattle(true);
 			SceneManager.LoadScene(1);
 		} else {
 			popWarning2();
@@ -299,7 +295,6 @@ public class MainMenuUI : MonoBehaviour {
 		bool isNew = sc.isNewGame(saveIndex);
 		if (isNew) {
 			sc.setContinuing(false);
-			bm.setCanBattle(true);
 			string saveName = inputField.GetComponent<InputField>().text;
 			sc.setCurrentSlot(saveIndex);
 			sc.setCurrentName(saveName);

@@ -25,9 +25,27 @@ public class CutsceneManager : MonoBehaviour
     private bool animateCutsceneBars = false;
     private float cutsceneBarSpeed = 1f;
 
+	public static CutsceneManager instance = null;
+
+	private void Awake()
+	{
+		if (instance == null)
+		{
+			instance = this;
+		}
+		else if (instance != this)
+		{
+			Destroy(gameObject);
+		}
+	}
+
 	// Use this for initialization
 	void Start ()
 	{
+
+		//Allows us to persist accross scenes
+		DontDestroyOnLoad (gameObject);
+
 		cameraManager = FindObjectOfType<CameraManager>();
 		player = FindObjectOfType<PlayerController> ();
 		dMan = FindObjectOfType<DialogueManager>();
@@ -59,14 +77,23 @@ public class CutsceneManager : MonoBehaviour
 	{
 
         this.cutsceneIsActive = true;
+		cameraManager = FindObjectOfType<CameraManager>();
+		this.boxTop = this.cutsceneTop.GetComponent<RectTransform>();
+		this.boxBottom = this.cutsceneBottom.GetComponent<RectTransform>();
+		dMan = FindObjectOfType<DialogueManager>();
 
-        cameraManager.freeze = true;
+
+        //cameraManager.freeze = true;
+		if (player == null)
+			player = FindObjectOfType<PlayerController> ();
 		player.frozen = true;
 		player.gameObject.GetComponent<Animator>().SetFloat("input_x", 0);
 		player.gameObject.GetComponent<Animator>().SetFloat("input_y", -1);
 
 		this.cutsceneBarSpeed = 1f;
         this.startTime = Time.time;
+
+
         this.topPosition = this.boxTop.position;
         this.bottomPosition = this.boxBottom.position;
         this.topTarget = this.topPosition + new Vector2(0f, -75f);

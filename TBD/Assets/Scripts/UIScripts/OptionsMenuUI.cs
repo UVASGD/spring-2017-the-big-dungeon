@@ -27,9 +27,25 @@ public class OptionsMenuUI : MonoBehaviour {
 
 	private bool isActive = false;
 
+
+	public static OptionsMenuUI instance = null;
+
+	private void Awake()
+	{
+		if (instance == null)
+		{
+			instance = this;
+		}
+		else if (instance != this)
+		{
+			Destroy(gameObject);
+		}
+	}
+
+
 	// Use this for initialization
 	void Start () {
-        DontDestroyOnLoad(this.gameObject);
+		DontDestroyOnLoad (gameObject);
 		menu = FindObjectOfType<MainMenuUI>();
 		volMan = FindObjectOfType<VolumeManager>();
 		pause = FindObjectOfType<PauseMenuUI>();
@@ -108,6 +124,8 @@ public class OptionsMenuUI : MonoBehaviour {
 	}
 
 	public void OnConfirmButtonClick() {
+		menu = FindObjectOfType<MainMenuUI>();
+		pause = FindObjectOfType<PauseMenuUI>();
 		if (menu != null) {
 			menu.CloseOptions();
 		}
@@ -121,6 +139,8 @@ public class OptionsMenuUI : MonoBehaviour {
 	}
 
 	public void OnCancelButtonClick() {
+		menu = FindObjectOfType<MainMenuUI>();
+		pause = FindObjectOfType<PauseMenuUI>();
 		if (menu != null) {
 			menu.CloseOptions();
 		}

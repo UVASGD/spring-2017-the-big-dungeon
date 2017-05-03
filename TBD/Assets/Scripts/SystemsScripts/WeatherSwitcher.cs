@@ -7,9 +7,12 @@ public class WeatherSwitcher : MonoBehaviour {
 	private WeatherScript weather;
 	public int type;
 
+
 	// Use this for initialization
 	void Start() {
 		weather = FindObjectOfType<WeatherScript>();
+
+
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {

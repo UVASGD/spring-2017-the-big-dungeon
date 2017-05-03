@@ -8,8 +8,24 @@ public class ObjectLock : MonoBehaviour {
 
 	bool locked;
 
+	public static ObjectLock instance = null;
+
+	private void Awake()
+	{
+		if (instance == null)
+		{
+			instance = this;
+		}
+		else if (instance != this)
+		{
+			Destroy(gameObject);
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
+		DontDestroyOnLoad (gameObject);
+
 		locked = false;
 	}
 	

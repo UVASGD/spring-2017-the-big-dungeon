@@ -19,9 +19,7 @@ public class BattleManager : MonoBehaviour
 	private SaveData tempSave;
 
 	// State machine
-	private bool inBattle = false;
     private Queue<BattleState> stateQueue = new Queue<BattleState>();
-	private bool canBattle = false;
 	private PlayerController player;
 	private bool waitForPlayer = false;
 	private int currentKey;
@@ -31,7 +29,6 @@ public class BattleManager : MonoBehaviour
 	private bool isReady;
 	private int successfulAttacks;
 	private int failedAttacks;
-	private GameOverUI gameover;
 
     private void Awake()
     {
@@ -52,7 +49,6 @@ public class BattleManager : MonoBehaviour
 		music = FindObjectOfType<MusicManager>();
 		player = FindObjectOfType<PlayerController> ();
 		timer = FindObjectOfType<TimerUI> ();
-		gameover = FindObjectOfType<GameOverUI> ();
 	}
 
 	void Update() {
@@ -89,11 +85,7 @@ public class BattleManager : MonoBehaviour
 
 		}
 	}
-
-	public void setCanBattle(bool set) {
-		this.canBattle = set;
-	}
-
+		
     public void loadEnemy(Enemy enemy)
     {
         enemies.Add(enemy);
@@ -119,12 +111,12 @@ public class BattleManager : MonoBehaviour
     // State Machine stuff
     public void StartBattle()
     {
-        this.inBattle = true;
         this.stateQueue.Enqueue(new PlayerState());
 		if (player == null)
 			player = FindObjectOfType<PlayerController> ();
 		player.frozen = true;
 		this.tempSave = FindObjectOfType<SaveController> ().WriteToData (false);
+		music.SwitchTrack(4);
 
         SceneManager.LoadScene(2);
     }
@@ -167,7 +159,6 @@ public class BattleManager : MonoBehaviour
         this.battleInfo = null;
 		SceneManager.LoadScene (1);
 		music.SwitchTrack(0);
-		this.inBattle = false;
 		player.frozen = false;
 		FindObjectOfType<ScreenFader> ().startLevel ();
 		if (!isDead)
@@ -198,7 +189,11 @@ public class BattleManager : MonoBehaviour
 		c.a = 0;
 		this.battleMenu.keyBack.color = c;
 		if (success) {
+			
 			int damage = Math.Max (successfulAttacks - failedAttacks + (int) player.getCurrentStatValue ("str") - (int) enemies [0].defense, 0);
+			if (failedAttacks > successfulAttacks) {
+				damage = 0;
+			}
 			this.addState (new TextState ("You swing a wild punch at the " + enemies[0].name + " and deal " + damage + " damage!"));
 
 			enemies [0].hp = Math.Max(enemies[0].hp - damage , 0);

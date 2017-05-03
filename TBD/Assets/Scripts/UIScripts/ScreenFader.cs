@@ -38,6 +38,7 @@ public class ScreenFader : MonoBehaviour {
 	}
 
 	void Update() {
+		Debug.Log (state);
 		switch (state) {
 		case FadeStatus.FADE_TO_BLACK:
 			alpha = Mathf.Min (1, alpha + (Time.deltaTime * 0.5f));
@@ -61,6 +62,7 @@ public class ScreenFader : MonoBehaviour {
 	}
 
     public void FadeToClear() {
+		Debug.Log ("Call FadeToClear");
 		if (!initialized) {
 			Start();
 		}
@@ -68,6 +70,7 @@ public class ScreenFader : MonoBehaviour {
     }
 
     public void FadeToBlack() {
+		Debug.Log ("Call FadeToBlack");
 		if (!initialized) {
 			Start();
 		}
@@ -75,6 +78,7 @@ public class ScreenFader : MonoBehaviour {
 	}
 
 	public void BlackOut() {
+		Debug.Log ("Call BlackOut");
 		if (!initialized) {
 			Start();
 		}

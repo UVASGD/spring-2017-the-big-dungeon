@@ -23,9 +23,9 @@ public class PlayerController : MonoBehaviour {
 	public AudioSource[] playerStepSounds;
 
 	//Arbitrary speeds
-    private float currentSpeed = 2.5f;
-    private float normalSpeed = 2.5f;
-    private float runSpeed = 4.0f;
+    private float currentSpeed = 1.5f;
+    private float normalSpeed = 1.5f;
+    private float runSpeed = 2.5f;
     private float slowSpeed = 0.5f;
 
     // How often the step sound occurs
@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour {
 	private float timer = 0.0f;
 	private AudioSource currentStep;
 
-	private bool stepsOn;
+	public bool stepsOn;
 
 	public bool inMenu = false;
 	public bool talking = false;
@@ -79,6 +79,8 @@ public class PlayerController : MonoBehaviour {
 		cam = FindObjectOfType<CameraManager>();
 		statsMenu = FindObjectOfType<PlayerStatsUI> ();
         debug(getCurrentStatValue("HP") + "");
+		sfxMan.GroundChange("default");
+
 
 		//Initializes stats and stats UI
 		//startStats ();
@@ -166,26 +168,10 @@ public class PlayerController : MonoBehaviour {
 			rbody.velocity = new Vector2 (0f, 0f);
 			timer = 0;
         }
-        //Kill Yourself Instantly. Game Over Testing
-		/*
-        if (Input.GetKeyDown(KeyCode.M) && alive)
-        {
-            foreach (BaseStat s in stats)
-            {
-                if (String.Compare(s.statName, "HP") == 0)
-                {
-                    s.modifier -= 12;
-                }
-            }
-            Debug.Log(getCurrentStatValue("HP") + "");
-        }*/
-		
-		//If necessary, Die
-		/*
-        if (getCurrentStatValue("HP") <= 0 && alive)
-        {
-			killPlayer ();
-        }*/
+		if (playerStepSounds [0] == null) {
+			Debug.Log ("FUCK");
+			sfxMan.refreshSounds ();
+		}
     }
 
 	public void killPlayer() {
@@ -195,20 +181,21 @@ public class PlayerController : MonoBehaviour {
 
 	//Plays current step sound
 	void PlayNextSound() {
-		AudioSource lastStep = currentStep;
+		if (currentStep != null) {
+			AudioSource lastStep = currentStep;
 
-		//Gets another random sound
-		while (currentStep == lastStep && playerStepSounds.Length > 1) {
-			currentStep = playerStepSounds[UnityEngine.Random.Range(0, playerStepSounds.Length)];
+			//Gets another random sound
+			while (currentStep == lastStep && playerStepSounds.Length > 1) {
+				currentStep = playerStepSounds[UnityEngine.Random.Range(0, playerStepSounds.Length)];
+			}
+
+			//stops last sound
+			if (lastStep != null)
+				sfxMan.StopSFX(lastStep);
+			//plays new sound
+			if (currentStep != null)
+				sfxMan.PlaySFX(currentStep);
 		}
-
-		//stops last sound
-		if (lastStep != null)
-            sfxMan.StopSFX(lastStep);
-		//plays new sound
-        if (currentStep != null)
-            sfxMan.PlaySFX(currentStep);
-
     }
 
 	//Getter / Setter for player name
@@ -227,26 +214,30 @@ public class PlayerController : MonoBehaviour {
 			cam.setCurrentRoom(other.gameObject);
 			cam.instantMove ();
 		}
-        if (stepsOn) {
-			debug("Steps are on from entering something");
-			if (other.transform.tag == "path") {
-				sfxMan.GroundChange("path");
-			}
-			else if (other.transform.tag == "grass") {
+	}
+
+	/*
+	void OnTriggerStay2D(Collider2D other) {
+		if (stepsOn) {
+			debug("Steps are on from staying something");
+			if (other.transform.tag == "grass") {
 				sfxMan.GroundChange("grass");
+			}
+			else if (other.transform.tag == "water") {
+				sfxMan.GroundChange("water");
 			}
 			else
 				sfxMan.GroundChange("default");
 		}
-	}
+	}*/
 
-	//Checks for exiting certain areas
+	/*//Checks for exiting certain areas
 	void OnTriggerExit2D(Collider2D other) {
 		if (stepsOn) {
 			debug("Steps are on from exiting something");
 			sfxMan.GroundChange("default");
 		}
-	}
+	}*/
 
 	//Update walking noises to fit the area we are walking on
 	public void UpdateGround(AudioSource[] stepSounds) {

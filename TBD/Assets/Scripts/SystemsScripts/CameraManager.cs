@@ -22,6 +22,10 @@ public class CameraManager : MonoBehaviour {
 
 	public GameObject outskirts;
 	public GameObject town;
+	public GameObject jungle;
+	public GameObject underwater;
+	public GameObject mountain;
+
 
 	// Use this for initialization
 	void Start () {

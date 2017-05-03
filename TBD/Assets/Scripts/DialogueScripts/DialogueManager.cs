@@ -67,6 +67,8 @@ public class DialogueManager : MonoBehaviour {
 
     void Update()
     {
+		npcManager = FindObjectOfType<NPCManager>();
+
         if (this.dialogueActive) {
 			if (Input.GetKeyUp(KeyCode.Space) && !this.initialFrame) {
 
@@ -202,13 +204,15 @@ public class DialogueManager : MonoBehaviour {
 						
 						break;
 
-                    case "setnpc":
+				case "setnpc":
 						/* Changes the NPC we are talking to -- could be useful if you want
 						 * to talk to multiple people at once in a cutscene
 						*/
-                        NPC npc = npcManager.getNPC(tokenstr.Split(new Char[] { ':' })[1]);
-                        dFace.sprite = npc.npcSprite;
-                        dName.text = npc.npcName;
+					NPC npc = npcManager.getNPC (tokenstr.Split (new Char[] { ':' }) [1]);
+					if (npc != null) {
+						dFace.sprite = npc.npcSprite;
+						dName.text = npc.npcName;
+					}
                         break;
                     default:
 					    break;

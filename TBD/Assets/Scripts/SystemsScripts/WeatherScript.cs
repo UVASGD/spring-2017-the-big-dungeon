@@ -16,8 +16,30 @@ public class WeatherScript : MonoBehaviour {
 	private List<SpriteRenderer> sprites;
 	private List<MeshRenderer> renderers;
 	public float brightness = 0.5f;
+
+
+	public static WeatherScript instance = null;
+
+	private void Awake()
+	{
+		if (instance == null)
+		{
+			instance = this;
+		}
+		else if (instance != this)
+		{
+			Destroy(gameObject);
+		}
+	}
+
+
+
 	// Use this for initialization
 	void Start() {
+
+		//Allows us to persist accross scenes
+		DontDestroyOnLoad (gameObject);
+
 		//Get Needed Objects
 		sounds = new List<AudioSource>();
 		player = FindObjectOfType<PlayerController>();

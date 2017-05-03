@@ -156,6 +156,8 @@ public class SaveController : MonoBehaviour {
 					ps.updateName(currentName);
 				player.GetComponent<PlayerController> ().stats = s.playerStats;
 				player.transform.position = new Vector2(s.x, s.y);
+				inventory = FindObjectOfType<InventoryManager>();
+
 				inventory.items = s.inventory;
 				inventory.money = s.money;
 				inventory.setHat (curData.hat);
@@ -267,7 +269,6 @@ public class SaveController : MonoBehaviour {
 		case 0:
 			if (bm == null)
 				bm = FindObjectOfType<BattleManager>();
-			bm.setCanBattle(false);
 			music.SwitchTrack (0);
 			currentLevel = 0;
 			break;
@@ -283,10 +284,13 @@ public class SaveController : MonoBehaviour {
 			}
 			inventory.addStartItems (isContinuing);
 			if (isContinuing) {
-				sf.BlackOut ();
-				StartCoroutine (sf.Wait (1.0f));
+				//sf.BlackOut ();
+				//StartCoroutine (sf.Wait (1.0f));
 				LoadFromSlot (currentSlot);
 				inventory.refreshItems ();
+				sf.BlackOut ();
+				sf.FadeToClear ();
+				//sf.CutBlackOut ();
 				//player.GetComponent<PlayerController> ().refreshStats ();
 			} else {
 				//just starting
@@ -294,6 +298,8 @@ public class SaveController : MonoBehaviour {
 				player.GetComponent<PlayerController> ().updatePlayerName (currentName);
 				player.GetComponent<PlayerController> ().startStats ();
 				setNewGame (false);
+				sf.BlackOut ();
+				sf.FadeToClear ();
 			}
 			SaveToSlot (currentSlot);
 			break;

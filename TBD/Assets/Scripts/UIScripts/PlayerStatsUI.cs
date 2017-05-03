@@ -10,7 +10,6 @@ public class PlayerStatsUI : MonoBehaviour {
 	public bool isActive = false;
 	public GameObject blankStat;
 	private PauseMenuUI pause;
-	private GameObject statPanel;
 	public bool debugOn = false;
 	private PlayerController player;
 
@@ -34,7 +33,6 @@ public class PlayerStatsUI : MonoBehaviour {
 		statsMenu = GetComponentInChildren<Image>().gameObject;
 		statsMenu.SetActive(isActive);
 		pause = FindObjectOfType<PauseMenuUI>();
-		statPanel = statsMenu.GetComponentInChildren<VerticalLayoutGroup>().gameObject;
 		player = FindObjectOfType<PlayerController>();
 
 		updateName(player.getPlayerName());

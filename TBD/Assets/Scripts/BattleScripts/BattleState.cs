@@ -15,9 +15,7 @@ class PlayerState : BattleState
 
 class PAttackState : BattleState
 {
-	// attempt battle
-	// wait to press a key
-	public KeyCode currentKey;
+
 
 }
 

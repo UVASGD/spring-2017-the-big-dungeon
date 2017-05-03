@@ -14,7 +14,7 @@ public class PauseMenuUI : MonoBehaviour {
 	private Vector2 yOffset = new Vector3(0f, 105f);
 	private ScreenFader sf;
 	private Vector2 startPosition;
-	public OptionsMenuUI optionsMenu;
+	public Canvas optionsMenu;
 	public bool inOptions = false;
 	private List<GameObject> optionParts = new List<GameObject>();
 	private InventoryUI inventoryMenu;
@@ -38,6 +38,7 @@ public class PauseMenuUI : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
+		pauseMenu = FindObjectOfType<PauseMenuUI>().gameObject;
 		pauseMenu = GetComponentInChildren<Image>().gameObject;
 		pauseMenu.SetActive(isActive);
         sellObject = FindObjectOfType<SellMenuUI>();
@@ -45,13 +46,15 @@ public class PauseMenuUI : MonoBehaviour {
 		inventoryMenu = FindObjectOfType<InventoryUI>();
 		statsMenu = FindObjectOfType<PlayerStatsUI>();
 		player = FindObjectOfType<PlayerController>();
+		if (pauseMenu == null)
+			pauseMenu = FindObjectOfType<PauseMenuUI>().gameObject;
 		arrow = pauseMenu.GetComponentInChildren<Animator>().gameObject;
 		startPosition = arrow.GetComponent<RectTransform>().anchoredPosition;
 
 		if (optionsMenu == null) {
-			optionsMenu = FindObjectOfType<OptionsMenuUI>();
+			optionsMenu = FindObjectOfType<OptionsMenuUI>().GetComponent<Canvas>();
 		}
-		foreach (Image i in optionsMenu.GetComponentsInChildren<Image>()) {
+		foreach (Image i in optionsMenu.gameObject.GetComponentsInChildren<Image>()) {
 			optionParts.Add(i.gameObject);
 		}
 		try {
@@ -197,11 +200,17 @@ public class PauseMenuUI : MonoBehaviour {
 
 	public void exitConfirm() {
 		// Could break a lot of stuff switching between scenes
+		/*
 		if (sf != null) {
 			sf.BlackOut();
-		}
+		}*/
+		exitIndex = 0;
+		Vector2 arrowPosition = exitArrow.GetComponent<RectTransform>().anchoredPosition;
+		arrowPosition -= exitOffset;
+		exitArrow.GetComponent<RectTransform>().anchoredPosition = arrowPosition;
+		exitConfirmMenu.SetActive(false);
+		exitMenu ();
 		inExit = false;
-		toggleMenu ();
 		SceneManager.LoadScene(0);
 	}
 
@@ -221,7 +230,8 @@ public class PauseMenuUI : MonoBehaviour {
 		foreach (GameObject g in optionParts) {
 			g.SetActive(true);
 		}
-		optionsMenu.toggleMenu();
+		//optionsMenu.toggleMenu();
+		optionsMenu.enabled = true;
 		inOptions = true;
 		canEscape = false;
 	}
@@ -230,7 +240,8 @@ public class PauseMenuUI : MonoBehaviour {
 		foreach (GameObject g in optionParts) {
 			g.SetActive(false);
 		}
-		optionsMenu.toggleMenu();
+		//optionsMenu.toggleMenu();
+		optionsMenu.enabled = false;
 		inOptions = false;
 		canEscape = true;
 		escapeWait = true;

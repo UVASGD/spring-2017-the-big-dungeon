@@ -75,6 +75,7 @@ public class SaveMenuUI : MonoBehaviour {
 	void Save() {
 		sc = FindObjectOfType<SaveController> ();
 		sc.SaveTo ("slot" + (selIndex + 1), false);
+		player.setCurrentStatValue ("HP", player.getBaseStatValue ("HP") - player.getCurrentStatValue("HP"));
 	}
 
 	void ExitMenu() {

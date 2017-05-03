@@ -45,9 +45,9 @@ public class RandomEncounter : MonoBehaviour {
 
 	public void updateEncounterList() {
 		if (encounterArea == "outskirts") {
-			this.enemyList.Add (new Enemy ("Swift Sweepster", "Sweepster no swifting!", 5, 20, 4, 3, 0));
-			this.enemyList.Add (new Enemy ("Tin Can", "This is one can that you shouldn't kick.", 15, 14, 7, 4, 2));
-			this.enemyList.Add (new Enemy ("Grock", "Can you smell what the Grock is cooking?", 24, 12, 8, 5, 1));
+			this.enemyList.Add (new Enemy ("Swift Sweepster", "Sweepster no swifting!", 20, 13, 4, 4, 0));
+			this.enemyList.Add (new Enemy ("Tin Can", "This is one can that you shouldn't kick.", 25, 12, 7, 5, 2));
+			this.enemyList.Add (new Enemy ("Grock", "Can you smell what the Grock is cooking?", 30, 11, 8, 6, 1));
 			setEncounterSec (10);
 		}
 		// add more encounters

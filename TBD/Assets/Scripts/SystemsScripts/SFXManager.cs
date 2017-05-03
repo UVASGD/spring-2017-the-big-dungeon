@@ -40,16 +40,21 @@ public class SFXManager : MonoBehaviour {
         sfx.Stop();
     }
 
-    public void PlaySFX(AudioSource sfx)
+	public void PlaySFX(AudioSource sfx)
     {
         sfx.Play();
     }
 
+	public void PlayNumSFX(int sfx)
+	{
+		soundEffects [sfx].Play ();
+	}
+
 	public void GroundChange(string change) {
-		if (change == "path") {
+		if (change == "grass") {
 			setGroundType(myGroundTypes[1]);
 		}
-		else if (change == "grass") {
+		else if (change == "water") {
 			setGroundType(myGroundTypes[2]);
 		}
 		else
@@ -60,9 +65,18 @@ public class SFXManager : MonoBehaviour {
 	public void setGroundType(GroundType ground) {
 		if (currentground != ground.name) {
 			debug("Setting ground type from type " + ground.name);
+			if (player == null) {
+				player = FindObjectOfType<PlayerController>();
+			}
 			player.UpdateGround(ground.stepSounds);
 			currentground = ground.name;
 		}
+	}
+
+	public void refreshSounds() {
+		player = FindObjectOfType<PlayerController>();
+		setGroundType(myGroundTypes[1]);
+		started = true;
 	}
 
 	void debug(string line) {

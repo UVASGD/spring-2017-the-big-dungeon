@@ -118,7 +118,7 @@ public class CreditScrollUI : MonoBehaviour {
 		ms.endOfCredits();
 		if (mc == null)
 			mc = FindObjectOfType<MusicManager>();
-		mc.SwitchTrack(2, 0.2f, 0.1f);
+		mc.SwitchTrack(8, 0.2f, 0.1f);
 	}
 
 	public void startCredits() {
