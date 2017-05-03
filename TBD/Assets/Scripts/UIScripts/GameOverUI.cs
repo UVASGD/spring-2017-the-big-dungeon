@@ -16,7 +16,6 @@ public class GameOverUI : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        Debug.Log("Start");
         player = FindObjectOfType<PlayerController>();
         save = FindObjectOfType<SaveController>();
         gameObject.SetActive(isActive);
@@ -25,13 +24,11 @@ public class GameOverUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
         if (!player.alive && !isActive)
         {
             isActive = true;
             gameObject.SetActive(isActive);
             player.frozen = true;
-            Debug.Log("Death Screen");
             if (sf != null)
             {
                 sf.BlackOut();
@@ -63,13 +60,13 @@ public class GameOverUI : MonoBehaviour {
                 switch (index)
                 {
 				case 0:
-						save = FindObjectOfType<SaveController> ();
-                        save.LoadFromSlot(save.getCurrentSlot());
-                        gameObject.SetActive(false);
-                        player.alive = true;
-                        player.frozen = false;
-                        break;
-                    case 1:
+                    gameObject.SetActive(false);
+                   	player.alive = true;
+                    player.frozen = false;
+					save = FindObjectOfType<SaveController> ();
+					save.LoadFromSlot(save.getCurrentSlot());
+                    break;
+                case 1:
                         exitConfirm();
                         break;
                 }

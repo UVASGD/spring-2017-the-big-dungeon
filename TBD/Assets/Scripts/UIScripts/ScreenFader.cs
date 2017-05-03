@@ -25,13 +25,11 @@ public class ScreenFader : MonoBehaviour {
 		} else if(instance != this) {
 			Destroy (this);
 		}
-		Debug.Log ("Fading in.................");
 	}
 
 	// Use this for initialization
 	void Start () {
 		if (!initialized) {
-			Debug.Log("Started fader");
 			initialized = true;
 			isFading = true;
 		}
@@ -93,12 +91,10 @@ public class ScreenFader : MonoBehaviour {
 	}
 
 	void AnimationComplete() {
-		Debug.Log("animation complete");
         isFading = false;
     }
 
 	public void startLevel() {
-		Debug.Log ("Kill me Raggy");
 		BlackOut ();
 		FadeToClear ();
 	}

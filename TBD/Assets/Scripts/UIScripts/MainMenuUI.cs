@@ -285,7 +285,6 @@ public class MainMenuUI : MonoBehaviour {
 
 	public void ContinueGame(){
 		bool isNew = sc.isNewGame(contIndex);
-		Debug.Log(isNew + " " + contIndex);
 		if (!isNew) {
 			sc.setContinuing(true);
 			sc.setCurrentSlot(contIndex);
@@ -294,7 +293,6 @@ public class MainMenuUI : MonoBehaviour {
 		} else {
 			popWarning2();
 		}
-		Debug.Log("continue the game " + contIndex);
 	}
 
 	public void StartGame() {

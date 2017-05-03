@@ -180,7 +180,8 @@ public class SaveController : MonoBehaviour {
 			s.weapon = inventory.getCurWeapon ();
 			s.money = inventory.money;
 			s.level = player.GetComponent<PlayerController>().level;
-			s.newGame = getNewGame();
+			//s.newGame = getNewGame();
+			s.newGame = false;
 		} else {
 			s.playerName = "NEW SAVE FILE";
 			s.x = 0;
@@ -286,11 +287,15 @@ public class SaveController : MonoBehaviour {
 				StartCoroutine (sf.Wait (1.0f));
 				LoadFromSlot (currentSlot);
 				inventory.refreshItems ();
+				//player.GetComponent<PlayerController> ().refreshStats ();
 			} else {
 				//just starting
 				SaveToSlot (currentSlot);
 				player.GetComponent<PlayerController> ().updatePlayerName (currentName);
+				player.GetComponent<PlayerController> ().startStats ();
+				setNewGame (false);
 			}
+			SaveToSlot (currentSlot);
 			break;
 		case 2:
 			currentLevel = 2;

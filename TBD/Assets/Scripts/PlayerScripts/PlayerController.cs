@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour {
     public int currentExp = 0;
 
 	//References for menus
-	private PlayerStatsUI statsMenu;
+	public PlayerStatsUI statsMenu;
     public GameObject gameoverMenu;
 
     private string playerName;
@@ -81,15 +81,15 @@ public class PlayerController : MonoBehaviour {
         debug(getCurrentStatValue("HP") + "");
 
 		//Initializes stats and stats UI
-		startStats ();
+		//startStats ();
     }
 
 	//Initializes player's stats, and also adds these stats to the proper UI
 	public void startStats() {
 		statsMenu = FindObjectOfType<PlayerStatsUI> ();
-		BaseStat strength = new BaseStat ("str", 10, "Damage Dealt", -2); //Current 3 stats-- should be not hardcoded?? consider changing.
-		BaseStat defense = new BaseStat ("def", 11, "Damage Taken", 0);
-		BaseStat HP = new BaseStat ("HP", 12, "Health", 5);
+		BaseStat strength = new BaseStat ("str", 10, "Damage Dealt", 0); //Current 3 stats-- should be not hardcoded?? consider changing.
+		BaseStat defense = new BaseStat ("def", 10, "Damage Taken", 0);
+		BaseStat HP = new BaseStat ("HP", 20, "Health", 0);
 
 		//Adds to our stats
 		stats.Add(HP);
@@ -181,13 +181,17 @@ public class PlayerController : MonoBehaviour {
         }*/
 		
 		//If necessary, Die
+		/*
         if (getCurrentStatValue("HP") <= 0 && alive)
         {
-            Debug.Log("Die Please!");
-            alive = false;
-            gameoverMenu.SetActive(true);
-        }
+			killPlayer ();
+        }*/
     }
+
+	public void killPlayer() {
+		alive = false;
+		gameoverMenu.SetActive(true);
+	}
 
 	//Plays current step sound
 	void PlayNextSound() {
@@ -265,6 +269,16 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	//Getter / Setter for stats
+	public void setCurrentStatValue(string statName, int newValue) {
+		foreach (BaseStat s in stats) {
+			if (String.Compare(s.statName, statName) == 0) {
+				s.modifier += newValue;
+				break;
+			}
+		}
+	}
+
+	//Getter / Setter for stats
 	public void setStatValue(string statName, int newValue) {
 		foreach (BaseStat s in stats) {
 			if (String.Compare(s.statName, statName) == 0) {
@@ -273,7 +287,7 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 	}
-
+		
 	//base stat + modifier
 	public int getCurrentStatValue(string statName) {
 		foreach (BaseStat s in stats) {
@@ -281,7 +295,7 @@ public class PlayerController : MonoBehaviour {
 				return s.currentValue();
 			}
 		}
-		return 0;
+		return -100;
 	}
 
 	//base stat
@@ -291,7 +305,7 @@ public class PlayerController : MonoBehaviour {
 				return s.baseVal;
 			}
 		}
-		return 0;
+		return -100;
 	}
 
     //currently only need 1000 XP to get to the next lvl

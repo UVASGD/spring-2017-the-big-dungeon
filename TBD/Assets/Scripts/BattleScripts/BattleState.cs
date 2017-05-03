@@ -1,9 +1,23 @@
-﻿abstract public class BattleState
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using System;
+using System.Collections;
+
+abstract public class BattleState
 {
 }
 
 class PlayerState : BattleState
 {
+
+}
+
+class PAttackState : BattleState
+{
+	// attempt battle
+	// wait to press a key
+	public KeyCode currentKey;
 
 }
 
@@ -20,3 +34,5 @@ class TextState : BattleState
         this.text = text;
     }
 }
+
+

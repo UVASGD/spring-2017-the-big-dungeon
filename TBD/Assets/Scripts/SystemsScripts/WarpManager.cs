@@ -19,7 +19,6 @@ public class WarpManager : MonoBehaviour {
 		}
 		private set {
 			_timerOn = value;
-			Debug.Log(value);
 		}
 	}
 

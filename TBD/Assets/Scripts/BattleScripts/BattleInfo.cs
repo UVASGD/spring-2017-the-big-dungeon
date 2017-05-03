@@ -80,7 +80,7 @@ public class BattleInfo : MonoBehaviour
 
         if (line.Equals("{end}"))
         {
-            this.battleManager.EndBattle();
+            this.battleManager.EndBattle(false);
         }
         else
         {

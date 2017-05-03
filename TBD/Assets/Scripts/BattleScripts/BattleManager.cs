@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
+using System.Collections;
+using UnityEngine.UI;
 
 public class BattleManager : MonoBehaviour
 {
@@ -21,6 +23,15 @@ public class BattleManager : MonoBehaviour
     private Queue<BattleState> stateQueue = new Queue<BattleState>();
 	private bool canBattle = false;
 	private PlayerController player;
+	private bool waitForPlayer = false;
+	private int currentKey;
+	private List<string> currentKeyList = new List<string>();
+	private List<string> possibleKeys = new List<string>(){"W", "A", "S", "D", "UpArrow", "DownArrow", "LeftArrow", "RightArrow"};
+	private TimerUI timer;
+	private bool isReady;
+	private int successfulAttacks;
+	private int failedAttacks;
+	private GameOverUI gameover;
 
     private void Awake()
     {
@@ -40,6 +51,42 @@ public class BattleManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 		music = FindObjectOfType<MusicManager>();
 		player = FindObjectOfType<PlayerController> ();
+		timer = FindObjectOfType<TimerUI> ();
+		gameover = FindObjectOfType<GameOverUI> ();
+	}
+
+	void Update() {
+		if (this.waitForPlayer) {
+			if (Input.anyKey && isReady) {
+				if (Input.GetKeyDown ((KeyCode)System.Enum.Parse (typeof(KeyCode), this.currentKeyList [this.currentKey]))) {
+					this.currentKey++;
+					this.successfulAttacks++;
+					isReady = false;
+					if (this.currentKey >= this.currentKeyList.Count) {
+						//completed in time!
+						attemptAttack (true);
+					}
+					parseKey ();
+				}
+				else if (!Input.GetKeyDown ((KeyCode)System.Enum.Parse (typeof(KeyCode), this.currentKeyList [this.currentKey]))) {
+					this.currentKey++;
+					this.failedAttacks++;
+					if (this.currentKey >= this.currentKeyList.Count) {
+						//completed in time!
+						attemptAttack (true);
+					}
+					parseKey ();
+				}
+			}
+			if (timer.isOutOfTime()) {
+				// failed!!
+				attemptAttack (false);
+			}
+			if (!isReady && !Input.anyKey) {
+				isReady = true;
+			}
+
+		}
 	}
 
 	public void setCanBattle(bool set) {
@@ -86,7 +133,16 @@ public class BattleManager : MonoBehaviour
         this.battleMenu = battleMenu;
 
 		this.battleMenu.enemySprite.GetComponent<Animator> ().SetInteger ("Enemy", enemies [0].sprite);
-		Debug.Log (enemies [0].sprite);
+
+		Color c = this.battleMenu.keyBack.color;
+		c.a = 0;
+		this.battleMenu.keyBack.color = c;
+
+		if (timer == null)
+			timer = FindObjectOfType<TimerUI> ();
+		
+		timer.hideTimer ();
+
 
 		// Try to display the enemy sprite
 		//this.battleMenu.enemySprite.sprite = Resources.Load<Sprite>(enemies[0].sprite);
@@ -100,8 +156,9 @@ public class BattleManager : MonoBehaviour
         this.battleInfo = battleInfo;
     }
 
-    public void EndBattle()
+	public void EndBattle(bool isDead)
     {
+		removeAll ();
         this.stateQueue.Clear();
         Destroy(this.battleMenu);
         this.battleMenu = null;
@@ -112,7 +169,13 @@ public class BattleManager : MonoBehaviour
 		this.inBattle = false;
 		player.frozen = false;
 		FindObjectOfType<ScreenFader> ().startLevel ();
-		FindObjectOfType<SaveController> ().WriteFromData (this.tempSave);
+		if (!isDead)
+			FindObjectOfType<SaveController> ().WriteFromData (this.tempSave);
+		if (isDead) {
+			player.killPlayer ();
+			//FindObjectOfType<SaveController> ().LoadFromSlot (FindObjectOfType<SaveController> ().getCurrentSlot ());
+		}
+			
     }
 
     public void addState(BattleState battleState)
@@ -121,19 +184,36 @@ public class BattleManager : MonoBehaviour
     }
 
 	public void playerAttack() {
-		this.addState (new TextState ("You swing a wild punch at the " + enemies[0].name));
+		this.addState (new PAttackState ());
+		this.ProcessState ();
+	}
 
-		enemies [0].hp = Math.Max(enemies[0].hp - 3, 0);
+	public void attemptAttack(bool success) {
+		this.waitForPlayer = false;
+		this.currentKey = 0;
+		timer.resetTimer ();
+		timer.hideTimer ();
+		Color c = this.battleMenu.keyBack.color;
+		c.a = 0;
+		this.battleMenu.keyBack.color = c;
+		if (success) {
+			int damage = Math.Max (successfulAttacks - failedAttacks + (int) player.getCurrentStatValue ("str") - (int) enemies [0].defense, 0);
+			this.addState (new TextState ("You swing a wild punch at the " + enemies[0].name + " and deal " + damage + " damage!"));
 
-		this.addState (new TextState ("The " + enemies[0].name + " has " + enemies[0].hp + " HP left."));
+			enemies [0].hp = Math.Max(enemies[0].hp - damage , 0);
 
-		if (enemies[0].hp <= 0) {
-			// You won!
-			this.addState (new TextState ("The " + enemies[0].name + " has fallen!"));
-			this.addState(new TextState("{end}"));
-			this.ProcessState ();
+			this.addState (new TextState ("The " + enemies[0].name + " has " + enemies[0].hp + " HP left."));
+
+			if (enemies[0].hp <= 0) {
+				// You won!
+				this.addState (new TextState ("The " + enemies[0].name + " has fallen!"));
+				this.addState(new TextState("{end}"));
+				removeAll ();
+				//this.ProcessState ();
+			}
+		} else {
+			this.addState (new TextState ("You swing a wild punch at the " + enemies[0].name + " but miss!"));
 		}
-
 		this.addState (new EnemyState ());
 		this.ProcessState ();
 	}
@@ -145,30 +225,27 @@ public class BattleManager : MonoBehaviour
         {
             current = stateQueue.Dequeue();
         } catch {
-            Debug.Log("Out of states, exiting battle");
-            EndBattle();
+            EndBattle(false);
             return;
         }
         
-        if (current is PlayerState)
-        {
-            handlePlayerState(current as PlayerState);
-        } else if (current is EnemyState)
-        {
-            handleEnemyState(current as EnemyState);
-        } else if (current is TextState)
-        {
-            handleTextState(current as TextState);
-        }
+		if (current is PlayerState) {
+			handlePlayerState (current as PlayerState);
+		} else if (current is EnemyState) {
+			handleEnemyState (current as EnemyState);
+		} else if (current is TextState) {
+			handleTextState (current as TextState);
+		} else if (current is PAttackState) {
+			handlePAttackState (current as PAttackState);
+		}
         else
         {
-            Debug.Log("Invalid state, ending the battle");
-            EndBattle();
+            EndBattle(false);
             
         }
     }
 
-    private void handlePlayerState(PlayerState state)
+	private void handlePlayerState(PlayerState state)
     {
         this.battleMenu.EnableMenu();
     }
@@ -177,20 +254,24 @@ public class BattleManager : MonoBehaviour
     {
 		// For now, we just use the first enemy
 		Enemy e = enemies[0];
+		int damage = Math.Max ((int) enemies [0].strength - (int) player.getCurrentStatValue ("def"), 0);
+
 		this.stateQueue.Enqueue(new TextState("The " + e.name + " strikes out viciously!"));
 
-		player.setStatValue ("HP", player.getBaseStatValue ("HP") - 1);
+		player.setCurrentStatValue("HP", - damage);
 
-		this.stateQueue.Enqueue(new TextState("You take 1 damage."));
+		this.stateQueue.Enqueue(new TextState("You take " + damage + " damage."));
 
 		this.battleMenu.hpText.text = "" + player.getCurrentStatValue ("HP");
 
-		// Check if player is dead
-		if (player.getCurrentStatValue ("HP") == 0) {
-			Debug.Log ("you have died!");	
-		}
 
-        this.stateQueue.Enqueue(new PlayerState());
+		this.stateQueue.Enqueue(new PlayerState());
+
+		// Check if player is dead
+		if (player.getCurrentStatValue ("HP") <= 0) {
+			EndBattle (true);
+			//gameover.setActive ();
+		}
         ProcessState();
     }
 
@@ -200,5 +281,53 @@ public class BattleManager : MonoBehaviour
         dialogue.Add(state.text);
         this.battleInfo.ShowDialogue(dialogue);
     }
+
+	private void handlePAttackState(PAttackState state)
+	{
+		this.waitForPlayer = false;
+		Enemy e = enemies [0];
+		currentKeyList.Clear ();
+		for (int i = 0; i < (int)e.defense; i++) {
+			string s = possibleKeys[UnityEngine.Random.Range(0,possibleKeys.Count)];
+			currentKeyList.Add (s);
+		}
+		this.currentKey = 0;
+		this.successfulAttacks = 0;
+		this.failedAttacks = 0;
+		parseKey ();
+		if (timer == null)
+			timer = FindObjectOfType<TimerUI> ();
+		timer.changeMaxTime (enemies [0].initiative);
+		timer.startTimer ();
+		timer.showTimer ();
+		Color c = this.battleMenu.keyBack.color;
+		c.a = 255;
+		this.battleMenu.keyBack.color = c;
+		this.waitForPlayer = true;
+		isReady = true;
+	}
+
+	private void parseKey() {
+		
+		string s = this.currentKeyList [this.currentKey];
+		if (s.Length == 1) {
+			this.battleMenu.keyText.text = s;
+		} else if (s == "UpArrow") {
+			this.battleMenu.keyText.text = "⇧";
+		} else if (s == "DownArrow") {
+			this.battleMenu.keyText.text = "⇩";
+		} else if (s == "LeftArrow") {
+			this.battleMenu.keyText.text = "⇦";
+		} else if (s == "RightArrow") {
+			this.battleMenu.keyText.text = "⇨";
+		}
+		else
+		{
+			Debug.Log("Invalid key, ending the battle");
+			EndBattle(false);
+
+		}
+	}
+
 
 }

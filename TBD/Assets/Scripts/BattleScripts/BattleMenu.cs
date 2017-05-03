@@ -19,6 +19,9 @@ public class BattleMenu : MonoBehaviour
     private Canvas mainMenu;
 	private PlayerController player;
 
+	public Text keyText;
+	public Image keyBack;
+
     // Use this for initialization
     void Awake()
     {
@@ -36,7 +39,7 @@ public class BattleMenu : MonoBehaviour
 
 		player = FindObjectOfType<PlayerController> ();
 		hpText.text = "" + player.getCurrentStatValue ("HP");
-		hpMaxText.text = "" + player.getCurrentStatValue ("HP");
+		hpMaxText.text = "" + player.getBaseStatValue ("HP");
 		nameText.text = player.getPlayerName ();
 
         mainMenu.enabled = true;
