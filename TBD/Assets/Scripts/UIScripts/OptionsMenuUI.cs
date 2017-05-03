@@ -29,6 +29,7 @@ public class OptionsMenuUI : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        DontDestroyOnLoad(this.gameObject);
 		menu = FindObjectOfType<MainMenuUI>();
 		volMan = FindObjectOfType<VolumeManager>();
 		pause = FindObjectOfType<PauseMenuUI>();
