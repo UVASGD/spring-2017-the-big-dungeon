@@ -1,12 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-guid: e3517e676aa0a49f7a43a3e515c6da76
-timeCreated: 1493791378
-=======
 guid: d4ec9a621aae8411a8dc5f540c96398d
-timeCreated: 1493790829
->>>>>>> origin/master
-licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
@@ -87,36 +80,17 @@ ModelImporter:
     4300024: mesh_0013
     4300026: mesh_0014
     4300028: mesh_0015
-    11400000: mesh_0001
-    11400002: mesh_0002
-    11400004: mesh_0003
-    11400006: mesh_0004
-    11400008: mesh_0005
-    11400010: mesh_0006
-    11400012: mesh_0007
-    11400014: mesh_0008
-    11400016: mesh_0009
-    11400018: mesh_0010
-    11400020: mesh_0011
-    11400022: mesh_0012
-    11400024: mesh_0013
-    11400026: mesh_0014
-    11400028: mesh_0015
+    9500000: //RootNode
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
   animations:
-    legacyGenerateAnimations: 0
+    legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
     motionNodeName: 
-<<<<<<< HEAD
-    rigImportErrors: 
-    rigImportWarnings: 
-=======
->>>>>>> origin/master
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -131,10 +105,10 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0
     meshCompression: 0
     addColliders: 0
-    importBlendShapes: 0
+    importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -149,7 +123,7 @@ ModelImporter:
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
-    tangentImportMode: 2
+    tangentImportMode: 3
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
@@ -169,7 +143,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
