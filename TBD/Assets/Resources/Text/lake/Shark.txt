@@ -1,0 +1,7 @@
+start:
+    {setnpc:Shark}{fast}Hi, lovely human!
+    {fast}I got a quest for you!
+    {fast}My friend Nemo and I are playing hide and seek but I can't seem to find him!
+    {fast}I haven't seen him for 2 days...{goto:second}{end}
+second:
+    {fast}Did you know that the ocean gets its saltiness from sharks that just want to cuddle '^' {goto:second}{end}

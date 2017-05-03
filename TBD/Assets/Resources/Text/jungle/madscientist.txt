@@ -1,0 +1,5 @@
+start:
+    {setnpc:Mad Scientist}{fast}Hey!
+    {fast}I want you to go in this lake!
+    {fast}I've been studying the lake for a while but I could never go deep into it!
+    {fast}Take this breathing apparatus and consider this part of your adventure!

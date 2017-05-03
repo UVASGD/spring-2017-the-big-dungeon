@@ -1,0 +1,5 @@
+start:
+    {setnpc:Mad Scientist}{fast}Hi! I'm the mad scientist!
+    {fast}I will help you on this adventure you are on!
+    {fast}Confused? No need! You will learn as you go on!
+    {fast}Take this warping device to fast travel between locations.
