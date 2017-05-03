@@ -30,12 +30,7 @@ class NPCManager : MonoBehaviour
 
     public NPC getNPC(string name)
     {
-		try {
-			return npcs.First(item => item.npcName == name);
-		} catch {
-			//throw new InvalidOperationException();
-			return null;
-		}
+		return npcs.First(item => item.npcName == name);
     }
 
 }
