@@ -1,5 +1,5 @@
 ﻿start:
-	{setnpc:Narrator}{instant}Will be better intro cutscene at ESE!
+	{setnpc:Narrator}{instant}Welcome to The Big Dungeon!
 	{fast}The shimmering light that had stolen your bag is now gone as you find yourself in a large cave.
 	{fast}You can only seem to remember falling down a hole of some sort.
 	{fast}You look down and see a goat chewing on your pants.

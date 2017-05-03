@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour {
                     currentSpeed = runSpeed;
                     stepInterval = 0.3f;
 					if (currentStep != null)
-                    	currentStep.volume = 0.6f;
+                    	currentStep.volume = 0.3f;
                     anim.speed = 2.0f;
                 }
                 //Walk Slower
