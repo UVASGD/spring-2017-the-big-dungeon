@@ -50,6 +50,24 @@ public class RandomEncounter : MonoBehaviour {
 			this.enemyList.Add (new Enemy ("Grock", "Can you smell what the Grock is cooking?", 30, 11, 8, 6, 1));
 			setEncounterSec (10);
 		}
+		if (encounterArea == "jungle") {
+			this.enemyList.Add (new Enemy ("Swift Sweepster", "Sweepster no swifting!", 22, 15, 6, 6, 0));
+			this.enemyList.Add (new Enemy ("Tin Can", "This is one can that you shouldn't kick.", 27, 14, 9, 7, 2));
+			this.enemyList.Add (new Enemy ("Grock", "Can you smell what the Grock is cooking?", 32, 13, 10, 8, 1));
+			setEncounterSec (10);
+		}
+		if (encounterArea == "water") {
+			this.enemyList.Add (new Enemy ("Swift Sweepster", "Sweepster no swifting!", 23, 16, 7, 7, 0));
+			this.enemyList.Add (new Enemy ("Tin Can", "This is one can that you shouldn't kick.", 28, 15, 10, 8, 2));
+			this.enemyList.Add (new Enemy ("Grock", "Can you smell what the Grock is cooking?", 33, 14, 11, 9, 1));
+			setEncounterSec (10);
+		}
+		if (encounterArea == "lava") {
+			this.enemyList.Add (new Enemy ("Swift Sweepster", "Sweepster no swifting!", 30, 17, 10, 6, 0));
+			this.enemyList.Add (new Enemy ("Tin Can", "This is one can that you shouldn't kick.", 35, 14, 8, 5, 2));
+			this.enemyList.Add (new Enemy ("Grock", "Can you smell what the Grock is cooking?", 40, 15, 9, 5, 1));
+			setEncounterSec (10);
+		}
 		// add more encounters
 	}
 
@@ -63,6 +81,20 @@ public class RandomEncounter : MonoBehaviour {
 			this.battleMan.loadEnemy(enemyList[ran2]);
 			this.battleMan.StartBattle();
 		}
+	}
+
+	public void catfishEncounter() {
+		this.enemyList.Clear ();
+		this.enemyList.Add(new Enemy ("Catfish", "Who dat is", 100, 12, 15, 10, 3));
+		this.battleMan.loadEnemy(enemyList[0]);
+		this.battleMan.StartBattle();
+	}
+
+	public void bossEncounter() {
+		this.enemyList.Clear ();
+		this.enemyList.Add (new Enemy ("THE MAD SCIENTIST", "Ah shit", 1000, 20, 10, 4, 4));
+		this.battleMan.loadEnemy (enemyList [0]);
+		this.battleMan.StartBattle ();
 	}
 
 	public void setEncounterSec(int num) {

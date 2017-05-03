@@ -12,7 +12,6 @@ public class PauseMenuUI : MonoBehaviour {
 	private GameObject arrow;
 	private int index = 0;
 	private Vector2 yOffset = new Vector3(0f, 105f);
-	private ScreenFader sf;
 	private Vector2 startPosition;
 	public Canvas optionsMenu;
 	public bool inOptions = false;
@@ -56,11 +55,6 @@ public class PauseMenuUI : MonoBehaviour {
 		}
 		foreach (Image i in optionsMenu.gameObject.GetComponentsInChildren<Image>()) {
 			optionParts.Add(i.gameObject);
-		}
-		try {
-			sf = FindObjectOfType<ScreenFader>();
-		} catch {
-			sf = null;
 		}
 		exitArrow = exitConfirmMenu.GetComponentInChildren<Animator>().gameObject;
 	}
