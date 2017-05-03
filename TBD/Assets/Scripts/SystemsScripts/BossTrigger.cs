@@ -24,6 +24,9 @@ public class BossTrigger : MonoBehaviour {
 			case 1:
 				ran.bossEncounter ();
 				break;
+			case 2:
+				ran.sharkEncounter ();
+				break;
 			}
 		}
 

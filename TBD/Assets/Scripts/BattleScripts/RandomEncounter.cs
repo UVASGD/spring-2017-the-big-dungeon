@@ -79,7 +79,7 @@ public class RandomEncounter : MonoBehaviour {
 			// need to eventually call this from battle manager
 			//FindObjectOfType<ScreenFader>().FadeToBlack();
 			this.battleMan.loadEnemy(enemyList[ran2]);
-			this.battleMan.StartBattle();
+			this.battleMan.StartBattle(-1);
 		}
 	}
 
@@ -87,14 +87,21 @@ public class RandomEncounter : MonoBehaviour {
 		this.enemyList.Clear ();
 		this.enemyList.Add(new Enemy ("Catfish", "Who dat is", 100, 12, 15, 10, 3));
 		this.battleMan.loadEnemy(enemyList[0]);
-		this.battleMan.StartBattle();
+		this.battleMan.StartBattle(0);
 	}
 
 	public void bossEncounter() {
 		this.enemyList.Clear ();
 		this.enemyList.Add (new Enemy ("THE MAD SCIENTIST", "Ah shit", 1000, 20, 10, 4, 4));
 		this.battleMan.loadEnemy (enemyList [0]);
-		this.battleMan.StartBattle ();
+		this.battleMan.StartBattle (1);
+	}
+
+	public void sharkEncounter() {
+		this.enemyList.Clear ();
+		this.enemyList.Add (new Enemy ("Sharkboi", "Ah shit", 200, 15, 20, 15, 5));
+		this.battleMan.loadEnemy (enemyList [0]);
+		this.battleMan.StartBattle (2);
 	}
 
 	public void setEncounterSec(int num) {

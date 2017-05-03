@@ -109,15 +109,23 @@ public class BattleManager : MonoBehaviour
     }
 
     // State Machine stuff
-    public void StartBattle()
+	public void StartBattle(int boss)
     {
         this.stateQueue.Enqueue(new PlayerState());
 		if (player == null)
 			player = FindObjectOfType<PlayerController> ();
 		player.frozen = true;
 		this.tempSave = FindObjectOfType<SaveController> ().WriteToData (false);
-		music.SwitchTrack(4);
-
+		if (boss == -1)
+			music.SwitchTrack(4);
+		else if (boss == 0) 
+			music.SwitchTrack(9);
+		else if (boss == 1) 
+			music.SwitchTrack(0);
+		else if (boss == 2) 
+			music.SwitchTrack(2);
+		else 
+			music.SwitchTrack(4);
         SceneManager.LoadScene(2);
     }
 

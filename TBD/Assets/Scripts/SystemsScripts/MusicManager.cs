@@ -30,8 +30,6 @@ public class MusicManager : MonoBehaviour {
 
 	// Use this for initialization
 
-	//0 Journey's Call ??
-	//9 Battle ??
 	void Start() {
 		musicTracks.AddRange(GetComponentsInChildren<AudioSource>());
 		vm = FindObjectOfType<VolumeManager>();
