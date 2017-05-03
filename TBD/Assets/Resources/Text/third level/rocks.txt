@@ -1,0 +1,13 @@
+start:
+    {setnpc:Rock C}{fast}What do you think we should do, Rock E?
+    {setnpc:Rock... wait for it... E}{fast}I told you not to refer to my old name. It is now Rocky.
+    {setnpc:Rock C}{fast}Ok, Rocky, what should we do?
+    {setnpc:Rock A}{fast}I have an idea... why don't we eat the human?
+    {setnpc:Rocky}{fast}No. We will aid the human on its journey.
+    {fast}Human, we, the Rocks, are twenty-six siblings.
+    {fast}During the height of our time, we ruled the Earth.
+    {setnpc:Rock Q}{fast}We wuz kingz.
+    {setnpc:Rocky}{fast}The mad scientist has been performing experiments on people and sending them on "journeys".
+    {fast}Human, you must go and defeat the final test subject blocking you from completing your journey!{goto:second}{end}
+second:
+    {fast}Journey on!

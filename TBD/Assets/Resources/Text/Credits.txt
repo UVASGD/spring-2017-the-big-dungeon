@@ -15,6 +15,7 @@ Writing/Design
 Mark Villadelgado
 Claire Zhu
 Wooju Lee
+James Hu
 
 Art
 Jennifer Wu

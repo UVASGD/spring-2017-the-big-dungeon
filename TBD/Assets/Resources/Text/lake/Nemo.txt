@@ -1,0 +1,10 @@
+start:
+    {setnpc:Nemo}{fast}Yo!
+    {fast}Thanks for finding me!
+    {fast}I didn't realize Shark was so worried sick from missing me!
+    {fast}How did I get here underwater?
+    {fast}I was given this respirator and told to go in this lake...honestly I’m not sure why I’m here.
+    {fast}I kind of forgot and started playing hide and seek with this really nice shark. 
+    {fast}Not sure why he wears a fishbowl.{goto:second}{end}
+second:
+    {fast}Thanks!{goto:second}{end}
