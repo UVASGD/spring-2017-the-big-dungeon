@@ -1,0 +1,3 @@
+start:
+    {setnpc:MadKid}{fast}I AM SO MAD!
+    {fast}If you want to beat me, fight me using your keyboard by pressing the keys that correspond to those on the screen!

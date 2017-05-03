@@ -1,0 +1,8 @@
+start:
+    {setnpc:mayor}{fast}Hi!
+first:
+    Thanks for rescuing me!{goto:second}{end}
+second:
+    We brought you here for our own amusement ^.^ {goto:third}{end}
+third:
+    You should maybe go to the forest :^)

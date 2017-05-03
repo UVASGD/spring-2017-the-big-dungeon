@@ -1,0 +1,4 @@
+start:
+    {setnpc:Lost Girl}{fast}Help me!
+    {fast}I am lost!
+    {fast}Please help me back to town, onii-chan!
