@@ -45,9 +45,9 @@ public class RandomEncounter : MonoBehaviour {
 
 	public void updateEncounterList() {
 		if (encounterArea == "outskirts") {
-			this.enemyList.Add (new Enemy ("Swift Sweepster", "Sweepster no swifting!", 10, 12, 4, 3, 0));
+			this.enemyList.Add (new Enemy ("Swift Sweepster", "Sweepster no swifting!", 5, 20, 4, 3, 0));
 			this.enemyList.Add (new Enemy ("Tin Can", "This is one can that you shouldn't kick.", 15, 14, 7, 4, 2));
-			this.enemyList.Add (new Enemy ("Grock", "Can you smell what the Grock is cooking?", 20, 15, 8, 5, 1));
+			this.enemyList.Add (new Enemy ("Grock", "Can you smell what the Grock is cooking?", 24, 12, 8, 5, 1));
 			setEncounterSec (10);
 		}
 		// add more encounters
@@ -81,10 +81,14 @@ public class RandomEncounter : MonoBehaviour {
 	}
 
 	public void OnTriggerEnter2D(Collider2D other) {
-		this.playerWithin = true;
+		if (other.tag == "Player") {
+			this.playerWithin = true;
+		}
 	}
 
 	public void OnTriggerExit2D(Collider2D other) {
-		this.playerWithin = false;
+		if (other.tag == "Player") {
+			this.playerWithin = false;
+		}
 	}
 }

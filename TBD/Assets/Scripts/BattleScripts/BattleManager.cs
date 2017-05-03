@@ -71,6 +71,7 @@ public class BattleManager : MonoBehaviour
 				else if (!Input.GetKeyDown ((KeyCode)System.Enum.Parse (typeof(KeyCode), this.currentKeyList [this.currentKey]))) {
 					this.currentKey++;
 					this.failedAttacks++;
+					isReady = false;
 					if (this.currentKey >= this.currentKeyList.Count) {
 						//completed in time!
 						attemptAttack (true);
@@ -304,7 +305,8 @@ public class BattleManager : MonoBehaviour
 		c.a = 255;
 		this.battleMenu.keyBack.color = c;
 		this.waitForPlayer = true;
-		isReady = true;
+		//FUCK?
+		isReady = false;
 	}
 
 	private void parseKey() {
