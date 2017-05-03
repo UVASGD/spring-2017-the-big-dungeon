@@ -56,7 +56,7 @@ public class RandomEncounter : MonoBehaviour {
 	public void checkEncounter() {
 		int ran = Random.Range(0, 33 * encounterSec);
 		// 1 encounter per second == 1/33
-		if (ran < 1) {
+		if (enemyList.Count > 0 && ran < 1) {
 			int ran2 = Random.Range(0, enemyList.Count);
 			// need to eventually call this from battle manager
 			//FindObjectOfType<ScreenFader>().FadeToBlack();
