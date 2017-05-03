@@ -1,13 +1,22 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 78c89127307c44c83ad484379476a398
 timeCreated: 1493791373
+=======
+guid: 413c90dff2d794e6192f65b745929024
+timeCreated: 1493790820
+>>>>>>> origin/master
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
+<<<<<<< HEAD
     enableMipMap: 0
+=======
+    enableMipMap: 1
+>>>>>>> origin/master
     sRGBTexture: 0
     linearTexture: 0
     fadeOut: 0
