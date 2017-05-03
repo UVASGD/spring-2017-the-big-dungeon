@@ -81,12 +81,27 @@ ModelImporter:
     4300026: mesh_0014
     4300028: mesh_0015
     9500000: //RootNode
+    11400000: mesh_0001
+    11400002: mesh_0002
+    11400004: mesh_0003
+    11400006: mesh_0004
+    11400008: mesh_0005
+    11400010: mesh_0006
+    11400012: mesh_0007
+    11400014: mesh_0008
+    11400016: mesh_0009
+    11400018: mesh_0010
+    11400020: mesh_0011
+    11400022: mesh_0012
+    11400024: mesh_0013
+    11400026: mesh_0014
+    11400028: mesh_0015
   materials:
-    importMaterials: 1
+    importMaterials: 0
     materialName: 0
     materialSearch: 1
   animations:
-    legacyGenerateAnimations: 4
+    legacyGenerateAnimations: 0
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
@@ -108,7 +123,7 @@ ModelImporter:
     globalScale: 0
     meshCompression: 0
     addColliders: 0
-    importBlendShapes: 1
+    importBlendShapes: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -123,7 +138,7 @@ ModelImporter:
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
-    tangentImportMode: 3
+    tangentImportMode: 2
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
@@ -143,7 +158,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
