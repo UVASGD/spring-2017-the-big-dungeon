@@ -1,0 +1,5 @@
+start:
+    {setnpc:Dinosaur}{slow}Doesn't this shrub look like me?
+    {slow}Now go further in to see something cooler!{goto:second}{end}
+second:
+    {slow}How'd you like it?{goto:second}{end}

@@ -1,0 +1,5 @@
+start:
+    {setnpc:Dinosaur}{slow}This is my friend, Rocky.
+    {slow}Isn't it lovely?{goto:second}{end}
+second:
+    {slow}Go on, talk to it!{goto:second}{end}

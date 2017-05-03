@@ -1,0 +1,6 @@
+start:
+    {setnpc:Dinosaur}{slow}Hello... friend.
+    {slow}I have something to show you.
+    {slow}Go further into the jungle to see!{goto:second}{end}
+second:
+    {slow}How'd you like it?{goto:second}{end}

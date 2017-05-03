@@ -1,0 +1,6 @@
+start:
+    {setnpc:Dinosaur}{slow}These cave paintings are pretty cool.
+    {slow}I really like them.
+    {slow}Go further in to something more bootyful.{goto:second}{end}
+second:
+    {slow}How'd you like it?{goto:second}{end}
